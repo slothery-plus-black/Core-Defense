@@ -104,7 +104,7 @@
             m.pintado();
         }
 
-        //Objeto casilla
+        //Objeto casilla, con la imagen y si se puede mover por ella
         function casilla(imagen,mov) {
             //this.stat = 0;
             /*var aliveTime = 0;
@@ -119,21 +119,19 @@
             }*/
 			this.movible = mov;
 			this.image = imagen;
-			//this.tile = imagen;
 			
 			this.setImagen = function(imagen, mov){
 				this.image = imagen;
-				//this.tile = imagen;
 				this.movible = mov;
 			}
         }
         
-        //Objeto jugador
-        function Jugador(spr,x,y) {
+        //Objeto jugador, tiene su sprite, sus posiciones en x e y ademas de la velocidad
+        function Jugador(spr,x,y,vel) {
 			this.sprite = spr;
 			this.posx = x;
 			this.posy = y;
-			this.velocidad = 4;
+			this.velocidad = vel;
         }
 
         //Objeto mundo, contiene el mapa y los objetos que lo contiene.
@@ -153,7 +151,7 @@
 						
 						//Prueba para poner un jugador
 						if (i === 1 && j ===1){
-							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize));
+							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize), 4);
 						}
 						
 						//Bordes
@@ -300,7 +298,9 @@
 				}
 				
 				if (board[Math.floor(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true
-				&& board[Math.ceil(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true){
+				&& board[Math.ceil(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
+				&& board[Math.floor(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
+				&& board[Math.ceil(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true){
 					this.pintado();
 				}else{
 					jugador.posx = jxOriginal;
