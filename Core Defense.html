@@ -120,44 +120,26 @@
 			this.movible = mov;
 			this.image = imagen;
 			//this.tile = imagen;
-			this.personaje = null;
-			
-			this.setSinPersonaje = function(){
-				this.personaje = null;
-				//this.image = this.tile;
-			}
-			
-			this.setPersonaje = function(perso){
-				this.personaje = perso;
-			}
 			
 			this.setImagen = function(imagen, mov){
 				this.image = imagen;
 				//this.tile = imagen;
-				this.personaje = null;
 				this.movible = mov;
 			}
         }
         
-        //POR IMPLEMENTAR: Objeto jugador
-        function jugador(spr,b) {
+        //Objeto jugador
+        function Jugador(spr,x,y) {
 			this.sprite = spr;
-			var board = b;
-            //this.posicion = pos;
-            //var speed = 1;
-            /*this.getState = function(){
-                return this.state;
-            }*/
-            /*this.getSpeed = function(){
-                return speed;
-            }*/
+			this.posx = x;
+			this.posy = y;
+			this.velocidad = 4;
         }
 
         //Objeto mundo, contiene el mapa y los objetos que lo contiene.
         function mundo() {
             var board = [];
-			var boardJugador;
-			var jx, jy;
+			var jugador;
             // var hcells = x; //número de células horizontales
             // var y = y; //número de células verticales
 
@@ -171,11 +153,7 @@
 						
 						//Prueba para poner un jugador
 						if (i === 1 && j ===1){
-							var per = new jugador(personaje_1, board[i][j]);
-							board[i][j].setPersonaje(per);
-							boardJugador = board[i][j];
-							jx = i;
-							jy = j;
+							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize));
 						}
 						
 						//Bordes
@@ -242,21 +220,14 @@
 						}*/
 						context.globalAlpha = 1.0;
 						context.drawImage(board[i][j].image,i * cellSize, j * cellSize);
-						//Para imprimir si tiene algun personaje
-						if (board[i][j].personaje !== null){
-							context.globalAlpha = 0.7;
-							context.drawImage(board[i][j].personaje.sprite,i * cellSize, j * cellSize);
-						}
-						
-						
-						/*switch (board[i][j].personaje){
-							case !null:
-								console.log("ASDFSD");
-								context.drawImage(board[i][j].personaje.sprite,i * cellSize, j * cellSize);
-								break;
-						}*/
                     }
                 }
+				
+				//Para imprimir si tiene algun personaje
+				if (jugador !== null){
+					context.globalAlpha = 0.7;
+					context.drawImage(jugador.sprite,jugador.posx, jugador.posy);
+				}
             }
             
             //PARA TESTEO: Pintar en la casilla pinchada
@@ -266,7 +237,7 @@
                 var boardX = parseInt(x / cellSize);
                 var boardY = parseInt(y / cellSize);
                 
-				//estado = tecla pulsada
+				//estado = tecla del 1 al 8 que selecciona el tile a pintar
 				switch (estado){
 					case 1:
 						board[boardX][boardY].setImagen(m_vert, false);
@@ -294,8 +265,6 @@
 						break;
 				}
 				
-				//board[boardX][boardY].image = estado;
-				
                 m.pintado();
             }
             
@@ -304,44 +273,38 @@
 			
 			//0 arriba, 1 abajo, 2 izquierda y 3 derecha
 			this.moverJugador = function (num) {
-				//console.log("mover "+num);
-				
-				var jxOriginal = jx;
-				var jyOriginal = jy;
+				var jxOriginal = jugador.posx;
+				var jyOriginal = jugador.posy;
 				
 				switch (num){
 					case 0:
-						jy = jy - 1;
-						if (jy < 0)
-							jy = 0;
+						jugador.posy = jugador.posy - jugador.velocidad;
+						if (jugador.posy < 0)
+							jugador.posy = 0;
 						break;
 					case 1:
-						jy = jy + 1;
-						if (jy >= y)
-							jy = y-1;
+						jugador.posy = jugador.posy + jugador.velocidad;
+						if (jugador.posy >= (y*cellSize)-jugador.velocidad)
+							jugador.posy = (y*cellSize)-jugador.velocidad;
 						break;
 					case 2:
-						jx = jx - 1;
-						if (jx < 0)
-							jx = 0;
+						jugador.posx = jugador.posx - jugador.velocidad;
+						if (jugador.posx < 0)
+							jugador.posx = 0;
 						break;
 					case 3:
-						jx = jx + 1;
-						if (jx >= x)
-							jx = x-1;
+						jugador.posx = jugador.posx + jugador.velocidad;
+						if (jugador.posx >= (x*cellSize)-jugador.velocidad)
+							jugador.posx = (x*cellSize)-jugador.velocidad;
 						break;
 				}
 				
-				if (board[jx][jy].movible === true){
-					boardJugador.setSinPersonaje();
-					boardJugador = board[jx][jy];
-					var per = new jugador(personaje_1, boardJugador);
-					boardJugador.setPersonaje(per);
-					
+				if (board[Math.floor(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true
+				&& board[Math.ceil(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true){
 					this.pintado();
 				}else{
-					jx = jxOriginal;
-					jy = jyOriginal;
+					jugador.posx = jxOriginal;
+					jugador.posy = jyOriginal;
 				}
 			}
         }
@@ -447,6 +410,5 @@
     <p align="center">
         <span id="cellTime" style="color: #FF920E;"></span></p>
 </body>
-
 
 </html>
