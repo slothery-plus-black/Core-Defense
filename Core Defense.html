@@ -165,11 +165,10 @@
                 for (i = 0; i < x; i++) {
                     board[i] = [];
                     for (j = 0; j < y; j++) {
-                        board[i][j] = new casilla(m_vert); //CREA UNA casilla VACIA
+                        board[i][j] = new casilla(m_Fondo); //CREA UNA casilla VACIA
 						
 						//Prueba para poner un jugador
 						if (i === 1 && j ===1){
-							board[i][j] = new casilla(m_vert);
 							var per = new jugador(personaje_1, board[i][j]);
 							board[i][j].setPersonaje(per);
 							boardJugador = board[i][j];
@@ -303,6 +302,10 @@
 			//0 arriba, 1 abajo, 2 izquierda y 3 derecha
 			this.moverJugador = function (num) {
 				//console.log("mover "+num);
+				
+				var jxOriginal = jx;
+				var jyOriginal = jy;
+				
 				switch (num){
 					case 0:
 						jy = jy - 1;
@@ -325,12 +328,18 @@
 							jx = x-1;
 						break;
 				}
-				boardJugador.setSinPersonaje();
-				boardJugador = board[jx][jy];
-				var per = new jugador(personaje_1, boardJugador);
-				boardJugador.setPersonaje(per);
 				
-				this.pintado();
+				if (board[jx][jy].image === m_Fondo){
+					boardJugador.setSinPersonaje();
+					boardJugador = board[jx][jy];
+					var per = new jugador(personaje_1, boardJugador);
+					boardJugador.setPersonaje(per);
+					
+					this.pintado();
+				}else{
+					jx = jxOriginal;
+					jy = jyOriginal;
+				}
 			}
         }
         
