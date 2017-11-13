@@ -345,7 +345,7 @@
 			var charCode = evt.keyCode || evt.which;
 			var charStr = String.fromCharCode(charCode);
 			
-			console.log(charStr);
+			//console.log(charStr);
 			
 			switch (charStr){
 				case "1":
@@ -374,15 +374,19 @@
 					break;
 					
 				case "w":
+				case "W":
 					m.moverJugador(0);
 					break;
 				case "s":
+				case "S":
 					m.moverJugador(1);
 					break;
 				case "a":
+				case "A":
 					m.moverJugador(2);
 					break;
 				case "d":
+				case "D":
 					m.moverJugador(3);
 					break;
 			}
