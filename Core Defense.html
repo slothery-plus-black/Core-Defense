@@ -105,7 +105,7 @@
         }
 
         //Objeto casilla
-        function casilla(imagen, usuario) {
+        function casilla(imagen) {
             //this.stat = 0;
             /*var aliveTime = 0;
             this.turnoMas = function () {
@@ -117,43 +117,45 @@
             this.setTiempo = function (time) {
                 aliveTime = time + 1;
             }*/
-			
 			this.image = imagen;
-			this.tile = imagen;
-			this.personaje = usuario;
+			//this.tile = imagen;
+			this.personaje = null;
 			
 			this.setSinPersonaje = function(){
 				this.personaje = null;
-				this.image = this.tile;
+				//this.image = this.tile;
 			}
 			
-			this.setPersonaje = function(perso, imagenPersonaje){
+			this.setPersonaje = function(perso){
 				this.personaje = perso;
-				this.image = imagenPersonaje;
 			}
 			
 			this.setImagen = function(imagen){
 				this.image = imagen;
-				this.tile = imagen;
-				this.personaje = 0;
+				//this.tile = imagen;
+				this.personaje = null;
 			}
         }
         
         //POR IMPLEMENTAR: Objeto jugador
-        function jugador() {
-            var state = 1;
-            var speed = 1;
-            this.getState = function(){
-                return state;
-            }
-            this.getSpeed = function(){
+        function jugador(spr,b) {
+			this.sprite = spr;
+			var board = b;
+            //this.posicion = pos;
+            //var speed = 1;
+            /*this.getState = function(){
+                return this.state;
+            }*/
+            /*this.getSpeed = function(){
                 return speed;
-            }
+            }*/
         }
 
         //Objeto mundo, contiene el mapa y los objetos que lo contiene.
         function mundo() {
             var board = [];
+			var boardJugador;
+			var jx, jy;
             // var hcells = x; //número de células horizontales
             // var y = y; //número de células verticales
 
@@ -163,36 +165,41 @@
                 for (i = 0; i < x; i++) {
                     board[i] = [];
                     for (j = 0; j < y; j++) {
-                        board[i][j] = new casilla(0,0); //CREA UNA casilla VACIA
+                        board[i][j] = new casilla(m_vert); //CREA UNA casilla VACIA
 						
 						//Prueba para poner un jugador
 						if (i === 1 && j ===1){
-							board[i][j] = new casilla(7,1);
+							board[i][j] = new casilla(m_vert);
+							var per = new jugador(personaje_1, board[i][j]);
+							board[i][j].setPersonaje(per);
+							boardJugador = board[i][j];
+							jx = i;
+							jy = j;
 						}
 						
 						//Bordes
 						if (i === 0 || i === x-1){
-							board[i][j] = new casilla(1,0);
+							board[i][j] = new casilla(m_vert);
 						}
 						if (j === 0 || j === y-1){
-							board[i][j] = new casilla(2,0);
+							board[i][j] = new casilla(m_hor);
 						}
 						
 						//Esquinas
 						if (i === 0 && j ===0){
-							board[i][j] = new casilla(3,0);
+							board[i][j] = new casilla(m_ArI);
 						}
 						
 						if (i === x-1 && j ===0){
-							board[i][j] = new casilla(4,0);
+							board[i][j] = new casilla(m_ArD);
 						}
 						
 						if (i === 0 && j ===y-1){
-							board[i][j] = new casilla(5,0);
+							board[i][j] = new casilla(m_AbI);
 						}
 						
 						if (i === x-1 && j ===y-1){
-							board[i][j] = new casilla(6,0);
+							board[i][j] = new casilla(m_AbD);
 						}
                     }
                 }
@@ -202,7 +209,7 @@
                 for (i = 0; i < x; i++) {
                     for (j = 0; j < y; j++) {
 						//Caso 0 el que no tiene nada, los demás los diferentes tiles
-						switch (board[i][j].image){
+						/*switch (board[i][j].image){
 							case 0:
 								context.fillStyle = "rgb(100,100,100)";
 								context.fillRect(i * cellSize + extra, j * cellSize + extra, cellSize - extra, cellSize - extra);
@@ -231,14 +238,21 @@
 							case 8:
 								context.drawImage(m_Origen,i * cellSize, j * cellSize);
 								break;
+						}*/
+						
+						context.drawImage(board[i][j].image,i * cellSize, j * cellSize);
+						//Para imprimir si tiene algun personaje
+						if (board[i][j].personaje !== null){
+							context.drawImage(board[i][j].personaje.sprite,i * cellSize, j * cellSize);
 						}
 						
-						//Para imprimir si tiene algun personaje
-						switch (board[i][j].personaje){
-							case 1:
-								context.drawImage(personaje_1,i * cellSize, j * cellSize);
+						
+						/*switch (board[i][j].personaje){
+							case !null:
+								console.log("ASDFSD");
+								context.drawImage(board[i][j].personaje.sprite,i * cellSize, j * cellSize);
 								break;
-						}
+						}*/
                     }
                 }
             }
@@ -251,7 +265,33 @@
                 var boardY = parseInt(y / cellSize);
                 
 				//Pone el estado al tipo de "tile" que se esta usando
-				board[boardX][boardY].setImagen(estado);
+				switch (estado){
+					case 1:
+						board[boardX][boardY].setImagen(m_vert);
+						break;
+					case 2:
+						board[boardX][boardY].setImagen(m_hor);
+						break;
+					case 3:
+						board[boardX][boardY].setImagen(m_ArI);
+						break;
+					case 4:
+						board[boardX][boardY].setImagen(m_ArD);
+						break;
+					case 5:
+						board[boardX][boardY].setImagen(m_AbI);
+						break;
+					case 6:
+						board[boardX][boardY].setImagen(m_AbD);
+						break;
+					case 7:
+						board[boardX][boardY].setImagen(m_Fondo);
+						break;
+					case 8:
+						board[boardX][boardY].setImagen(m_Origen);
+						break;
+				}
+				
 				//board[boardX][boardY].image = estado;
 				
                 m.pintado();
@@ -259,6 +299,39 @@
             
             //Devuelve si tiene un bloque o lo que sea.
             this.hasBlock = function(x,y) { return board[x][y].image; }
+			
+			//0 arriba, 1 abajo, 2 izquierda y 3 derecha
+			this.moverJugador = function (num) {
+				//console.log("mover "+num);
+				switch (num){
+					case 0:
+						jy = jy - 1;
+						if (jy < 0)
+							jy = 0;
+						break;
+					case 1:
+						jy = jy + 1;
+						if (jy >= y)
+							jy = y-1;
+						break;
+					case 2:
+						jx = jx - 1;
+						if (jx < 0)
+							jx = 0;
+						break;
+					case 3:
+						jx = jx + 1;
+						if (jx >= x)
+							jx = x-1;
+						break;
+				}
+				boardJugador.setSinPersonaje();
+				boardJugador = board[jx][jy];
+				var per = new jugador(personaje_1, boardJugador);
+				boardJugador.setPersonaje(per);
+				
+				this.pintado();
+			}
         }
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
@@ -297,43 +370,52 @@
 			var charCode = evt.keyCode || evt.which;
 			var charStr = String.fromCharCode(charCode);
 			
+			console.log(charStr);
+			
 			switch (charStr){
 				case "1":
 					estado = 1;
 					break;
-					
 				case "2":
 					estado = 2;
 					break;
-					
 				case "3":
 					estado = 3;
 					break;
-					
 				case "4":
 					estado = 4;
 					break;
-					
 				case "5":
 					estado = 5;
 					break;
-					
 				case "6":
 					estado = 6;
 					break;
-					
 				case "7":
 					estado = 7;
 					break;
 				case "8":
 					estado = 8;
 					break;
+					
+				case "w":
+					m.moverJugador(0);
+					break;
+				case "s":
+					m.moverJugador(1);
+					break;
+				case "a":
+					m.moverJugador(2);
+					break;
+				case "d":
+					m.moverJugador(3);
+					break;
 			}
 		};
     </script>
 </head>
 
-<body bgcolor="#37383C">
+<body onload="initGame()" bgcolor="#37383C">
     <p align="center">
         <img src="src/titulo.png">
     </p>
