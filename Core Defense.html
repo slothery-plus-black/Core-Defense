@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<!--Autor: Alexander Matos Teodoro-->
-<!--Autor: Carolina Damián Fernández-->
 <html>
 
 <head>
@@ -17,7 +15,6 @@
             top: 570px;
         }
         
-        
         /* Esta clase define la anchura del contenido y la posicion centrada 
            El contenido queda centrado y limitado, pero el pie
            llegan hasta los limites del navegador.
@@ -31,9 +28,6 @@
     <script type="text/javascript">
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
         var cellSize = 40; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
-
-
-
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
@@ -43,17 +37,27 @@
         var rendija = true; //True si hay rendija activa
         var m = new mundo(); //Objeto mundo
         var m_vert = new Image();
-       
+		var m_hor = new Image();
+		var m_ArI = new Image();
+		var m_ArD = new Image();
+		var m_AbI = new Image();
+		var m_AbD = new Image();
+		var m_Fondo = new Image();
+		var m_Origen = new Image();
+		var estado = 1;//Para saber que "tile" se esta usando
+		
         //Carga de Sprites
         function loadImages(){
-            
             m_vert.src = 'src/Vertical.png';
-            
-            
+			m_hor.src = 'src/Horizontal.png';
+			m_ArI.src = 'src/E-Arriba-Izquierda.png';
+			m_ArD.src = 'src/E-Arriba-Derecha.png';
+			m_AbI.src = 'src/E-Abajo-Izquierda.png';
+			m_AbD.src = 'src/E-Abajo-Derecha.png';
+			m_Fondo.src = 'src/Fondo.png';
+			m_Origen.src = 'src/Origen.png';
         }
-        
-       
-
+		
         //PARA TESTEO: Pinta la rendija del mapa
         function pintarRendija() {
             if (rendija) {
@@ -79,21 +83,15 @@
             m.pintado();
         }
 
-
-
         //INICIALIZA TODO
         function initGame() {
-            canvas = document.getElementById("gameoflife");
+            canvas = document.getElementById("game");
             context = canvas.getContext("2d");
             canvas.addEventListener("click", m.onCanvasClick, false);
             loadImages();
-
             m.initMundo();
             m.pintado();
-
         }
-
-
 
         //Objeto casilla
         function casilla() {
@@ -128,8 +126,6 @@
             // var hcells = x; //número de células horizontales
             // var y = y; //número de células verticales
 
-           
-
             this.initMundo = function () {
                 board = [];
                 for (i = 0; i < x; i++) {
@@ -143,16 +139,45 @@
             this.pintado = function () {
                 for (i = 0; i < x; i++) {
                     for (j = 0; j < y; j++) {
-                        if (board[i][j].stat == 0) {
-                            context.fillStyle = "rgb(100,100,100)";
-                            context.fillRect(i * cellSize + extra, j * cellSize + extra, cellSize - extra, cellSize - extra);
-                        } else {
-                            context.fillStyle = "rgb(46, 254, 200)";
-                            context.drawImage(m_vert,i * cellSize, j * cellSize);
-                        }
-                        //context.drawImage(muro1,138,0,25,60);
-                        
-                        
+						//Caso 0 el que no tiene nada, los demás los diferentes tiles
+						switch (board[i][j].stat){
+							case 0:
+								context.fillStyle = "rgb(100,100,100)";
+								context.fillRect(i * cellSize + extra, j * cellSize + extra, cellSize - extra, cellSize - extra);
+								break;
+							case 1:
+								context.fillStyle = "rgb(46, 254, 200)";
+								context.drawImage(m_vert,i * cellSize, j * cellSize);
+								break;
+							case 2:
+								context.fillStyle = "rgb(46, 254, 200)";
+								context.drawImage(m_hor,i * cellSize, j * cellSize);
+								break;
+							case 3:
+								context.fillStyle = "rgb(46, 254, 200)";
+								context.drawImage(m_ArI,i * cellSize, j * cellSize);
+								break;
+							case 4:
+								context.fillStyle = "rgb(46, 254, 200)";
+								context.drawImage(m_ArD,i * cellSize, j * cellSize);
+								break;
+							case 5:
+								context.fillStyle = "rgb(46, 254, 200)";
+								context.drawImage(m_AbI,i * cellSize, j * cellSize);
+								break;
+							case 6:
+								context.fillStyle = "rgb(46, 254, 200)";
+								context.drawImage(m_AbD,i * cellSize, j * cellSize);
+								break;
+							case 7:
+								context.fillStyle = "rgb(46, 254, 200)";
+								context.drawImage(m_Fondo,i * cellSize, j * cellSize);
+								break;
+							case 8:
+								context.fillStyle = "rgb(46, 254, 200)";
+								context.drawImage(m_Origen,i * cellSize, j * cellSize);
+								break;
+						}
                     }
                 }
             }
@@ -164,21 +189,20 @@
                 var boardX = parseInt(x / cellSize);
                 var boardY = parseInt(y / cellSize);
                 
-                board[boardX][boardY].stat = 1;;
-
+				//Pone el estado al tipo de "tile" que se esta usando
+				board[boardX][boardY].stat = estado;
+				
                 m.pintado();
             }
             
             //Devuelve si tiene un bloque o lo que sea.
             this.hasBlock = function(x,y) { return board[x][y].stat; }
         }
-
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
             m.pintado();
         }
-
         
         //PARA TESTEO: Si pulsas play empieza el bucle
         function startNS() {
@@ -186,18 +210,17 @@
                 timerId = setInterval("computeNS()", 100);
                 var status = document.getElementById("status");
                 status.innerHTML = "<b>Play</b>";
-
             }
         }
+		
         //Para el tiempo de ejecucion, se llama desde stop
         function stopNS() {
             clearInterval(timerId);
             timerId = undefined;
             var status = document.getElementById("status");
             status.innerHTML = "<b>Pausa</b>";
-
-
         }
+		
         //PARA TESTEO: Si pulsas stop detienes el juego y limpias todo
         function clearBoard() {
             m.initMundo();
@@ -206,6 +229,45 @@
             var status = document.getElementById("status");
             status.innerHTML = "<b>Stop</b>";
         }
+		
+		document.onkeypress = function(evt) {
+			evt = evt || window.event;
+			var charCode = evt.keyCode || evt.which;
+			var charStr = String.fromCharCode(charCode);
+			
+			switch (charStr){
+				case "1":
+					estado = 1;
+					break;
+					
+				case "2":
+					estado = 2;
+					break;
+					
+				case "3":
+					estado = 3;
+					break;
+					
+				case "4":
+					estado = 4;
+					break;
+					
+				case "5":
+					estado = 5;
+					break;
+					
+				case "6":
+					estado = 6;
+					break;
+					
+				case "7":
+					estado = 7;
+					break;
+				case "8":
+					estado = 8;
+					break;
+			}
+		};
     </script>
 </head>
 
@@ -214,7 +276,7 @@
         <img src="src/titulo.png">
     </p>
     <p align="center">
-        <canvas id="gameoflife" width="720" height="720" border="1"></canvas>
+        <canvas id="game" width="720" height="720" border="1"></canvas>
         
         <br/>
         <img src="src/next.png" onclick="computeNS()" style=" left:780px; top:460px; width:40px; height:40px; cursor:pointer; cursor:hand;">
