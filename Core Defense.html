@@ -131,10 +131,11 @@
 				this.personaje = perso;
 			}
 			
-			this.setImagen = function(imagen){
+			this.setImagen = function(imagen, mov){
 				this.image = imagen;
 				//this.tile = imagen;
 				this.personaje = null;
+				this.movible = mov;
 			}
         }
         
@@ -268,28 +269,28 @@
 				//estado = tecla pulsada
 				switch (estado){
 					case 1:
-						board[boardX][boardY].setImagen(m_vert);
+						board[boardX][boardY].setImagen(m_vert, false);
 						break;
 					case 2:
-						board[boardX][boardY].setImagen(m_hor);
+						board[boardX][boardY].setImagen(m_hor, false);
 						break;
 					case 3:
-						board[boardX][boardY].setImagen(m_ArI);
+						board[boardX][boardY].setImagen(m_ArI, false);
 						break;
 					case 4:
-						board[boardX][boardY].setImagen(m_ArD);
+						board[boardX][boardY].setImagen(m_ArD, false);
 						break;
 					case 5:
-						board[boardX][boardY].setImagen(m_AbI);
+						board[boardX][boardY].setImagen(m_AbI, false);
 						break;
 					case 6:
-						board[boardX][boardY].setImagen(m_AbD);
+						board[boardX][boardY].setImagen(m_AbD, false);
 						break;
 					case 7:
-						board[boardX][boardY].setImagen(m_Fondo);
+						board[boardX][boardY].setImagen(m_Fondo, true);
 						break;
 					case 8:
-						board[boardX][boardY].setImagen(m_Origen);
+						board[boardX][boardY].setImagen(m_Origen, false);
 						break;
 				}
 				
