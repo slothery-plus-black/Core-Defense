@@ -25,7 +25,14 @@
         }
     </style>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
     <script type="text/javascript">
+		$( document ).ready(function() {
+			initGame();
+		});
+	
+	
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
         var cellSize = 40; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
         var canvas;
@@ -326,7 +333,7 @@
     </script>
 </head>
 
-<body onload="initGame()" bgcolor="#37383C">
+<body bgcolor="#37383C">
     <p align="center">
         <img src="src/titulo.png">
     </p>
