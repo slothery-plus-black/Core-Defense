@@ -70,7 +70,7 @@
         }
 		
         //PARA TESTEO: Pinta la rendija del mapa
-        function pintarRendija() {
+        /*function pintarRendija() {
             if (rendija) {
                 extra = 0;
                 rendija = false;
@@ -92,7 +92,7 @@
                 context.stroke();
             }
             m.pintado();
-        }
+        }*/
 
         //INICIALIZA TODO
         function initGame() {
@@ -301,7 +301,7 @@
 				&& board[Math.ceil(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
 				&& board[Math.floor(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
 				&& board[Math.ceil(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true){
-					this.pintado();
+					//this.pintado();
 				}else{
 					jugador.posx = jxOriginal;
 					jugador.posy = jyOriginal;
@@ -317,28 +317,33 @@
         //PARA TESTEO: Si pulsas play empieza el bucle
         function startNS() {
             if (!timerId) {
-                timerId = setInterval("computeNS()", 100);
-                var status = document.getElementById("status");
-                status.innerHTML = "<b>Play</b>";
+                timerId = setInterval("computeNS()", 25);
+				//1000 1 frame por segundo
+				//100 10 frames por segundo
+				//50 20 frames por segundo
+				//25 40 frames por segundo
+				
+                //var status = document.getElementById("status");
+                //status.innerHTML = "<b>Play</b>";
             }
         }
 		
         //Para el tiempo de ejecucion, se llama desde stop
-        function stopNS() {
+        /*function stopNS() {
             clearInterval(timerId);
             timerId = undefined;
             var status = document.getElementById("status");
             status.innerHTML = "<b>Pausa</b>";
-        }
+        }*/
 		
         //PARA TESTEO: Si pulsas stop detienes el juego y limpias todo
-        function clearBoard() {
+        /*function clearBoard() {
             m.initMundo();
             m.pintado();
             stopNS(); //(no tiene sentido ejecutar el mundo si esta vacio)
             var status = document.getElementById("status");
             status.innerHTML = "<b>Stop</b>";
-        }
+        }*/
 		
 		document.onkeypress = function(evt) {
 			evt = evt || window.event;
@@ -391,6 +396,8 @@
 					break;
 			}
 		};
+		
+		startNS();
     </script>
 </head>
 
@@ -400,16 +407,6 @@
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
-        
-        <br/>
-        <img src="src/next.png" onclick="computeNS()" style=" left:780px; top:460px; width:40px; height:40px; cursor:pointer; cursor:hand;">
-        <img src="src/play.png" onclick="startNS()" style=" left:825px; top:460px; width:40px; height:40px; cursor:pointer; cursor:hand;">
-        <img src="src/pause.png" onclick="stopNS()" style=" left:870px; top:460px; width:40px; height:40px; cursor:pointer; cursor:hand;">
-        <img src="src/stop.png" onclick="clearBoard()" style=" left:915px; top:460px; width:40px; height:40px; cursor:pointer; cursor:hand;">
-        <img src="src/rendija.png" onclick="pintarRendija()" style=" left:915px; top:460px; width:40px; height:40px; cursor:pointer; cursor:hand;">
-        <br/>
-
-        <span id="status" style="color: #FF920E;"><b>Pause</b></span>
     </p>
     <p align="center">
         <span id="cellTime" style="color: #FF920E;"></span></p>
