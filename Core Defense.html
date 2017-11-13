@@ -44,7 +44,9 @@
 		var m_AbD = new Image();
 		var m_Fondo = new Image();
 		var m_Origen = new Image();
-		var estado = 1;//Para saber que "tile" se esta usando
+		var estado = 0;//Para saber que "tile" se esta usando
+		
+		var personaje_1 = new Image();
 		
         //Carga de Sprites
         function loadImages(){
@@ -56,6 +58,8 @@
 			m_AbD.src = 'src/E-Abajo-Derecha.png';
 			m_Fondo.src = 'src/Fondo.png';
 			m_Origen.src = 'src/Origen.png';
+			
+			personaje_1.src = 'src/personaje_1.png';
         }
 		
         //PARA TESTEO: Pinta la rendija del mapa
@@ -94,9 +98,9 @@
         }
 
         //Objeto casilla
-        function casilla() {
-            this.stat = 0;
-            var aliveTime = 0;
+        function casilla(imagen, usuario) {
+            //this.stat = 0;
+            /*var aliveTime = 0;
             this.turnoMas = function () {
                 aliveTime++;
             }
@@ -105,7 +109,27 @@
             }
             this.setTiempo = function (time) {
                 aliveTime = time + 1;
-            }
+            }*/
+			
+			this.image = imagen;
+			this.tile = imagen;
+			this.personaje = usuario;
+			
+			this.setSinPersonaje = function(){
+				this.personaje = null;
+				this.image = this.tile;
+			}
+			
+			this.setPersonaje = function(perso, imagenPersonaje){
+				this.personaje = perso;
+				this.image = imagenPersonaje;
+			}
+			
+			this.setImagen = function(imagen){
+				this.image = imagen;
+				this.tile = imagen;
+				this.personaje = 0;
+			}
         }
         
         //POR IMPLEMENTAR: Objeto jugador
@@ -127,11 +151,42 @@
             // var y = y; //número de células verticales
 
             this.initMundo = function () {
+				//Aqui hay que leer la estructura del mapa y cargarlo
                 board = [];
                 for (i = 0; i < x; i++) {
                     board[i] = [];
                     for (j = 0; j < y; j++) {
-                        board[i][j] = new casilla(); //CREA UNA casilla VACIA
+                        board[i][j] = new casilla(0,0); //CREA UNA casilla VACIA
+						
+						//Prueba para poner un jugador
+						if (i === 1 && j ===1){
+							board[i][j] = new casilla(7,1);
+						}
+						
+						//Bordes
+						if (i === 0 || i === x-1){
+							board[i][j] = new casilla(1,0);
+						}
+						if (j === 0 || j === y-1){
+							board[i][j] = new casilla(2,0);
+						}
+						
+						//Esquinas
+						if (i === 0 && j ===0){
+							board[i][j] = new casilla(3,0);
+						}
+						
+						if (i === x-1 && j ===0){
+							board[i][j] = new casilla(4,0);
+						}
+						
+						if (i === 0 && j ===y-1){
+							board[i][j] = new casilla(5,0);
+						}
+						
+						if (i === x-1 && j ===y-1){
+							board[i][j] = new casilla(6,0);
+						}
                     }
                 }
             }
@@ -140,7 +195,7 @@
                 for (i = 0; i < x; i++) {
                     for (j = 0; j < y; j++) {
 						//Caso 0 el que no tiene nada, los demás los diferentes tiles
-						switch (board[i][j].stat){
+						switch (board[i][j].image){
 							case 0:
 								context.fillStyle = "rgb(100,100,100)";
 								context.fillRect(i * cellSize + extra, j * cellSize + extra, cellSize - extra, cellSize - extra);
@@ -170,6 +225,13 @@
 								context.drawImage(m_Origen,i * cellSize, j * cellSize);
 								break;
 						}
+						
+						//Para imprimir si tiene algun personaje
+						switch (board[i][j].personaje){
+							case 1:
+								context.drawImage(personaje_1,i * cellSize, j * cellSize);
+								break;
+						}
                     }
                 }
             }
@@ -182,13 +244,14 @@
                 var boardY = parseInt(y / cellSize);
                 
 				//Pone el estado al tipo de "tile" que se esta usando
-				board[boardX][boardY].stat = estado;
+				board[boardX][boardY].setImagen(estado);
+				//board[boardX][boardY].image = estado;
 				
                 m.pintado();
             }
             
             //Devuelve si tiene un bloque o lo que sea.
-            this.hasBlock = function(x,y) { return board[x][y].stat; }
+            this.hasBlock = function(x,y) { return board[x][y].image; }
         }
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
