@@ -105,7 +105,7 @@
         }
 
         //Objeto casilla
-        function casilla(imagen) {
+        function casilla(imagen,mov) {
             //this.stat = 0;
             /*var aliveTime = 0;
             this.turnoMas = function () {
@@ -117,6 +117,7 @@
             this.setTiempo = function (time) {
                 aliveTime = time + 1;
             }*/
+			this.movible = mov;
 			this.image = imagen;
 			//this.tile = imagen;
 			this.personaje = null;
@@ -165,7 +166,7 @@
                 for (i = 0; i < x; i++) {
                     board[i] = [];
                     for (j = 0; j < y; j++) {
-                        board[i][j] = new casilla(m_Fondo); //CREA UNA casilla VACIA
+                        board[i][j] = new casilla(m_Fondo, true); //CREA UNA casilla VACIA
 						
 						//Prueba para poner un jugador
 						if (i === 1 && j ===1){
@@ -178,27 +179,27 @@
 						
 						//Bordes
 						if (i === 0 || i === x-1){
-							board[i][j] = new casilla(m_vert);
+							board[i][j] = new casilla(m_vert, false);
 						}
 						if (j === 0 || j === y-1){
-							board[i][j] = new casilla(m_hor);
+							board[i][j] = new casilla(m_hor, false);
 						}
 						
 						//Esquinas
 						if (i === 0 && j ===0){
-							board[i][j] = new casilla(m_ArI);
+							board[i][j] = new casilla(m_ArI, false);
 						}
 						
 						if (i === x-1 && j ===0){
-							board[i][j] = new casilla(m_ArD);
+							board[i][j] = new casilla(m_ArD, false);
 						}
 						
 						if (i === 0 && j ===y-1){
-							board[i][j] = new casilla(m_AbI);
+							board[i][j] = new casilla(m_AbI, false);
 						}
 						
 						if (i === x-1 && j ===y-1){
-							board[i][j] = new casilla(m_AbD);
+							board[i][j] = new casilla(m_AbD, false);
 						}
                     }
                 }
@@ -238,10 +239,11 @@
 								context.drawImage(m_Origen,i * cellSize, j * cellSize);
 								break;
 						}*/
-						
+						context.globalAlpha = 1.0;
 						context.drawImage(board[i][j].image,i * cellSize, j * cellSize);
 						//Para imprimir si tiene algun personaje
 						if (board[i][j].personaje !== null){
+							context.globalAlpha = 0.7;
 							context.drawImage(board[i][j].personaje.sprite,i * cellSize, j * cellSize);
 						}
 						
@@ -263,7 +265,7 @@
                 var boardX = parseInt(x / cellSize);
                 var boardY = parseInt(y / cellSize);
                 
-				//Pone el estado al tipo de "tile" que se esta usando
+				//estado = tecla pulsada
 				switch (estado){
 					case 1:
 						board[boardX][boardY].setImagen(m_vert);
@@ -329,7 +331,7 @@
 						break;
 				}
 				
-				if (board[jx][jy].image === m_Fondo){
+				if (board[jx][jy].movible === true){
 					boardJugador.setSinPersonaje();
 					boardJugador = board[jx][jy];
 					var per = new jugador(personaje_1, boardJugador);
