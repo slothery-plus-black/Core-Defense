@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<html lang="en">
 
-<a href="Core Defense.html">Core Defense</a>
+<head>
+    <title>Slothery Plus Black Games</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+    <style>
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        #carouselButtons {
+            margin-left: 100px;
+            position: absolute;
+            bottom: 0px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="carousel" class="carousel slide" data-ride="carousel">
+
+        <ul class="carousel-indicators">
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./src/core_defense_logo.png" alt="Core Defense" width="1100" height="500">
+                <div class="carousel-caption">
+                    <h3>Core Defense</h3>
+                    <p>¡Protege el núcleo central contra virus informáticos!</p>
+
+                    <div id="carouselButton">
+                        <a class="btn btn-large btn-light" href="./Core%20Defense.html">Jugar</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <img src="./src/unity_logo.jpg" alt="Coming Soon!" width="1100" height="500">
+                <div class="carousel-caption">
+                    <h3>Coming Soon!</h3>
+                    <p>Nuestro próximo proyecto hecho con Unity</p>
+                </div>
+            </div>
+
+            <a class="carousel-control-prev" href="#carousel" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#carousel" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </div>
 
 </body>
+
 </html>
