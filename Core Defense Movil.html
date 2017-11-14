@@ -146,19 +146,6 @@
 			this.posy = y;
 			this.velocidad = vel;
         }
-		
-				
-		var txtFile = "/texto.txt"
-		var file = file.createFromFileName("texto.txt");
-
-		file.open("r"); // open file with read access
-		var str = "";
-		while (!file.eof) {
-			// read each line of text
-			str += file.readln() + "\n";
-		}
-		file.close();
-		console.log(str);
 
         //Objeto mundo, contiene el mapa y los objetos que lo contiene.
         function mundo() {
@@ -168,9 +155,6 @@
             // var y = y; //número de células verticales
 
             this.initMundo = function () {
-				
-				
-				
 				//Aqui hay que leer la estructura del mapa y cargarlo
                 board = [];
                 for (i = 0; i < x; i++) {
@@ -222,19 +206,19 @@
 							board[i][j] = new casilla(m_Aparicion, false);
 						}
 						
-						if (i === 8 && j === 17){
+						/*if (i === 8 && j === 8){
 							board[i][j] = new casilla(m_Aparicion, false);
 						}
-						if (i === 9 && j === 17){
+						if (i === 8 && j === 9){
 							board[i][j] = new casilla(m_Aparicion, false);
 						}
-						if (i === 17 && j === 8){
+						if (i === 0 && j === 8){
 							board[i][j] = new casilla(m_Aparicion, false);
 						}
-						if (i === 17 && j === 9){
+						if (i === 0 && j === 9){
 							board[i][j] = new casilla(m_Aparicion, false);
 						}
-						
+						*/
 						//Centro
 						if (i === 8 && j === 8){
 							board[i][j] = new casilla(m_Core0, false);

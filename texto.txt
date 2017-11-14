@@ -1,0 +1,22 @@
+{
+    "filas": {
+        "fila0": ["A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A"],
+		"fila1": ["GML", "XML"],
+		"fila2": ["GML", "XML"],
+		"fila3": ["GML", "XML"],
+		"fila4": ["GML", "XML"],
+		"fila5": ["GML", "XML"],
+		"fila6": ["GML", "XML"],
+		"fila7": ["GML", "XML"],
+		"fila8": ["GML", "XML"],
+		"fila9": ["GML", "XML"],
+		"fila10": ["GML", "XML"],
+		"fila11": ["GML", "XML"],
+		"fila12": ["GML", "XML"],
+		"fila13": ["GML", "XML"],
+		"fila14": ["GML", "XML"],
+		"fila15": ["GML", "XML"],
+		"fila16": ["GML", "XML"],
+		"fila17": ["GML", "XML"]
+    }
+}
