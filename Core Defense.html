@@ -32,7 +32,6 @@
 			initGame();
 		});
 	
-	
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
         var cellSize = 40; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
         var canvas;
@@ -57,6 +56,7 @@
 		
         //Carga de Sprites
         function loadImages(){
+			//Tiles
             m_vert.src = 'src/Vertical.png';
 			m_hor.src = 'src/Horizontal.png';
 			m_ArI.src = 'src/E-Arriba-Izquierda.png';
@@ -66,6 +66,7 @@
 			m_Fondo.src = 'src/Fondo.png';
 			m_Origen.src = 'src/Origen.png';
 			
+			//Personajes
 			personaje_1.src = 'src/personaje_1.png';
         }
 		
@@ -128,6 +129,7 @@
         
         //Objeto jugador, tiene su sprite, sus posiciones en x e y ademas de la velocidad
         function Jugador(spr,x,y,vel) {
+			//Velocidad del jugador debe ser multiplo de cellsize
 			this.sprite = spr;
 			this.posx = x;
 			this.posy = y;
@@ -151,7 +153,7 @@
 						
 						//Prueba para poner un jugador
 						if (i === 1 && j ===1){
-							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize), 4);
+							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize), 8);
 						}
 						
 						//Bordes
@@ -267,7 +269,9 @@
             }
             
             //Devuelve si tiene un bloque o lo que sea.
-            this.hasBlock = function(x,y) { return board[x][y].image; }
+            this.hasBlock = function(x,y) {
+				return board[x][y];
+			}
 			
 			//0 arriba, 1 abajo, 2 izquierda y 3 derecha
 			this.moverJugador = function (num) {
@@ -297,12 +301,10 @@
 						break;
 				}
 				
-				if (board[Math.floor(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true
-				&& board[Math.ceil(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
-				&& board[Math.floor(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
-				&& board[Math.ceil(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true){
-					//this.pintado();
-				}else{
+				if (!board[Math.floor(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true
+				|| !board[Math.ceil(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
+				|| !board[Math.floor(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
+				|| !board[Math.ceil(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true){
 					jugador.posx = jxOriginal;
 					jugador.posy = jyOriginal;
 				}
@@ -312,6 +314,7 @@
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
             m.pintado();
+			
         }
         
         //PARA TESTEO: Si pulsas play empieza el bucle
@@ -345,6 +348,7 @@
             status.innerHTML = "<b>Stop</b>";
         }*/
 		
+		//Para saber cuando se pulsan las teclas
 		document.onkeypress = function(evt) {
 			evt = evt || window.event;
 			var charCode = evt.keyCode || evt.which;
