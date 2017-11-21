@@ -55,7 +55,7 @@
 		var m_Core2 = new Image();
 		var m_Core3 = new Image();
 		var m_Aparicion = new Image();
-		
+		var balas = [];               //Contiene las balas lanzadas en juego
 		var estado = 0;//Para saber que "tile" se esta usando
 		
 		var personaje_1 = new Image();
@@ -401,7 +401,7 @@
         //PARA TESTEO: Si pulsas play empieza el bucle
         function startNS() {
             if (!timerId) {
-                timerId = setInterval("computeNS()", 25);
+                timerId = setInterval("computeNS()", 60);
 				//1000 1 frame por segundo
 				//100 10 frames por segundo
 				//50 20 frames por segundo
@@ -428,7 +428,52 @@
             var status = document.getElementById("status");
             status.innerHTML = "<b>Stop</b>";
         }*/
-		
+        
+        
+		function shootingController(){
+            //Disparo, crea una bala en la direccion indicada, desde la posicion dada
+            this.shoot = function (x,y,dir){
+                balas[balas.length] = new bala(x,y,dir);
+            }
+            //Recorre el array de balas y las mueve todas
+            this.renderBalas = function(){
+                if (balas != null){
+                    for(var i=0; i<balas.length;i++){   //Recorre el array de balas
+                        switch(balas[i].dir){           //Mueve la bala
+                            case 0:
+                                balas[i].x += 2;
+                                break;
+                            case 1:
+                                balas[i].y += 2;
+                                break;
+                            case 2:
+                                balas[i].x -= 2;
+                                break;
+                            case 3:
+                                balas[i].y -= 2;
+                                break;
+                        }
+                        colision(balas[i]); //Comprueba colision de esa bala
+                        
+                    }
+                }
+                
+            }
+            var colision = function(bala){
+                //Si la bala está en una casilla con un objeto, se destruye ella y el objeto con el que ha chocado
+            }
+            
+        }
+        
+        function bala(x,y,dir){
+            this.x = x;
+            this.y = y;
+            this.dir = dir;
+            this.vel = 3;
+            
+        }
+        
+        
 		//Para saber cuando se pulsan las teclas
 		document.onkeypress = function(evt) {
 			evt = evt || window.event;
