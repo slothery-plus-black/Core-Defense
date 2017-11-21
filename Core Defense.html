@@ -147,18 +147,31 @@
 			this.velocidad = vel;
         }
 		
-				
-		var txtFile = "/texto.txt"
-		var file = file.createFromFileName("texto.txt");
-
-		file.open("r"); // open file with read access
-		var str = "";
-		while (!file.eof) {
-			// read each line of text
-			str += file.readln() + "\n";
-		}
-		file.close();
-		console.log(str);
+		/*$.getJSON( "ajax/test.json", function( data ) {
+		  var items = [];
+		  $.each( data, function( key, val ) {
+			//items.push( "<li id='" + key + "'>" + val + "</li>" );
+			console.log(key+" "+val);
+		  });
+		 
+		  /*$( "<ul/>", {
+			"class": "my-new-list",
+			html: items.join( "" )
+		  }).appendTo( "body" );
+		});*/
+		
+		$.ajax({
+			dataType: "json",
+			url: "texto.json",
+			mimeType: "application/json",
+			success: function(result){
+				console.log(result);
+			}
+		});
+		
+		/*$.getJSON("texto.json", function(json) {
+			console.log(json.filas);
+		});*/
 
         //Objeto mundo, contiene el mapa y los objetos que lo contiene.
         function mundo() {
