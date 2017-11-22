@@ -29,7 +29,7 @@
 	
     <script type="text/javascript">
 		$( document ).ready(function() {
-			initGame();
+			//initGame();
 		});
 	
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
@@ -43,6 +43,7 @@
         var rendija = true; //True si hay rendija activa
         var m = new mundo(); //Objeto mundo
         var sc = new shootingController();
+		
         var m_vert = new Image();
 		var m_hor = new Image();
 		var m_ArI = new Image();
@@ -56,6 +57,8 @@
 		var m_Core2 = new Image();
 		var m_Core3 = new Image();
 		var m_Aparicion = new Image();
+		var m_Bala = new Image();
+		
 		var balas = [];               //Contiene las balas lanzadas en juego
 		var estado = 0;//Para saber que "tile" se esta usando
 		
@@ -77,35 +80,11 @@
 			m_Core2.src = 'src/A.png';
 			m_Core3.src = 'src/B.png';
 			m_Aparicion.src = 'src/C.png';
+			m_Bala.src = 'src/personaje_1.png';
 			
 			//Personajes
 			personaje_1.src = 'src/sprite1.png';
         }
-		
-        //PARA TESTEO: Pinta la rendija del mapa
-        /*function pintarRendija() {
-            if (rendija) {
-                extra = 0;
-                rendija = false;
-            } else if (rendija == false) {
-                m.pintado();
-                rendija = true;
-                extra = 1;
-                //Dibuja la reja
-                for (var h = 0; h <= x * cellSize; h = h + cellSize) {
-                    context.moveTo(h, 0);
-                    context.lineTo(h, y * cellSize);
-                }
-                for (var v = 0; v <= y * cellSize; v = v + 10) {
-                    context.moveTo(0, v);
-                    context.lineTo(x * cellSize, v);
-                }
-                //Hace visible la reja
-                context.strokeStyle = "#27282C";
-                context.stroke();
-            }
-            m.pintado();
-        }*/
 
         //INICIALIZA TODO
         function initGame() {
@@ -172,7 +151,7 @@
 			url: "texto2.json",
 			mimeType: "application/json",
 			success: function(result){
-				console.log(result);
+				//console.log(result);
 			}
 		});
 		
@@ -201,6 +180,7 @@
 						
 						//Prueba para poner un jugador
 						if (i === 1 && j ===1){
+							//Velocidad del jugador debe ser multiplo de cellsize
 							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize), 4);
 						}
 						
@@ -330,6 +310,9 @@
 					//context.globalAlpha = 0.7;
 					context.drawImage(jugador.sprite,jugador.posx, jugador.posy);
 				}
+				
+				//Balas
+				sc.renderBalas();
             }
             
             //Pintar en la casilla pinchada
@@ -372,7 +355,7 @@
 						break;
 				}
 				if (imagen !== null)
-					m.ponerImagenNueva(boardX*cellSize,boardY*cellSize,imagen, mov);
+					m.ponerImagenNueva(boardX*cellSize, boardY*cellSize, imagen, mov);
 				
                 m.pintado();
             }
@@ -428,9 +411,13 @@
 					jugador.posy = jyOriginal;
 				}
 			}
+			
+			this.disparar = function () {
+                sc.shoot(jugador.posx,jugador.posy,jugador.dir, m_Bala);
+			}
+			
+			
         }
-		
-		
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
@@ -472,8 +459,8 @@
         
 		function shootingController(){
             //Disparo, crea una bala en la direccion indicada, desde la posicion dada
-            this.shoot = function (x,y,dir){
-                balas[balas.length] = new bala(x,y,dir);
+            this.shoot = function (x,y,dir,image){
+                balas[balas.length] = new bala(x,y,dir,image);
             }
             //Recorre el array de balas y las mueve todas
             this.renderBalas = function(){
@@ -481,39 +468,57 @@
                     for(var i=0; i<balas.length;i++){   //Recorre el array de balas
                         switch(balas[i].dir){           //Mueve la bala
                             case 0:
-                                balas[i].x += 2;
+                                balas[i].y -= balas[i].vel;
                                 break;
                             case 1:
-                                balas[i].y += 2;
+                                balas[i].y += balas[i].vel;
                                 break;
                             case 2:
-                                balas[i].x -= 2;
+                                balas[i].x -= balas[i].vel;
                                 break;
                             case 3:
-                                balas[i].y -= 2;
+                                balas[i].x += balas[i].vel;
                                 break;
                         }
-                        colision(balas[i]); //Comprueba colision de esa bala
-                        
+						
+						//console.log(balas[i].image);
+						context.drawImage(balas[i].image, balas[i].x, balas[i].y);
+						
+                        //colision(balas[i]); //Comprueba colision de esa bala
                     }
                 }
                 
             }
+			
             var colision = function(bala){
                 //Si la bala está en una casilla con un objeto, se destruye ella y el objeto con el que ha chocado
             }
             
         }
         
-        function bala(x,y,dir){
+        function bala(x,y,dir,imagen){
             this.x = x;
             this.y = y;
             this.dir = dir;
-            this.vel = 3;
-            
+			this.image = imagen;
+            this.vel = 4;
         }
         
-        
+		//Para varias pulsaciones de teclas a la vez
+		/*var map = {68: false, 69: false, 86: false};
+		$(document).keydown(function(e) {
+			if (e.keyCode in map) {
+				map[e.keyCode] = true;
+				if (map[68] && map[69] && map[86]) {
+					// FIRE EVENT
+				}
+			}
+		}).keyup(function(e) {
+			if (e.keyCode in map) {
+				map[e.keyCode] = false;
+			}
+		});*/
+		
 		//Para saber cuando se pulsan las teclas
 		document.onkeypress = function(evt) {
 			evt = evt || window.event;
@@ -563,6 +568,11 @@
 				case "d":
 				case "D":
 					m.moverJugador(3);
+					break;
+					
+				case "f":
+				case "F":
+					m.disparar();
 					break;
 			}
 		};
