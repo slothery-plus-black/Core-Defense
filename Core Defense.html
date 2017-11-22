@@ -169,7 +169,7 @@
 		
 		$.ajax({
 			dataType: "json",
-			url: "texto.json",
+			url: "texto2.json",
 			mimeType: "application/json",
 			success: function(result){
 				console.log(result);
@@ -183,25 +183,28 @@
         //Objeto mundo, contiene el mapa y los objetos que lo contiene.
         function mundo() {
             var board = [];
+			
 			var jugador;
             // var hcells = x; //número de células horizontales
             // var y = y; //número de células verticales
 
             this.initMundo = function () {
 				
-				
-				
 				//Aqui hay que leer la estructura del mapa y cargarlo
                 board = [];
+				
                 for (i = 0; i < x; i++) {
                     board[i] = [];
+					
                     for (j = 0; j < y; j++) {
                         board[i][j] = new casilla(m_Fondo, true); //CREA UNA casilla VACIA
 						
 						//Prueba para poner un jugador
 						if (i === 1 && j ===1){
-							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize), 8);
+							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize), 4);
 						}
+						
+						//Falta leer el json y cargar el mapa a partir de aqui
 						
 						//Bordes
 						if (i === 0 || i === x-1){
@@ -270,6 +273,17 @@
 						}
                     }
                 }
+				
+				var boardtemp = [];
+				//Ampliamos la board al tamaño del lienzo, de [18][18] pasa a [18*cellSize][18*cellSize] para mayor precision
+				for (var i =0;i<x*cellSize;i++){
+					boardtemp[i] = [];
+					for (var j =0;j<y*cellSize;j++){
+						//Se copia la imagen de la x,y hasta la x+cellSize-1,y+cellSize-1 para que contengan la misma informacion
+						boardtemp[i][j] = board[Math.floor(i/cellSize)][Math.floor(j/cellSize)];
+					}
+				}
+				board = boardtemp;
             }
 
             this.pintado = function () {
@@ -307,7 +321,7 @@
 								break;
 						}*/
 						//context.globalAlpha = 1.0;
-						context.drawImage(board[i][j].image,i * cellSize, j * cellSize);
+						context.drawImage(board[i*cellSize][j*cellSize].image,i * cellSize, j * cellSize);
                     }
                 }
 				
@@ -318,42 +332,58 @@
 				}
             }
             
-            //PARA TESTEO: Pintar en la casilla pinchada
+            //Pintar en la casilla pinchada
             this.onCanvasClick = function (evt) {
                 var x = evt.clientX - canvas.offsetLeft;
                 var y = evt.clientY - canvas.offsetTop;
-                var boardX = parseInt(x / cellSize);
-                var boardY = parseInt(y / cellSize);
-                
+				
+				//Se divide entre cellSize para coger el menor valor para el board de esa casilla
+				//Luego se ira recorriendo en ponerImagenNueva hasta llegar al valor menor+cellSize-1
+                var boardX = Math.floor(parseInt(x / cellSize));
+                var boardY = Math.floor(parseInt(y / cellSize));
+                //console.log(boardX+" "+boardY);
+				
+				var imagen = null;
+				var mov = false;
+				
 				//estado = tecla del 1 al 8 que selecciona el tile a pintar
 				switch (estado){
 					case 1:
-						board[boardX][boardY].setImagen(m_vert, false);
+						imagen = m_vert;
 						break;
 					case 2:
-						board[boardX][boardY].setImagen(m_hor, false);
+						imagen = m_hor;
 						break;
 					case 3:
-						board[boardX][boardY].setImagen(m_ArI, false);
+						imagen = m_ArI;
 						break;
 					case 4:
-						board[boardX][boardY].setImagen(m_ArD, false);
+						imagen = m_ArD;
 						break;
 					case 5:
-						board[boardX][boardY].setImagen(m_AbI, false);
+						imagen = m_AbI;
 						break;
 					case 6:
-						board[boardX][boardY].setImagen(m_AbD, false);
+						imagen = m_AbD;
 						break;
 					case 7:
-						board[boardX][boardY].setImagen(m_Fondo, true);
-						break;
-					case 8:
-						board[boardX][boardY].setImagen(m_Origen, false);
+						imagen = m_Fondo;
+						mov = true;
 						break;
 				}
+				if (imagen !== null)
+					m.ponerImagenNueva(boardX*cellSize,boardY*cellSize,imagen, mov);
 				
                 m.pintado();
+            }
+			
+			this.ponerImagenNueva = function (x, y, ima, m) {
+				//console.log(board);
+				for (i = 0;i<cellSize;i++){
+					for (j = 0;j<cellSize;j++){
+						board[x+i][y+j].setImagen(ima, m);
+					}
+				}
             }
             
             //Devuelve si tiene un bloque o lo que sea.
@@ -367,7 +397,7 @@
 				var jxOriginal = jugador.posx;
 				var jyOriginal = jugador.posy;
 				
-				switch (num){
+				switch (jugador.dir){
 					case 0:
 						jugador.posy = jugador.posy - jugador.velocidad;
 						if (jugador.posy < 0)
@@ -390,15 +420,17 @@
 						break;
 				}
 				
-				if (!board[Math.floor(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true
-				|| !board[Math.ceil(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
-				|| !board[Math.floor(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
-				|| !board[Math.ceil(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true){
+				if (board[jugador.posx][jugador.posy].movible === false
+				|| board[jugador.posx+cellSize-1][jugador.posy+cellSize-1].movible === false
+				|| board[jugador.posx][jugador.posy+cellSize-1].movible === false
+				|| board[jugador.posx+cellSize-1][jugador.posy].movible === false){
 					jugador.posx = jxOriginal;
 					jugador.posy = jyOriginal;
 				}
 			}
         }
+		
+		
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
