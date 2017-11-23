@@ -64,8 +64,7 @@
 		var m_Aparicion = new Image();
 		var m_Bala = new Image();
 		
-		
-		var estado = 0;//Para saber que "tile" se esta usando
+		//var estado = 0;//Para saber que "tile" se esta usando
 		
 		var personaje_1 = new Image();
 		
@@ -116,7 +115,7 @@
 		
 		$.ajax({
 			dataType: "json",
-			url: "Mapa.json",
+			url: "json/mapa.json",
 			mimeType: "application/json",
 			success: function(result){
 				for (i = 0;i<18;i++){
@@ -189,7 +188,7 @@
 			//console.log(charStr);
 			
 			switch (charStr){
-				case "1":
+				/*case "1":
 					estado = 1;
 					break;
 				case "2":
@@ -212,7 +211,7 @@
 					break;
 				case "8":
 					estado = 8;
-					break;
+					break;*/
 					
 				case "w":
 				case "W":
