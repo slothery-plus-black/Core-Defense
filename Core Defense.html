@@ -95,9 +95,9 @@
         function initGame() {
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
-            canvas.addEventListener("click", m.onCanvasClick, false);
+            //canvas.addEventListener("click", m.onCanvasClick, false);
             loadImages();
-            m.initMundo();
+            m.initMundo(context);
             m.pintado();
         }
 		
@@ -116,17 +116,21 @@
 		
 		$.ajax({
 			dataType: "json",
-			url: "texto2.json",
+			url: "Mapa.json",
 			mimeType: "application/json",
 			success: function(result){
-				//console.log(result);
+				for (i = 0;i<18;i++){
+					console.log("Resultados de la fila "+result.filas[i].fila);
+					for (j=0;j<18;j++){
+						console.log("Columna "+result.filas[i].datos[j].columna+" y tile "+result.filas[i].datos[j].tile);
+					}
+				}
 			}
 		});
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
             m.pintado();
-			
         }
         
         //PARA TESTEO: Si pulsas play empieza el bucle

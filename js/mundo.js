@@ -1,15 +1,17 @@
 //Objeto mundo, contiene el mapa y los objetos que lo contiene.
 function mundo() {
 	var board = [];
-	
 	var jugador;
+
+	this.context;
 	// var hcells = x; //número de células horizontales
 	// var y = y; //número de células verticales
 
-	this.initMundo = function () {
-		
+	this.initMundo = function (context) {
 		//Aqui hay que leer la estructura del mapa y cargarlo
 		board = [];
+
+		this.context = context;
 		
 		for (i = 0; i < x; i++) {
 			board[i] = [];
@@ -140,14 +142,17 @@ function mundo() {
 						break;
 				}*/
 				//context.globalAlpha = 1.0;
-				context.drawImage(board[i*cellSize][j*cellSize].image,i * cellSize, j * cellSize);
+
+				if (this.context != null)
+				this.context.drawImage(board[i*cellSize][j*cellSize].image,i * cellSize, j * cellSize);
 			}
 		}
 		
 		//Para imprimir si tiene algun personaje
 		if (jugador !== null){
 			//context.globalAlpha = 0.7;
-			context.drawImage(jugador.sprite,jugador.posx, jugador.posy);
+			if (this.context != null)
+			this.context.drawImage(jugador.sprite,jugador.posx, jugador.posy);
 		}
 		
 		//Balas
@@ -155,7 +160,7 @@ function mundo() {
 	}
 	
 	//Pintar en la casilla pinchada
-	this.onCanvasClick = function (evt) {
+	/*this.onCanvasClick = function (evt) {
 		var x = evt.clientX - canvas.offsetLeft;
 		var y = evt.clientY - canvas.offsetTop;
 		
@@ -197,16 +202,16 @@ function mundo() {
 			m.ponerImagenNueva(boardX*cellSize, boardY*cellSize, imagen, mov);
 		
 		m.pintado();
-	}
+	}*/
 	
-	this.ponerImagenNueva = function (x, y, ima, m) {
+	/*this.ponerImagenNueva = function (x, y, ima, m) {
 		//console.log(board);
 		for (i = 0;i<cellSize;i++){
 			for (j = 0;j<cellSize;j++){
 				board[x+i][y+j].setImagen(ima, m);
 			}
 		}
-	}
+	}*/
 	
 	//Devuelve si tiene un bloque o lo que sea.
 	this.hasBlock = function(x,y) {
