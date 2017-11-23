@@ -1,29 +1,31 @@
 function shootingController(){
+	this.balas = [];
+
 	//Disparo, crea una bala en la direccion indicada, desde la posicion dada
 	this.shoot = function (x,y,dir,image){
-		balas[balas.length] = new bala(x,y,dir,image);
+		this.balas[this.balas.length] = new bala(x,y,dir,image);
 	}
 	//Recorre el array de balas y las mueve todas
 	this.renderBalas = function(){
-		if (balas != null){
-			for(var i=0; i<balas.length;i++){   //Recorre el array de balas
-				switch(balas[i].dir){           //Mueve la bala
+		if (this.balas != null){
+			for(var i=0; i<this.balas.length;i++){   //Recorre el array de balas
+				switch(this.balas[i].dir){           //Mueve la bala
 					case 0:
-						balas[i].y -= balas[i].vel;
+						this.balas[i].y -= this.balas[i].vel;
 						break;
 					case 1:
-						balas[i].y += balas[i].vel;
+						this.balas[i].y += this.balas[i].vel;
 						break;
 					case 2:
-						balas[i].x -= balas[i].vel;
+						this.balas[i].x -= this.balas[i].vel;
 						break;
 					case 3:
-						balas[i].x += balas[i].vel;
+						this.balas[i].x += this.balas[i].vel;
 						break;
 				}
 				
 				//console.log(balas[i].image);
-				context.drawImage(balas[i].image, balas[i].x, balas[i].y);
+				context.drawImage(this.balas[i].image, this.balas[i].x, this.balas[i].y);
 				
 				//colision(balas[i]); //Comprueba colision de esa bala
 			}
