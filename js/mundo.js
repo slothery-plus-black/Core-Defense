@@ -111,23 +111,23 @@ function mundo() {
 		if (this.cargado){
 			for (i = 0; i < this.x; i++) {
 				for (j = 0; j < this.y; j++) {
-					try {
-						this.context.drawImage(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
-					} catch(err) {
-						//Error en el pintado porque aun no se ha cargado la imagen en firefox, en chrome no hay problema
-					}
+					this.pintar(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
 				}
 			}
 
 			//Para imprimir el personaje
-			try {
-				this.context.drawImage(this.jugador.sprite, this.jugador.posx, this.jugador.posy);
-			} catch(err) {
-				//Error en el pintado porque aun no se ha cargado la imagen en firefox, en chrome no hay problema
-			}
-			
+			this.pintar(this.jugador.sprite, this.jugador.posx, this.jugador.posy);
+
 			//Impresion de las balas
 			this.sc.renderBalas();
+		}
+	}
+
+	this.pintar = function(img, x, y){
+		try{
+			this.context.drawImage(img, x, y);
+		} catch(err) {
+			//Error en el pintado porque aun no se ha cargado la imagen en firefox, en chrome no hay problema
 		}
 	}
 	
