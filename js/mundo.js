@@ -111,7 +111,6 @@ function mundo() {
 		if (this.cargado){
 			for (i = 0; i < this.x; i++) {
 				for (j = 0; j < this.y; j++) {
-					//context.globalAlpha = 1.0;
 					try {
 						this.context.drawImage(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
 					} catch(err) {
@@ -184,11 +183,6 @@ function mundo() {
 				board[x+i][y+j].setImagen(ima, m);
 			}
 		}
-	}*/
-	
-	//Devuelve si tiene un bloque o lo que sea.
-	/*this.hasBlock = function(x,y) {
-		return this.board[x][y];
 	}*/
 	
 	//0 arriba, 1 abajo, 2 izquierda y 3 derecha
