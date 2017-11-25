@@ -151,7 +151,7 @@
         
         //PARA TESTEO: Si pulsas play empieza el bucle
         function startNS() {
-			try {
+			//try {
 			//computeNS();
 				if (!timerId) {
 					timerId = setInterval("computeNS()", 30);
@@ -163,13 +163,13 @@
 					//var status = document.getElementById("status");
 					//status.innerHTML = "<b>Play</b>";
 				}
-			} catch (e) {
+			/*} catch (e) {
 					if (e.name == "NS_ERROR_NOT_AVAILABLE") {
 						setTimeout(computeNS, 100);
 				} else {
 					throw e;
 				}
-			}
+			}*/
         }
 		
         //Para el tiempo de ejecucion, se llama desde stop
@@ -263,11 +263,11 @@
 			}
 		};
 		
-		startNS();
+		//startNS();
 
-		/*setTimeout(function(){
+		setTimeout(function(){
     		startNS();
-		}, 1000);*/
+		}, 1000);
     </script>
 </head>
 
