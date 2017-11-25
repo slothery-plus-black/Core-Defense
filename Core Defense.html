@@ -127,18 +127,14 @@
 			html: items.join( "" )
 		  }).appendTo( "body" );
 		});*/
-		
-		
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
-			//if (m.isCargado());
-			
-				//m.pintado();
+			m.pintado();
 				
 			//Este try para firefox, porque no espera a cargar las imagenes y puede saltar error
 			//En chrome no hay problema
-			try {
+			/*try {
 				m.pintado();
 			} catch (e) {
 					if (e.name == "NS_ERROR_NOT_AVAILABLE") {
@@ -146,7 +142,7 @@
 				} else {
 					throw e;
 				}
-			}
+			}*/
         }
         
         //PARA TESTEO: Si pulsas play empieza el bucle
@@ -154,7 +150,7 @@
 			//try {
 			//computeNS();
 				if (!timerId) {
-					timerId = setInterval("computeNS()", 30);
+					timerId = setInterval("computeNS()", 50);
 					//1000 1 frame por segundo
 					//100 10 frames por segundo
 					//50 20 frames por segundo

@@ -7,8 +7,4 @@ function Jugador(spr,x,y,vel) {
 	this.velocidad = vel;
 	this.dir = 0;
 	this.cadencia = 1;
-	//Disparo
-	this.shoot = function(){
-		sc.shoot(posx,posy,dir);
-	}
 }
