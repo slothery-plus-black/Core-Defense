@@ -3,7 +3,7 @@
 
 <head>
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-	
+
     <title>Core Defense</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
@@ -34,69 +34,22 @@
 	<script src="js/shootingController.js"></script>
 	<script src="js/bala.js"></script>
 
-    <script type="text/javascript">
-		$( document ).ready(function() {
-			//initGame();
-		});
-	
+	<script type="text/javascript">
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
-        
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
         
-        var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
-        var rendija = true; //True si hay rendija activa
-        var m = new mundo(); //Objeto mundo
+        //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
+        //var rendija = true; //True si hay rendija activa
+		var m = new mundo(); //Objeto mundo
+		var keysDown = {};//Para saber que teclas estan pulsadas
         
-		
-        /*var m_vert = new Image();
-		var m_hor = new Image();
-		var m_ArI = new Image();
-		var m_ArD = new Image();
-		var m_AbI = new Image();
-		var m_AbD = new Image();
-		var m_Fondo = new Image();
-		var m_Bordes = new Image();
-		var m_Core0 = new Image();
-		var m_Core1 = new Image();
-		var m_Core2 = new Image();
-		var m_Core3 = new Image();
-		var m_Aparicion = new Image();
-		var m_Bala = new Image();
-		
-		//var estado = 0;//Para saber que "tile" se esta usando
-		
-		var personaje_1 = new Image();*/
-		
-        //Carga de Sprites
-        /*function loadImages(){
-			//Tiles
-            m_vert.src = 'src/2.png';
-			m_hor.src = 'src/3.png';
-			m_ArI.src = 'src/4.png';
-			m_ArD.src = 'src/5.png';
-			m_AbI.src = 'src/7.png';
-			m_AbD.src = 'src/6.png';
-			m_Fondo.src = 'src/0.png';
-			m_Bordes.src = 'src/1.png';
-			m_Core0.src = 'src/8.png';
-			m_Core1.src = 'src/9.png';
-			m_Core2.src = 'src/A.png';
-			m_Core3.src = 'src/B.png';
-			m_Aparicion.src = 'src/C.png';
-			m_Bala.src = 'src/personaje_1.png';
-			
-			//Personajes
-			personaje_1.src = 'src/sprite1.png';
-        }*/
-
         //INICIALIZA TODO
         function initGame() {
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
             //canvas.addEventListener("click", m.onCanvasClick, false);
-			//loadImages();
 			
 			$.ajax({
 				dataType: "json",
@@ -104,34 +57,10 @@
 				mimeType: "application/json",
 				success: function(result){
 					m.initMundo(context, result);
-					/*for (i = 0;i<18;i++){
-						console.log("Resultados de la fila "+result.filas[i].fila);
-						for (j=0;j<18;j++){
-							console.log("Columna "+result.filas[i].datos[j].columna+" y tile "+result.filas[i].datos[j].tile);
-						}
-					}*/
 				}
 			});
-            
-			//m.pintado();
-			
         }
 		
-		/*$.getJSON( "ajax/test.json", function( data ) {
-		  var items = [];
-		  $.each( data, function( key, val ) {
-			//items.push( "<li id='" + key + "'>" + val + "</li>" );
-			console.log(key+" "+val);
-		  });
-		 
-		  /*$( "<ul/>", {
-			"class": "my-new-list",
-			html: items.join( "" )
-		  }).appendTo( "body" );
-		});*/
-		
-		var keysDown = {};      // Tracking object
-
 		$(document).keydown(function(e) {
 			keysDown[e.keyCode] = true;
 		});
@@ -145,36 +74,24 @@
 			m.pintado();
 		}
 
-        //PARA TESTEO: Si pulsas play empieza el bucle
         function startNS() {
-			//try {
-			//computeNS();
-				if (!timerId) {
-					timerId = setInterval("computeNS()", 50);
-					//1000 1 frame por segundoS
-					//100 10 frames por segundo
-					//50 20 frames por segundo
-					//25 40 frames por segundo
-					
-					//var status = document.getElementById("status");
-					//status.innerHTML = "<b>Play</b>";
-				}
-			/*} catch (e) {
-					if (e.name == "NS_ERROR_NOT_AVAILABLE") {
-						setTimeout(computeNS, 100);
-				} else {
-					throw e;
-				}
-			}*/
+			if (!timerId) {
+				timerId = setInterval("computeNS()", 50);
+				//1000 1 frame por segundoS
+				//100 10 frames por segundo
+				//50 20 frames por segundo
+				//25 40 frames por segundo
+				
+				//var status = document.getElementById("status");
+				//status.innerHTML = "<b>Play</b>";
+			}
         }
 		
-        //Para el tiempo de ejecucion, se llama desde stop
-        /*function stopNS() {
-            clearInterval(timerId);
-            timerId = undefined;
-            var status = document.getElementById("status");
-            status.innerHTML = "<b>Pausa</b>";
-        }*/
+        //Para el tiempo de ejecucion
+        function stopNS() {
+			window.clearInterval(timerId);
+			timerId = undefined;
+        }
 		
         //PARA TESTEO: Si pulsas stop detienes el juego y limpias todo
         /*function clearBoard() {
@@ -190,6 +107,13 @@
 		/*setTimeout(function(){
     		startNS();
 		}, 1000);*/
+
+		/*setTimeout(function(){
+			stopNS();
+			setTimeout(function(){
+				startNS();
+			}, 2000);
+		}, 2000);*/
     </script>
 </head>
 

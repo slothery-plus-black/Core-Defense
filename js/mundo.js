@@ -58,8 +58,8 @@ function mundo() {
 			this.board[i] = [];
 			for (j=0;j<this.y;j++){
 				var imagen = new Image();
-				imagen.src = "src/"+mapa.filas[i].datos[j].tile+".png";
-				if (mapa.filas[i].datos[j].tile === "0"){
+				imagen.src = "src/"+mapa.filas[j].datos[i].tile+".png";
+				if (mapa.filas[j].datos[i].tile === "0"){
 					this.board[i][j] = new casilla(imagen, true);
 				}else{
 					this.board[i][j] = new casilla(imagen, false);
@@ -126,7 +126,7 @@ function mundo() {
 			} catch(err) {
 				//Error en el pintado porque aun no se ha cargado la imagen en firefox, en chrome no hay problema
 			}
-					
+			
 			//Impresion de las balas
 			this.sc.renderBalas();
 		}
