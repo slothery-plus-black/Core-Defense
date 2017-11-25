@@ -38,16 +38,15 @@
 		});
 	
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
-        var cellSize = 40; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
+        
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
-        var x = (720) / cellSize, //Número de CASILLAS horizontales
-            y = x; //Verticales
+        
         var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
         var rendija = true; //True si hay rendija activa
         var m = new mundo(); //Objeto mundo
-        var sc = new shootingController();
+        
 		
         var m_vert = new Image();
 		var m_hor = new Image();
@@ -95,9 +94,25 @@
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
             //canvas.addEventListener("click", m.onCanvasClick, false);
-            loadImages();
-            m.initMundo(context);
-            m.pintado();
+			loadImages();
+			
+			$.ajax({
+				dataType: "json",
+				url: "json/mapa.json",
+				mimeType: "application/json",
+				success: function(result){
+					m.initMundo(context, result);
+					/*for (i = 0;i<18;i++){
+						console.log("Resultados de la fila "+result.filas[i].fila);
+						for (j=0;j<18;j++){
+							console.log("Columna "+result.filas[i].datos[j].columna+" y tile "+result.filas[i].datos[j].tile);
+						}
+					}*/
+				}
+			});
+            
+			//m.pintado();
+			
         }
 		
 		/*$.getJSON( "ajax/test.json", function( data ) {
@@ -113,27 +128,30 @@
 		  }).appendTo( "body" );
 		});*/
 		
-		$.ajax({
-			dataType: "json",
-			url: "json/mapa.json",
-			mimeType: "application/json",
-			success: function(result){
-				for (i = 0;i<18;i++){
-					console.log("Resultados de la fila "+result.filas[i].fila);
-					for (j=0;j<18;j++){
-						console.log("Columna "+result.filas[i].datos[j].columna+" y tile "+result.filas[i].datos[j].tile);
-					}
-				}
-			}
-		});
+		
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
-            m.pintado();
+			//if (m.isCargado());
+			
+				m.pintado();
+				
+			/*try {
+				m.pintado();
+			} catch (e) {
+					if (e.name == "NS_ERROR_NOT_AVAILABLE") {
+					// Wait a bit before trying again; you may wish to change the
+					// length of this delay.
+						setTimeout(computeNS, 100);
+				} else {
+					throw e;
+				}
+			}*/
         }
         
         //PARA TESTEO: Si pulsas play empieza el bucle
         function startNS() {
+			//computeNS();
             if (!timerId) {
                 timerId = setInterval("computeNS()", 30);
 				//1000 1 frame por segundo
@@ -238,6 +256,10 @@
 		};
 		
 		startNS();
+
+		/*setTimeout(function(){
+    		startNS();
+		}, 1000);*/
     </script>
 </head>
 

@@ -1,19 +1,51 @@
 //Objeto mundo, contiene el mapa y los objetos que lo contiene.
 function mundo() {
-	var board = [];
-	var jugador;
+	this.board = [];
+	this.jugador;
+	this.cellSize = 40; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
+	this.x = (720) / this.cellSize, //Número de CASILLAS horizontales
+	this.y = this.x; //Verticales
 
 	this.context;
 	// var hcells = x; //número de células horizontales
 	// var y = y; //número de células verticales
+	this.sc = new shootingController();
+	this.cargado = false;
 
-	this.initMundo = function (context) {
+	this.m_fondo = new Image();
+
+	this.initMundo = function (context, mapa) {
 		//Aqui hay que leer la estructura del mapa y cargarlo
-		board = [];
+		this.board = [];
+
+		this.m_fondo.src = 'src/personaje_1.png';
 
 		this.context = context;
+
+		var imagenJ = new Image();
+		var tileJ = "src/sprite1.png";
+		imagenJ.src = tileJ;
 		
-		for (i = 0; i < x; i++) {
+		this.jugador = new Jugador(imagenJ, (1 * this.cellSize), (1 * this.cellSize), 4);
+
+		for (i = 0;i<this.x;i++){
+			//console.log("Resultados de la fila "+mapa.filas[i].fila);
+			this.board[i] = [];
+			for (j=0;j<this.y;j++){
+				var imagen = new Image();
+				var tile = "src/"+mapa.filas[i].datos[j].tile+".png";
+				imagen.src = tile;
+				if (mapa.filas[i].datos[j].tile === "0"){
+					this.board[i][j] = new casilla(imagen, true);
+				}else{
+					this.board[i][j] = new casilla(imagen, false);
+				}
+				
+				//console.log("Columna "+mapa.filas[i].datos[j].columna+" y tile "+mapa.filas[i].datos[j].tile);
+			}
+		}
+
+		/*for (i = 0; i < x; i++) {
 			board[i] = [];
 			
 			for (j = 0; j < y; j++) {
@@ -93,70 +125,82 @@ function mundo() {
 					board[i][j] = new casilla(m_Core3, false);
 				}
 			}
-		}
+		}*/
 		
 		var boardtemp = [];
 		//Ampliamos la board al tamaño del lienzo, de [18][18] pasa a [18*cellSize][18*cellSize] para mayor precision
-		for (var i =0;i<x*cellSize;i++){
+		for (i = 0;i<this.x*this.cellSize;i++){
 			boardtemp[i] = [];
-			for (var j =0;j<y*cellSize;j++){
+			for (j = 0;j<this.y*this.cellSize;j++){
 				//Se copia la imagen de la x,y hasta la x+cellSize-1,y+cellSize-1 para que contengan la misma informacion
-				boardtemp[i][j] = board[Math.floor(i/cellSize)][Math.floor(j/cellSize)];
+				boardtemp[i][j] = this.board[Math.floor(i/this.cellSize)][Math.floor(j/this.cellSize)];
 			}
 		}
-		board = boardtemp;
+		this.board = boardtemp;
+		this.cargado = true;
+	}
+
+	this.isCargado = function (){
+		return this.cargado;
 	}
 
 	this.pintado = function () {
-		for (i = 0; i < x; i++) {
-			for (j = 0; j < y; j++) {
-				//Caso 0 el que no tiene nada, los demás los diferentes tiles
-				/*switch (board[i][j].image){
-					case 0:
-						context.fillStyle = "rgb(100,100,100)";
-						context.fillRect(i * cellSize + extra, j * cellSize + extra, cellSize - extra, cellSize - extra);
-						break;
-					case 1:
-						context.drawImage(m_vert,i * cellSize, j * cellSize);
-						break;
-					case 2:
-						context.drawImage(m_hor,i * cellSize, j * cellSize);
-						break;
-					case 3:
-						context.drawImage(m_ArI,i * cellSize, j * cellSize);
-						break;
-					case 4:
-						context.drawImage(m_ArD,i * cellSize, j * cellSize);
-						break;
-					case 5:
-						context.drawImage(m_AbI,i * cellSize, j * cellSize);
-						break;
-					case 6:
-						context.drawImage(m_AbD,i * cellSize, j * cellSize);
-						break;
-					case 7:
-						context.drawImage(m_Fondo,i * cellSize, j * cellSize);
-						break;
-					case 8:
-						context.drawImage(m_Origen,i * cellSize, j * cellSize);
-						break;
-				}*/
-				//context.globalAlpha = 1.0;
-
-				if (this.context != null)
-				this.context.drawImage(board[i*cellSize][j*cellSize].image,i * cellSize, j * cellSize);
+		if (this.cargado){
+			for (i = 0; i < this.x; i++) {
+				for (j = 0; j < this.y; j++) {
+					//Caso 0 el que no tiene nada, los demás los diferentes tiles
+					/*switch (board[i][j].image){
+						case 0:
+							context.fillStyle = "rgb(100,100,100)";
+							context.fillRect(i * cellSize + extra, j * cellSize + extra, cellSize - extra, cellSize - extra);
+							break;
+						case 1:
+							context.drawImage(m_vert,i * cellSize, j * cellSize);
+							break;
+						case 2:
+							context.drawImage(m_hor,i * cellSize, j * cellSize);
+							break;
+						case 3:
+							context.drawImage(m_ArI,i * cellSize, j * cellSize);
+							break;
+						case 4:
+							context.drawImage(m_ArD,i * cellSize, j * cellSize);
+							break;
+						case 5:
+							context.drawImage(m_AbI,i * cellSize, j * cellSize);
+							break;
+						case 6:
+							context.drawImage(m_AbD,i * cellSize, j * cellSize);
+							break;
+						case 7:
+							context.drawImage(m_Fondo,i * cellSize, j * cellSize);
+							break;
+						case 8:
+							context.drawImage(m_Origen,i * cellSize, j * cellSize);
+							break;
+					}*/
+					//context.globalAlpha = 1.0;
+					//console.log("i "+i+" j "+j);
+					//console.log(board[i][j]);
+					//if (this.context != null)
+						this.context.drawImage(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
+						//console.log("i "+i+" j "+j);
+						//console.log("i "+i*this.cellSize+" j "+j*this.cellSize);
+				}
 			}
+
+			//console.log(this.board);
+			
+			//Para imprimir si tiene algun personaje
+			//if (this.jugador !== null){
+				//context.globalAlpha = 0.7;
+				//if (this.context != null)
+					this.context.drawImage(this.jugador.sprite, this.jugador.posx, this.jugador.posy);
+			//}
+			
+			//Balas
+			this.sc.renderBalas();
 		}
-		
-		//Para imprimir si tiene algun personaje
-		if (jugador !== null){
-			//context.globalAlpha = 0.7;
-			if (this.context != null)
-			this.context.drawImage(jugador.sprite,jugador.posx, jugador.posy);
-		}
-		
-		//Balas
-		sc.renderBalas();
 	}
 	
 	//Pintar en la casilla pinchada
@@ -215,48 +259,48 @@ function mundo() {
 	
 	//Devuelve si tiene un bloque o lo que sea.
 	this.hasBlock = function(x,y) {
-		return board[x][y];
+		return this.board[x][y];
 	}
 	
 	//0 arriba, 1 abajo, 2 izquierda y 3 derecha
 	this.moverJugador = function (num) {
-		jugador.dir=num;           //Actualiza la direccion en la que mira
-		var jxOriginal = jugador.posx;
-		var jyOriginal = jugador.posy;
+		this.jugador.dir=num;           //Actualiza la direccion en la que mira
+		var jxOriginal = this.jugador.posx;
+		var jyOriginal = this.jugador.posy;
 		
-		switch (jugador.dir){
+		switch (this.jugador.dir){
 			case 0:
-				jugador.posy = jugador.posy - jugador.velocidad;
-				if (jugador.posy < 0)
-					jugador.posy = 0;
+				this.jugador.posy = this.jugador.posy - this.jugador.velocidad;
+				if (this.jugador.posy < 0)
+				this.jugador.posy = 0;
 				break;
 			case 1:
-				jugador.posy = jugador.posy + jugador.velocidad;
-				if (jugador.posy >= (y*cellSize)-jugador.velocidad)
-					jugador.posy = (y*cellSize)-jugador.velocidad;
+				this.jugador.posy = this.jugador.posy + this.jugador.velocidad;
+				if (this.jugador.posy >= (this.y*this.cellSize)-this.jugador.velocidad)
+					this.jugador.posy = (this.y*this.cellSize)-this.jugador.velocidad;
 				break;
 			case 2:
-				jugador.posx = jugador.posx - jugador.velocidad;
-				if (jugador.posx < 0)
-					jugador.posx = 0;
+				this.jugador.posx = this.jugador.posx - this.jugador.velocidad;
+				if (this.jugador.posx < 0)
+					this.jugador.posx = 0;
 				break;
 			case 3:
-				jugador.posx = jugador.posx + jugador.velocidad;
-				if (jugador.posx >= (x*cellSize)-jugador.velocidad)
-					jugador.posx = (x*cellSize)-jugador.velocidad;
+				this.jugador.posx = this.jugador.posx + this.jugador.velocidad;
+				if (this.jugador.posx >= (this.x*this.cellSize)-this.jugador.velocidad)
+					this.jugador.posx = (this.x*this.cellSize)-this.jugador.velocidad;
 				break;
 		}
 		
-		if (board[jugador.posx][jugador.posy].movible === false
-		|| board[jugador.posx+cellSize-1][jugador.posy+cellSize-1].movible === false
-		|| board[jugador.posx][jugador.posy+cellSize-1].movible === false
-		|| board[jugador.posx+cellSize-1][jugador.posy].movible === false){
-			jugador.posx = jxOriginal;
-			jugador.posy = jyOriginal;
+		if (this.board[this.jugador.posx][this.jugador.posy].movible === false
+		|| this.board[this.jugador.posx+this.cellSize-1][this.jugador.posy+this.cellSize-1].movible === false
+		|| this.board[this.jugador.posx][this.jugador.posy+this.cellSize-1].movible === false
+		|| this.board[this.jugador.posx+this.cellSize-1][this.jugador.posy].movible === false){
+			this.jugador.posx = jxOriginal;
+			this.jugador.posy = jyOriginal;
 		}
 	}
 	
 	this.disparar = function () {
-		sc.shoot(jugador.posx,jugador.posy,jugador.dir, m_Bala);
+		this.sc.shoot(this.jugador.posx,this.jugador.posy,this.jugador.dir, m_Bala);
 	}
 }
