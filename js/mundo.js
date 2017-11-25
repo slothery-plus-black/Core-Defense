@@ -183,7 +183,10 @@ function mundo() {
 					//console.log("i "+i+" j "+j);
 					//console.log(board[i][j]);
 					//if (this.context != null)
+					try {
 						this.context.drawImage(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
+						} catch(err) {}
+						
 						//console.log("i "+i+" j "+j);
 						//console.log("i "+i*this.cellSize+" j "+j*this.cellSize);
 				}
@@ -195,7 +198,10 @@ function mundo() {
 			//if (this.jugador !== null){
 				//context.globalAlpha = 0.7;
 				//if (this.context != null)
+				try {
 					this.context.drawImage(this.jugador.sprite, this.jugador.posx, this.jugador.posy);
+					} catch(err) {}
+					
 			//}
 			
 			//Balas

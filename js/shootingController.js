@@ -1,4 +1,5 @@
-function shootingController(){
+function shootingController(context){
+	this.context = context;
 	this.balas = [];
 
 	//Disparo, crea una bala en la direccion indicada, desde la posicion dada
@@ -25,7 +26,10 @@ function shootingController(){
 				}
 				
 				//console.log(balas[i].image);
-				context.drawImage(this.balas[i].image, this.balas[i].x, this.balas[i].y);
+				try {
+					this.context.drawImage(this.balas[i].image, this.balas[i].x, this.balas[i].y);
+					} catch(err) {}
+				
 				
 				//colision(balas[i]); //Comprueba colision de esa bala
 			}
