@@ -7,8 +7,7 @@ function mundo() {
 	this.y = this.x; //Verticales
 
 	this.context;
-	// var hcells = x; //número de células horizontales
-	// var y = y; //número de células verticales
+
 	this.sc = new shootingController();
 	this.cargado = false;
 
@@ -34,37 +33,24 @@ function mundo() {
 
 		this.sc.init(this.context);
 		
-		var tile = "src/disparo_1w.png";
-		this.imagenBala_1w.src = tile;
-		var tile = "src/disparo_2w.png";
-		this.imagenBala_2w.src = tile;
-		var tile = "src/disparo_3w.png";
-		this.imagenBala_3w.src = tile;
+		this.imagenBala_1w.src = "src/disparo_1w.png";
+		this.imagenBala_2w.src = "src/disparo_2w.png";
+		this.imagenBala_3w.src = "src/disparo_3w.png";
 
-		var tile = "src/disparo_1s.png";
-		this.imagenBala_1s.src = tile;
-		var tile = "src/disparo_2s.png";
-		this.imagenBala_2s.src = tile;
-		var tile = "src/disparo_3s.png";
-		this.imagenBala_3s.src = tile;
+		this.imagenBala_1s.src = "src/disparo_1s.png";
+		this.imagenBala_2s.src = "src/disparo_2s.png";
+		this.imagenBala_3s.src = "src/disparo_3s.png";
 
-		var tile = "src/disparo_1a.png";
-		this.imagenBala_1a.src = tile;
-		var tile = "src/disparo_2a.png";
-		this.imagenBala_2a.src = tile;
-		var tile = "src/disparo_3a.png";
-		this.imagenBala_3a.src = tile;
+		this.imagenBala_1a.src = "src/disparo_1a.png";
+		this.imagenBala_2a.src = "src/disparo_2a.png";
+		this.imagenBala_3a.src = "src/disparo_3a.png";
 
-		var tile = "src/disparo_1d.png";
-		this.imagenBala_1d.src = tile;
-		var tile = "src/disparo_2d.png";
-		this.imagenBala_2d.src = tile;
-		var tile = "src/disparo_3d.png";
-		this.imagenBala_3d.src = tile;
+		this.imagenBala_1d.src = "src/disparo_1d.png";
+		this.imagenBala_2d.src = "src/disparo_2d.png";
+		this.imagenBala_3d.src = "src/disparo_3d.png";
 
 		var imagenJ = new Image();
-		var tile = "src/sprite1.png";
-		imagenJ.src = tile;
+		imagenJ.src = "src/sprite1.png";
 		
 		this.jugador = new Jugador(imagenJ, (1 * this.cellSize), (1 * this.cellSize), 4);
 
@@ -72,8 +58,7 @@ function mundo() {
 			this.board[i] = [];
 			for (j=0;j<this.y;j++){
 				var imagen = new Image();
-				var tile = "src/"+mapa.filas[i].datos[j].tile+".png";
-				imagen.src = tile;
+				imagen.src = "src/"+mapa.filas[i].datos[j].tile+".png";
 				if (mapa.filas[i].datos[j].tile === "0"){
 					this.board[i][j] = new casilla(imagen, true);
 				}else{
@@ -93,6 +78,33 @@ function mundo() {
 		}
 		this.board = boardtemp;
 		this.cargado = true;
+	}
+
+	this.mover = function (keysDown) {
+		//w
+		if (keysDown[87]){
+			this.moverJugador(0);
+		}
+		//s
+		if (keysDown[83]){
+			this.moverJugador(1);
+		}
+		//a
+		if (keysDown[65]){
+			this.moverJugador(2);
+		}
+		//d
+		if (keysDown[68]){
+			this.moverJugador(3);
+		}
+		//f
+		if (keysDown[70]){
+			this.disparar();
+		}
+		//espacio
+		if (keysDown[32]){
+			this.disparar();
+		}
 	}
 
 	this.pintado = function () {
@@ -221,18 +233,17 @@ function mundo() {
 	this.disparar = function () {
 		switch(this.jugador.dir){
 			case 0:
-			this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1w,this.imagenBala_2w,this.imagenBala_3w]);
-			break;
+				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1w,this.imagenBala_2w,this.imagenBala_3w]);
+				break;
 			case 1:
-			this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
-			break;
+				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
+				break;
 			case 2:
-			this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1a,this.imagenBala_2a,this.imagenBala_3a]);
-			break;
+				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1a,this.imagenBala_2a,this.imagenBala_3a]);
+				break;
 			case 3:
-			this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
-			break;
-			
+				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
+				break;
 		}
 	}
 }

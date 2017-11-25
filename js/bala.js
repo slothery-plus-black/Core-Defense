@@ -1,10 +1,11 @@
+//Objeto bala, tiene su sprite, sus posiciones en x e, ademas de la velocidad y animacion
 function bala(x,y,dir,imagen){
 	this.x = x;
 	this.y = y;
 	this.dir = dir;
 	this.animacion = 0;
 	this.image = imagen;
-	this.vel = 8;
+	this.vel = 20;
 
     //Mueve la bala
 	this.aplicarVelocidad = function(){

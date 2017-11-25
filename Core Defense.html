@@ -31,7 +31,7 @@
 	<script src="js/mundo.js"></script>
 	<script src="js/shootingController.js"></script>
 	<script src="js/bala.js"></script>
-	
+
     <script type="text/javascript">
 		$( document ).ready(function() {
 			//initGame();
@@ -48,7 +48,7 @@
         var m = new mundo(); //Objeto mundo
         
 		
-        var m_vert = new Image();
+        /*var m_vert = new Image();
 		var m_hor = new Image();
 		var m_ArI = new Image();
 		var m_ArD = new Image();
@@ -65,10 +65,10 @@
 		
 		//var estado = 0;//Para saber que "tile" se esta usando
 		
-		var personaje_1 = new Image();
+		var personaje_1 = new Image();*/
 		
         //Carga de Sprites
-        function loadImages(){
+        /*function loadImages(){
 			//Tiles
             m_vert.src = 'src/2.png';
 			m_hor.src = 'src/3.png';
@@ -87,14 +87,14 @@
 			
 			//Personajes
 			personaje_1.src = 'src/sprite1.png';
-        }
+        }*/
 
         //INICIALIZA TODO
         function initGame() {
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
             //canvas.addEventListener("click", m.onCanvasClick, false);
-			loadImages();
+			//loadImages();
 			
 			$.ajax({
 				dataType: "json",
@@ -127,31 +127,29 @@
 			html: items.join( "" )
 		  }).appendTo( "body" );
 		});*/
-        
+		
+		var keysDown = {};      // Tracking object
+
+		$(document).keydown(function(e) {
+			keysDown[e.keyCode] = true;
+		});
+		$(document).keyup(function(e) {
+			keysDown[e.keyCode] = false;
+		});
+
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
+			m.mover(keysDown);
 			m.pintado();
-				
-			//Este try para firefox, porque no espera a cargar las imagenes y puede saltar error
-			//En chrome no hay problema
-			/*try {
-				m.pintado();
-			} catch (e) {
-					if (e.name == "NS_ERROR_NOT_AVAILABLE") {
-						setTimeout(computeNS, 100);
-				} else {
-					throw e;
-				}
-			}*/
-        }
-        
+		}
+
         //PARA TESTEO: Si pulsas play empieza el bucle
         function startNS() {
 			//try {
 			//computeNS();
 				if (!timerId) {
 					timerId = setInterval("computeNS()", 50);
-					//1000 1 frame por segundo
+					//1000 1 frame por segundoS
 					//100 10 frames por segundo
 					//50 20 frames por segundo
 					//25 40 frames por segundo
@@ -185,80 +183,6 @@
             status.innerHTML = "<b>Stop</b>";
         }*/
         
-		//////////////////////////////////////////////////////////
-		//Para varias pulsaciones de teclas a la vez
-		/*var map = {68: false, 69: false, 86: false};
-		$(document).keydown(function(e) {
-			if (e.keyCode in map) {
-				map[e.keyCode] = true;
-				if (map[68] && map[69] && map[86]) {
-					// FIRE EVENT
-				}
-			}
-		}).keyup(function(e) {
-			if (e.keyCode in map) {
-				map[e.keyCode] = false;
-			}
-		});*/
-		
-		//Para saber cuando se pulsan las teclas
-		document.onkeypress = function(evt) {
-			evt = evt || window.event;
-			var charCode = evt.keyCode || evt.which;
-			var charStr = String.fromCharCode(charCode);
-			
-			//console.log(charStr);
-			
-			switch (charStr){
-				/*case "1":
-					estado = 1;
-					break;
-				case "2":
-					estado = 2;
-					break;
-				case "3":
-					estado = 3;
-					break;
-				case "4":
-					estado = 4;
-					break;
-				case "5":
-					estado = 5;
-					break;
-				case "6":
-					estado = 6;
-					break;
-				case "7":
-					estado = 7;
-					break;
-				case "8":
-					estado = 8;
-					break;*/
-					
-				case "w":
-				case "W":
-					m.moverJugador(0);
-					break;
-				case "s":
-				case "S":
-					m.moverJugador(1);
-					break;
-				case "a":
-				case "A":
-					m.moverJugador(2);
-					break;
-				case "d":
-				case "D":
-					m.moverJugador(3);
-					break;
-					
-				case "f":
-				case "F":
-					m.disparar();
-					break;
-			}
-		};
-		
 		startNS();
 
 		/*setTimeout(function(){

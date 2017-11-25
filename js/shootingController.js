@@ -1,3 +1,4 @@
+//Objeto shootingController, controlara las balas y su pintado
 function shootingController(){
 	this.context;
 	this.balas;
