@@ -109,6 +109,9 @@ function mundo() {
 
 	this.pintado = function () {
 		if (this.cargado){
+			///////Falta mover enemigos
+			this.moverEnemigos();
+
 			for (i = 0; i < this.x; i++) {
 				for (j = 0; j < this.y; j++) {
 					this.pintar(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
@@ -196,7 +199,7 @@ function mundo() {
 			case 0:
 				this.jugador.posy = this.jugador.posy - this.jugador.velocidad;
 				if (this.jugador.posy < 0)
-				this.jugador.posy = 0;
+					this.jugador.posy = 0;
 				break;
 			case 1:
 				this.jugador.posy = this.jugador.posy + this.jugador.velocidad;
@@ -215,13 +218,21 @@ function mundo() {
 				break;
 		}
 		
-		if (this.board[this.jugador.posx][this.jugador.posy].movible === false
-		|| this.board[this.jugador.posx+this.cellSize-1][this.jugador.posy+this.cellSize-1].movible === false
-		|| this.board[this.jugador.posx][this.jugador.posy+this.cellSize-1].movible === false
-		|| this.board[this.jugador.posx+this.cellSize-1][this.jugador.posy].movible === false){
+		if (this.colision(this.jugador.posx,this.jugador.posy)){
 			this.jugador.posx = jxOriginal;
 			this.jugador.posy = jyOriginal;
 		}
+
+		/*if (this.board[this.jugador.posx][this.jugador.posy].movible === false
+		|| this.board[this.jugador.posx+this.cellSize-1][this.jugador.posy+this.cellSize-1].movible === false
+		|| this.board[this.jugador.posx][this.jugador.posy+this.cellSize-1].movible === false
+		|| this.board[this.jugador.posx+this.cellSize-1][this.jugador.posy].movible === false){
+			
+		}*/
+	}
+
+	this.moverEnemigos = function(){
+		
 	}
 	
 	this.disparar = function () {
@@ -238,6 +249,17 @@ function mundo() {
 			case 3:
 				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
 				break;
+		}
+	}
+
+	this.colision = function(colx,coly){
+		if (this.board[colx][coly].movible === false
+		|| this.board[colx+this.cellSize-1][coly+this.cellSize-1].movible === false
+		|| this.board[colx][coly+this.cellSize-1].movible === false
+		|| this.board[colx+this.cellSize-1][coly].movible === false){
+			return true;
+		}else{
+			return false;
 		}
 	}
 }
