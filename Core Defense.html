@@ -138,8 +138,31 @@
 				
 			//Este try para firefox, porque no espera a cargar las imagenes y puede saltar error
 			//En chrome no hay problema
-			try {
+			//try {
 				m.pintado();
+			/*} catch (e) {
+					if (e.name == "NS_ERROR_NOT_AVAILABLE") {
+						setTimeout(computeNS, 100);
+				} else {
+					throw e;
+				}
+			}*/
+        }
+        
+        //PARA TESTEO: Si pulsas play empieza el bucle
+        function startNS() {
+			try {
+			//computeNS();
+				if (!timerId) {
+					timerId = setInterval("computeNS()", 30);
+					//1000 1 frame por segundo
+					//100 10 frames por segundo
+					//50 20 frames por segundo
+					//25 40 frames por segundo
+					
+					//var status = document.getElementById("status");
+					//status.innerHTML = "<b>Play</b>";
+				}
 			} catch (e) {
 					if (e.name == "NS_ERROR_NOT_AVAILABLE") {
 						setTimeout(computeNS, 100);
@@ -147,21 +170,6 @@
 					throw e;
 				}
 			}
-        }
-        
-        //PARA TESTEO: Si pulsas play empieza el bucle
-        function startNS() {
-			//computeNS();
-            if (!timerId) {
-                timerId = setInterval("computeNS()", 30);
-				//1000 1 frame por segundo
-				//100 10 frames por segundo
-				//50 20 frames por segundo
-				//25 40 frames por segundo
-				
-                //var status = document.getElementById("status");
-                //status.innerHTML = "<b>Play</b>";
-            }
         }
 		
         //Para el tiempo de ejecucion, se llama desde stop
