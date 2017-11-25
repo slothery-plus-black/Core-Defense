@@ -134,19 +134,19 @@
         function computeNS() {
 			//if (m.isCargado());
 			
-				m.pintado();
+				//m.pintado();
 				
-			/*try {
+			//Este try para firefox, porque no espera a cargar las imagenes y puede saltar error
+			//En chrome no hay problema
+			try {
 				m.pintado();
 			} catch (e) {
 					if (e.name == "NS_ERROR_NOT_AVAILABLE") {
-					// Wait a bit before trying again; you may wish to change the
-					// length of this delay.
 						setTimeout(computeNS, 100);
 				} else {
 					throw e;
 				}
-			}*/
+			}
         }
         
         //PARA TESTEO: Si pulsas play empieza el bucle
