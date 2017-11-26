@@ -9,6 +9,8 @@ function Jugador(spr,x,y,vel,cadencia,margen) {
 	this.cadencia = cadencia;//disparos por segundo
 	this.puedeDisparar = true;
 	this.margen = margen;
+	this.animacion = this.sprite.length;
+	this.tiempo = 0;
 
 	this.shoot = function(){
 		this.puedeDisparar = false;
@@ -22,5 +24,20 @@ function Jugador(spr,x,y,vel,cadencia,margen) {
 
 	this.canShoot = function(){
 		return this.puedeDisparar;
+	}
+
+	this.cogerSprite = function(){
+		return this.sprite[this.animacion];
+	}
+	this.avanzarTiempo = function(){
+		this.tiempo++;
+		if (this.tiempo > 2){
+			this.animacion = 4;
+		}
+	}
+	
+	this.animar = function(num){
+		this.animacion = num;
+		this.tiempo = 0;
 	}
 }

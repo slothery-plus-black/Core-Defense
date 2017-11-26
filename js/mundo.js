@@ -2,6 +2,7 @@
 function mundo() {
 	this.board = [];
 	this.jugador;
+	this.jugador2;
 	this.cellSize = 40; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
 	this.x = (720) / this.cellSize, //Número de CASILLAS horizontales
 	this.y = this.x; //Verticales
@@ -26,11 +27,24 @@ function mundo() {
 	this.imagenBala_3d = new Image();
 
 	this.initMundo = function (context, mapa) {
-		//Aqui hay que leer la estructura del mapa y cargarlo
 		this.board = [];
 		
 		this.context = context;
+
+		//Imagenes jugador
+		imagenJ1_stand = new Image();
+		imagenJ1_w = new Image();
+		imagenJ1_s = new Image();
+		imagenJ1_a = new Image();
+		imagenJ1_d = new Image();
 		
+		imagenJ1_stand.src = "src/sprite1.png";
+		imagenJ1_w.src = "src/sprite1_arriba.png";
+		imagenJ1_s.src = "src/sprite1_abajo.png";
+		imagenJ1_a.src = "src/sprite1_izquierda.png";
+		imagenJ1_d.src = "src/sprite1_derecha.png";
+
+		//Imagenes balas
 		this.imagenBala_1w.src = "src/disparo_1w.png";
 		this.imagenBala_2w.src = "src/disparo_2w.png";
 		this.imagenBala_3w.src = "src/disparo_3w.png";
@@ -47,10 +61,13 @@ function mundo() {
 		this.imagenBala_2d.src = "src/disparo_2d.png";
 		this.imagenBala_3d.src = "src/disparo_3d.png";
 
-		var imagenJ = new Image();
-		imagenJ.src = "src/sprite1.png";
+		/*var imagenJ2 = new Image();
+		imagenJ2.src = "src/personaje_1.png";*/
 		
-		this.jugador = new Jugador(imagenJ, (1 * this.cellSize), (1 * this.cellSize), 4, 2, 8);
+		//this.jugador = new Jugador(this.imagenJ1_stand, (1 * this.cellSize), (1 * this.cellSize), 4, 2, 8);
+		//Jugador (sprite,x,y,velocidad,cadencia,margen)
+		this.jugador = new Jugador([imagenJ1_w,imagenJ1_s, imagenJ1_a, imagenJ1_d, imagenJ1_stand], (1 * this.cellSize), (1 * this.cellSize), 4, 2, 8);
+		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
 
 		//Casilla (x,y,imagen,movible,destructible)
 		for (i = 0;i<this.x;i++){
@@ -73,10 +90,10 @@ function mundo() {
 		}
 
 		//Recorrer posiciones jugador inicio
-		console.log(mapa.jugador[0].posx);
-		console.log(mapa.jugador[0].posy);
-		console.log(mapa.jugador[1].posx);
-		console.log(mapa.jugador[1].posy);
+		//console.log(mapa.jugador[0].posx);
+		//console.log(mapa.jugador[0].posy);
+		//console.log(mapa.jugador[1].posx);
+		//console.log(mapa.jugador[1].posy);
 
 		var boardtemp = [];
 		//Ampliamos la board al tamaño del lienzo, de [18][18] pasa a [18*cellSize][18*cellSize] para mayor precision
@@ -97,28 +114,49 @@ function mundo() {
 	this.mover = function (keysDown) {
 		//w
 		if (keysDown[87]){
-			this.moverJugador(0);
+			this.moverJugador(0, this.jugador);
 		}
 		//s
 		if (keysDown[83]){
-			this.moverJugador(1);
+			this.moverJugador(1, this.jugador);
 		}
 		//a
 		if (keysDown[65]){
-			this.moverJugador(2);
+			this.moverJugador(2, this.jugador);
 		}
 		//d
 		if (keysDown[68]){
-			this.moverJugador(3);
+			this.moverJugador(3, this.jugador);
 		}
 		//f
 		if (keysDown[70]){
-			this.disparar();
+			this.disparar(this.jugador);
 		}
 		//espacio
 		if (keysDown[32]){
-			this.disparar();
+			this.disparar(this.jugador);
 		}
+		/*
+		//up arrow
+		if (keysDown[38]){
+			this.moverJugador(0, this.jugador2);
+		}
+		//down arrow
+		if (keysDown[40]){
+			this.moverJugador(1, this.jugador2);
+		}
+		//left arrow
+		if (keysDown[37]){
+			this.moverJugador(2, this.jugador2);
+		}
+		//right arrow
+		if (keysDown[39]){
+			this.moverJugador(3, this.jugador2);
+		}
+		//0
+		if (keysDown[96]){
+			this.disparar(this.jugador2);
+		}*/
 	}
 
 	this.pintado = function () {
@@ -133,7 +171,9 @@ function mundo() {
 			}
 
 			//Para imprimir el personaje
-			this.pintar(this.jugador.sprite, this.jugador.posx, this.jugador.posy);
+			this.pintar(this.jugador.cogerSprite(), this.jugador.posx, this.jugador.posy);
+			this.jugador.avanzarTiempo();
+			//this.pintar(this.jugador2.sprite, this.jugador2.posx, this.jugador2.posy);
 
 			//Impresion de las balas
 			this.sc.renderBalas();
@@ -203,69 +243,64 @@ function mundo() {
 	}*/
 	
 	//0 arriba, 1 abajo, 2 izquierda y 3 derecha
-	this.moverJugador = function (num) {
+	this.moverJugador = function (num, jugador) {
 		//Actualiza la direccion en la que mira
-		this.jugador.dir=num;
-		var jxOriginal = this.jugador.posx;
-		var jyOriginal = this.jugador.posy;
-		
-		switch (this.jugador.dir){
+		jugador.dir=num;
+		var jxOriginal = jugador.posx;
+		var jyOriginal = jugador.posy;
+
+		switch (jugador.dir){
 			case 0:
-				this.jugador.posy = this.jugador.posy - this.jugador.velocidad;
-				if (this.jugador.posy < 0)
-					this.jugador.posy = 0;
+				jugador.posy = jugador.posy - jugador.velocidad;
+				if (jugador.posy < 0)
+					jugador.posy = 0;
 				break;
 			case 1:
-				this.jugador.posy = this.jugador.posy + this.jugador.velocidad;
-				if (this.jugador.posy >= (this.y*this.cellSize)-this.jugador.velocidad)
-					this.jugador.posy = (this.y*this.cellSize)-this.jugador.velocidad;
+				jugador.posy = jugador.posy + jugador.velocidad;
+				if (jugador.posy >= (this.y*this.cellSize)-jugador.velocidad)
+					jugador.posy = (this.y*this.cellSize)-jugador.velocidad;
 				break;
 			case 2:
-				this.jugador.posx = this.jugador.posx - this.jugador.velocidad;
-				if (this.jugador.posx < 0)
-					this.jugador.posx = 0;
+				jugador.posx = jugador.posx - jugador.velocidad;
+				if (jugador.posx < 0)
+					jugador.posx = 0;
 				break;
 			case 3:
-				this.jugador.posx = this.jugador.posx + this.jugador.velocidad;
-				if (this.jugador.posx >= (this.x*this.cellSize)-this.jugador.velocidad)
-					this.jugador.posx = (this.x*this.cellSize)-this.jugador.velocidad;
+				jugador.posx = jugador.posx + jugador.velocidad;
+				if (jugador.posx >= (this.x*this.cellSize)-jugador.velocidad)
+					jugador.posx = (this.x*this.cellSize)-jugador.velocidad;
 				break;
 		}
 		
-		if (this.colision(this.jugador.posx,this.jugador.posy, this.jugador.margen)){
-			this.jugador.posx = jxOriginal;
-			this.jugador.posy = jyOriginal;
+		if (this.colision(jugador.posx,jugador.posy,jugador.margen)){
+			jugador.posx = jxOriginal;
+			jugador.posy = jyOriginal;
 		}
 
-		/*if (this.board[this.jugador.posx][this.jugador.posy].movible === false
-		|| this.board[this.jugador.posx+this.cellSize-1][this.jugador.posy+this.cellSize-1].movible === false
-		|| this.board[this.jugador.posx][this.jugador.posy+this.cellSize-1].movible === false
-		|| this.board[this.jugador.posx+this.cellSize-1][this.jugador.posy].movible === false){
-			
-		}*/
+		jugador.animar(num);
 	}
 
 	this.moverEnemigos = function(){
 
 	}
 	
-	this.disparar = function () {
-		if (this.jugador.canShoot()){
-			switch(this.jugador.dir){
+	this.disparar = function (jugador) {
+		if (jugador.canShoot()){
+			switch(jugador.dir){
 				case 0:
-					this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1w,this.imagenBala_2w,this.imagenBala_3w]);
+					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1w,this.imagenBala_2w,this.imagenBala_3w]);
 					break;
 				case 1:
-					this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
+					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
 					break;
 				case 2:
-					this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1a,this.imagenBala_2a,this.imagenBala_3a]);
+					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1a,this.imagenBala_2a,this.imagenBala_3a]);
 					break;
 				case 3:
-					this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
+					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
 					break;
 			}
-			this.jugador.shoot();
+			jugador.shoot();
 		}
 	}
 

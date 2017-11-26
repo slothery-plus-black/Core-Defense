@@ -27,7 +27,7 @@ function shootingController(){
 			for(var i=0; i<this.balas.length;i++){
 				if (this.colision(this.balas[i])){
 
-					this.colisionBoard(this.balas[i]);
+					this.golpearBoard(this.balas[i]);
 					this.removeBala(this.balas[i],i);
 					
 				}else{
@@ -65,7 +65,7 @@ function shootingController(){
 		return false;
 	}
 
-	this.colisionBoard = function(bala){
+	this.golpearBoard = function(bala){
 		//Arriba izquierda
 		if (!this.board[bala.x+this.margenBala][bala.y+this.margenBala].movible){
 			this.board[bala.x+this.margenBala][bala.y+this.margenBala].golpear();
