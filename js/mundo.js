@@ -30,8 +30,6 @@ function mundo() {
 		this.board = [];
 		
 		this.context = context;
-
-		this.sc.init(this.context);
 		
 		this.imagenBala_1w.src = "src/disparo_1w.png";
 		this.imagenBala_2w.src = "src/disparo_2w.png";
@@ -52,7 +50,7 @@ function mundo() {
 		var imagenJ = new Image();
 		imagenJ.src = "src/sprite1.png";
 		
-		this.jugador = new Jugador(imagenJ, (1 * this.cellSize), (1 * this.cellSize), 4);
+		this.jugador = new Jugador(imagenJ, (1 * this.cellSize), (1 * this.cellSize), 4, 8);
 
 		for (i = 0;i<this.x;i++){
 			this.board[i] = [];
@@ -60,13 +58,19 @@ function mundo() {
 				var imagen = new Image();
 				imagen.src = "src/"+mapa.filas[j].datos[i].tile+".png";
 				if (mapa.filas[j].datos[i].tile === "0"){
-					this.board[i][j] = new casilla(imagen, true);
+					this.board[i][j] = new casilla(i,j,imagen, true);
 				}else{
-					this.board[i][j] = new casilla(imagen, false);
+					this.board[i][j] = new casilla(i,j,imagen, false);
 				}
 			}
 		}
-		
+
+		//Recorrer posiciones jugador inicio
+		console.log(mapa.jugador[0].posx);
+		console.log(mapa.jugador[0].posy);
+		console.log(mapa.jugador[1].posx);
+		console.log(mapa.jugador[1].posy);
+
 		var boardtemp = [];
 		//Ampliamos la board al tamaño del lienzo, de [18][18] pasa a [18*cellSize][18*cellSize] para mayor precision
 		for (i = 0;i<this.x*this.cellSize;i++){
@@ -78,6 +82,8 @@ function mundo() {
 		}
 		this.board = boardtemp;
 		this.cargado = true;
+
+		this.sc.init(this.context,this.board, this.cellSize, 8);
 	}
 
 	this.mover = function (keysDown) {
@@ -218,7 +224,7 @@ function mundo() {
 				break;
 		}
 		
-		if (this.colision(this.jugador.posx,this.jugador.posy)){
+		if (this.colision(this.jugador.posx,this.jugador.posy, this.jugador.margen)){
 			this.jugador.posx = jxOriginal;
 			this.jugador.posy = jyOriginal;
 		}
@@ -232,31 +238,36 @@ function mundo() {
 	}
 
 	this.moverEnemigos = function(){
-		
+		this.sc.cogerBalas().forEach(function (entry){
+
+		});
 	}
 	
 	this.disparar = function () {
-		switch(this.jugador.dir){
-			case 0:
-				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1w,this.imagenBala_2w,this.imagenBala_3w]);
-				break;
-			case 1:
-				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
-				break;
-			case 2:
-				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1a,this.imagenBala_2a,this.imagenBala_3a]);
-				break;
-			case 3:
-				this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
-				break;
+		if (this.jugador.canShoot()){
+			switch(this.jugador.dir){
+				case 0:
+					this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1w,this.imagenBala_2w,this.imagenBala_3w]);
+					break;
+				case 1:
+					this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
+					break;
+				case 2:
+					this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1a,this.imagenBala_2a,this.imagenBala_3a]);
+					break;
+				case 3:
+					this.sc.shoot(this.jugador.posx, this.jugador.posy, this.jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
+					break;
+			}
+			this.jugador.shoot();
 		}
 	}
 
-	this.colision = function(colx,coly){
-		if (this.board[colx][coly].movible === false
-		|| this.board[colx+this.cellSize-1][coly+this.cellSize-1].movible === false
-		|| this.board[colx][coly+this.cellSize-1].movible === false
-		|| this.board[colx+this.cellSize-1][coly].movible === false){
+	this.colision = function(colx,coly,margen){
+		if (this.board[colx+margen][coly+margen].movible === false
+		|| this.board[colx+this.cellSize-margen][coly+this.cellSize-margen].movible === false
+		|| this.board[colx+margen][coly+this.cellSize-margen].movible === false
+		|| this.board[colx+this.cellSize-margen][coly+margen].movible === false){
 			return true;
 		}else{
 			return false;
