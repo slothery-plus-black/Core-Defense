@@ -50,17 +50,24 @@ function mundo() {
 		var imagenJ = new Image();
 		imagenJ.src = "src/sprite1.png";
 		
-		this.jugador = new Jugador(imagenJ, (1 * this.cellSize), (1 * this.cellSize), 4, 8);
+		this.jugador = new Jugador(imagenJ, (1 * this.cellSize), (1 * this.cellSize), 4, 2, 8);
 
+		//Casilla (x,y,imagen,movible,destructible)
 		for (i = 0;i<this.x;i++){
 			this.board[i] = [];
 			for (j=0;j<this.y;j++){
 				var imagen = new Image();
 				imagen.src = "src/"+mapa.filas[j].datos[i].tile+".png";
 				if (mapa.filas[j].datos[i].tile === "0"){
-					this.board[i][j] = new casilla(i,j,imagen, true);
+					this.board[i][j] = new casilla(i,j,imagen, true, false);
 				}else{
-					this.board[i][j] = new casilla(i,j,imagen, false);
+					if (mapa.filas[j].datos[i].tile === "1" || mapa.filas[j].datos[i].tile === "C"
+					|| mapa.filas[j].datos[i].tile === "8" || mapa.filas[j].datos[i].tile === "9"
+					|| mapa.filas[j].datos[i].tile === "A" || mapa.filas[j].datos[i].tile === "B"){
+						this.board[i][j] = new casilla(i,j,imagen, false, false);
+					}else{
+						this.board[i][j] = new casilla(i,j,imagen, false, true);
+					}
 				}
 			}
 		}
@@ -238,9 +245,7 @@ function mundo() {
 	}
 
 	this.moverEnemigos = function(){
-		this.sc.cogerBalas().forEach(function (entry){
 
-		});
 	}
 	
 	this.disparar = function () {
@@ -264,13 +269,23 @@ function mundo() {
 	}
 
 	this.colision = function(colx,coly,margen){
-		if (this.board[colx+margen][coly+margen].movible === false
-		|| this.board[colx+this.cellSize-margen][coly+this.cellSize-margen].movible === false
-		|| this.board[colx+margen][coly+this.cellSize-margen].movible === false
-		|| this.board[colx+this.cellSize-margen][coly+margen].movible === false){
+		//Arriba izquierda
+		if (!this.board[colx+margen][coly+margen].movible){
 			return true;
-		}else{
-			return false;
 		}
+		//Abajo derecha
+		if (!this.board[colx+this.cellSize-margen][coly+this.cellSize-margen].movible){
+			return true;
+		}
+		//Abajo izquierda
+		if (!this.board[colx+margen][coly+this.cellSize-margen].movible){
+			return true;
+		}
+		//Arriba derecha
+		if (!this.board[colx+this.cellSize-margen][coly+margen].movible){
+			return true;
+		}
+
+		return false;
 	}
 }

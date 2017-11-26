@@ -16,15 +16,18 @@ function shootingController(){
 	
 	//Disparo, crea una bala en la direccion indicada, desde la posicion dada
 	this.shoot = function (x,y,dir,image){
-
 		this.balas[this.balas.length] = new bala(x,y,dir,image);
 	}
+
 	//Recorre el array de balas y las mueve todas
 	this.renderBalas = function(){
 		if (this.balas != null){
 			for(var i=0; i<this.balas.length;i++){
 				if (this.colision(this.balas[i])){
+
+					this.colisionBoard(this.balas[i]);
 					this.removeBala(this.balas[i],i);
+					
 				}else{
 					this.balas[i].aplicarVelocidad();
 					
@@ -38,20 +41,49 @@ function shootingController(){
 		}
 	}
 	
-	this.colision = function(bala,margen){
+	this.colision = function(bala){
 		//Si la bala está en una casilla con un objeto, se destruye ella y el objeto con el que ha chocado
-		if (this.board[bala.x+this.margenBala][bala.y+this.margenBala].movible === false
-		|| this.board[bala.x+this.cellSize-this.margenBala][bala.y+this.cellSize-this.margenBala].movible === false
-		|| this.board[bala.x+this.margenBala][bala.y+this.cellSize-this.margenBala].movible === false
-		|| this.board[bala.x+this.cellSize-this.margenBala][bala.y+this.margenBala].movible === false){
+		//Arriba izquierda
+		if (!this.board[bala.x+this.margenBala][bala.y+this.margenBala].movible){
 			return true;
-		}else{
-			return false;
 		}
+		//Abajo derecha
+		if (!this.board[bala.x+this.cellSize-this.margenBala][bala.y+this.cellSize-this.margenBala].movible){
+			return true;
+		}
+		//Abajo izquierda
+		if (!this.board[bala.x+this.margenBala][bala.y+this.cellSize-this.margenBala].movible){
+			return true;
+		}
+		//Arriba derecha
+		if (!this.board[bala.x+this.cellSize-this.margenBala][bala.y+this.margenBala].movible){
+			return true;
+		}
+		
+		return false;
 	}
 
-	this.cogerBalas = function(){
-		return this.balas;
+	this.colisionBoard = function(bala){
+		//Arriba izquierda
+		if (!this.board[bala.x+this.margenBala][bala.y+this.margenBala].movible){
+			this.board[bala.x+this.margenBala][bala.y+this.margenBala].golpear();
+			return;
+		}
+		//Abajo derecha
+		if (!this.board[bala.x+this.cellSize-this.margenBala][bala.y+this.cellSize-this.margenBala].movible){
+			this.board[bala.x+this.cellSize-this.margenBala][bala.y+this.cellSize-this.margenBala].golpear();
+			return;
+		}
+		//Abajo izquierda
+		if (!this.board[bala.x+this.margenBala][bala.y+this.cellSize-this.margenBala].movible){
+			this.board[bala.x+this.margenBala][bala.y+this.cellSize-this.margenBala].golpear();
+			return;
+		}
+		//Arriba derecha
+		if (!this.board[bala.x+this.cellSize-this.margenBala][bala.y+this.margenBala].movible){
+			this.board[bala.x+this.cellSize-this.margenBala][bala.y+this.margenBala].golpear();
+			return;
+		}
 	}
 	
 	this.removeBala = function(bala,pos){
