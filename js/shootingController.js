@@ -5,18 +5,20 @@ function shootingController(){
 	this.cellSize;
 	this.board;
 	this.margenBala;
+	this.velocidad;
 
-	this.init = function (context,board,cellSize,margen){
+	this.init = function (context,board,cellSize,margen,velocidad){
 		this.context = context;
 		this.balas = [];
 		this.board = board;
 		this.cellSize = cellSize;
 		this.margenBala = margen;
+		this.velocidad = velocidad;
 	}
 	
 	//Disparo, crea una bala en la direccion indicada, desde la posicion dada
 	this.shoot = function (x,y,dir,image){
-		this.balas[this.balas.length] = new bala(x,y,dir,image);
+		this.balas[this.balas.length] = new bala(x,y,dir,image,this.velocidad);
 	}
 
 	//Recorre el array de balas y las mueve todas

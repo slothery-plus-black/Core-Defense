@@ -90,7 +90,8 @@ function mundo() {
 		this.board = boardtemp;
 		this.cargado = true;
 
-		this.sc.init(this.context,this.board, this.cellSize, 8);
+		//sc (context, board, cellSize, margenBalas, velocidad)
+		this.sc.init(this.context,this.board, this.cellSize, 12, 20);
 	}
 
 	this.mover = function (keysDown) {
