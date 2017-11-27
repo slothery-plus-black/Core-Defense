@@ -12,7 +12,7 @@ function mundo() {
 	this.sc = new shootingController();
 	this.cargado = false;
 
-	this.srcImagenes = "src/"
+	this.srcImagenes = "src/images/";
 
 	//Imagenes de balas
 	this.imagenBala_1w = new Image();
@@ -84,7 +84,7 @@ function mundo() {
 			this.board[i] = [];
 			for (j=0;j<this.y;j++){
 				var imagen = new Image();
-				imagen.src = "src/"+mapa.filas[j].datos[i].tile+".png";
+				imagen.src = this.srcImagenes+""+mapa.filas[j].datos[i].tile+".png";
 				if (mapa.filas[j].datos[i].tile === "0"){
 					this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile, i,j,imagen, true, false,this.srcImagenes);
 				}else{

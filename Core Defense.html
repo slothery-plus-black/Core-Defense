@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="src/images/sprite1.png">
 
     <title>Core Defense</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -28,11 +28,11 @@
     </style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="js/jugador.js"></script>
-	<script src="js/casilla.js"></script>
-	<script src="js/mundo.js"></script>
-	<script src="js/shootingController.js"></script>
-	<script src="js/bala.js"></script>
+	<script src="src/js/jugador.js"></script>
+	<script src="src/js/casilla.js"></script>
+	<script src="src/js/mundo.js"></script>
+	<script src="src/js/shootingController.js"></script>
+	<script src="src/js/bala.js"></script>
 
 	<script type="text/javascript">
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
@@ -53,7 +53,7 @@
 			
 			$.ajax({
 				dataType: "json",
-				url: "json/MapaFacil.json",
+				url: "src/json/MapaFacil.json",
 				mimeType: "application/json",
 				success: function(result){
 					m.initMundo(context, result);
@@ -109,7 +109,7 @@
 
 <body onload="initGame()" bgcolor="#37383C">
     <p align="center">
-        <img src="src/titulo.png">
+        <img src="src/images/titulo.png">
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
