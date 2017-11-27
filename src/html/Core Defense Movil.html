@@ -66,11 +66,11 @@
             
             j1canvas = document.getElementById("j1");
             j1context = j1canvas.getContext("2d");
-            j1context.rect(20,20,150,100);
+            j1context.rect(0,0,720/4,100);
             j1context.stroke(); 
             
             
-            j1canvas.addEventListener("touchstart", function (e) {
+            /*j1canvas.addEventListener("touchstart", function (e) {
                 keysDown[87] = true;
                 /*mousePos = getTouchPos(canvas, e);
                 var touch = e.touches[0];
@@ -78,8 +78,8 @@
                     clientX: touch.clientX,
                     clientY: touch.clientY
                 });
-                canvas.dispatchEvent(mouseEvent);*/
-                }, false);
+                canvas.dispatchEvent(mouseEvent);
+                }, false);*/
         }
 		
 		$(document).keydown(function(e) {
