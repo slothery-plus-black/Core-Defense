@@ -68,9 +68,18 @@
             j1context = j1canvas.getContext("2d");
             j1context.rect(20,20,150,100);
             j1context.stroke(); 
-            var img = new Image();
-            img.src = "../images/personaje_1.png";
-            j1context.drawImage(img,100, 10);
+            
+            
+            j1canvas.addEventListener("touchstart", function (e) {
+                keysDown[87] = true;
+                /*mousePos = getTouchPos(canvas, e);
+                var touch = e.touches[0];
+                var mouseEvent = new MouseEvent("mousedown", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);*/
+                }, false);
         }
 		
 		$(document).keydown(function(e) {
@@ -121,7 +130,7 @@
             keysDown[87] = true;
         }
 
-        function prueba(){
+        function prueba2(){
             keysDown[87] = false;
         }
         
