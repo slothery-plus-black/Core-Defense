@@ -27,7 +27,7 @@
         }
     </style>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="../js/jugador.js"></script>
 	<script src="../js/casilla.js"></script>
 	<script src="../js/mundo.js"></script>
@@ -105,8 +105,28 @@
         
         startNS();
         
-        function w_J1_true(){
+        var wj1 = document.getElementById('w_j1');
+        wj1.addEventListener('touchstart', function(e){
             keysDown[87] = true;
+            e.preventDefault();
+        }, false);
+        wj1.addEventListener('touchend', function(e){
+            keysDown[87] = false;
+            e.preventDefault();
+        }, false);
+
+        var im = document.getElementById('im');
+        im.addEventListener('touchstart', function(e){
+            keysDown[87] = true;
+            e.preventDefault();
+        }, false);
+        im.addEventListener('touchend', function(e){
+            keysDown[87] = false;
+            e.preventDefault();
+        }, false);
+
+        function w_J1_true(){
+            
         }
         function w_J1_false(){
             keysDown[87] = false;
@@ -134,10 +154,10 @@
 
 <body onload="initGame()" bgcolor="#37383C">
     <p align="center">
-        <img src="../images/titulo_movil.png" ontouchstart="w_J1_true()">
+        <img id = "im" src="../images/titulo_movil.png">
     </p>
     <p align="center">
-        <button ontouchstart="w_J1_true()" ontouchend="w_J1_false()" ontouchleave="w_J1_false()">Arriba</button>
+        <button id="w_j1">Arriba</button>
         <button ontouchstart="s_J1_true()" ontouchend="s_J1_false()" ontouchleave="s_J1_false()">Abajo</button>
         <button ontouchstart="a_J1_true()" ontouchend="a_J1_false()" ontouchleave="a_J1_false()">Izquierda</button>
         <button ontouchstart="d_J1_true()" ontouchend="d_J1_false()" ontouchleave="d_J1_false()">Derecha</button>
