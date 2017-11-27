@@ -17,7 +17,7 @@ function Enemigo1(spr,x,y,vel,cadencia,margen) {
 		var _this = this;
 		setTimeout(function(){
 			_this.puedeDisparar = true;
-		}, 2000 /_this.cadencia);
+		}, 1000 /_this.cadencia);
 	}
 
 	this.canShoot = function(){

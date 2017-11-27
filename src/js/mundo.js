@@ -86,7 +86,7 @@ function mundo(cellsize, tam) {
 
 		//enemigo
 		for (i = 0;i<10;i++){
-			this.enemigos[i] = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (1 * this.cellSize), 2, 1, 8);
+			this.enemigos[i] = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (1 * this.cellSize), 2, 0.5, 8);
 		}
 		
 
