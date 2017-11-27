@@ -12,6 +12,8 @@ function mundo() {
 	this.sc = new shootingController();
 	this.cargado = false;
 
+	this.srcImagenes = "src/"
+
 	//Imagenes de balas
 	this.imagenBala_1w = new Image();
 	this.imagenBala_2w = new Image();
@@ -38,34 +40,31 @@ function mundo() {
 		imagenJ1_a = new Image();
 		imagenJ1_d = new Image();
 		
-		imagenJ1_stand.src = "src/sprite1.png";
-		imagenJ1_w.src = "src/sprite1_arriba.png";
-		imagenJ1_s.src = "src/sprite1_abajo.png";
-		imagenJ1_a.src = "src/sprite1_izquierda.png";
-		imagenJ1_d.src = "src/sprite1_derecha.png";
+		imagenJ1_stand.src = this.srcImagenes+"sprite1.png";
+		imagenJ1_w.src = this.srcImagenes+"sprite1_arriba.png";
+		imagenJ1_s.src = this.srcImagenes+"sprite1_abajo.png";
+		imagenJ1_a.src = this.srcImagenes+"sprite1_izquierda.png";
+		imagenJ1_d.src = this.srcImagenes+"sprite1_derecha.png";
 
 		//Imagenes balas
-		this.imagenBala_1w.src = "src/disparo_1w.png";
-		this.imagenBala_2w.src = "src/disparo_2w.png";
-		this.imagenBala_3w.src = "src/disparo_3w.png";
+		this.imagenBala_1w.src = this.srcImagenes+"disparo_1w.png";
+		this.imagenBala_2w.src = this.srcImagenes+"disparo_2w.png";
+		this.imagenBala_3w.src = this.srcImagenes+"disparo_3w.png";
 
-		this.imagenBala_1s.src = "src/disparo_1s.png";
-		this.imagenBala_2s.src = "src/disparo_2s.png";
-		this.imagenBala_3s.src = "src/disparo_3s.png";
+		this.imagenBala_1s.src = this.srcImagenes+"disparo_1s.png";
+		this.imagenBala_2s.src = this.srcImagenes+"disparo_2s.png";
+		this.imagenBala_3s.src = this.srcImagenes+"disparo_3s.png";
 
-		this.imagenBala_1a.src = "src/disparo_1a.png";
-		this.imagenBala_2a.src = "src/disparo_2a.png";
-		this.imagenBala_3a.src = "src/disparo_3a.png";
+		this.imagenBala_1a.src = this.srcImagenes+"disparo_1a.png";
+		this.imagenBala_2a.src = this.srcImagenes+"disparo_2a.png";
+		this.imagenBala_3a.src = this.srcImagenes+"disparo_3a.png";
 
-		this.imagenBala_1d.src = "src/disparo_1d.png";
-		this.imagenBala_2d.src = "src/disparo_2d.png";
-		this.imagenBala_3d.src = "src/disparo_3d.png";
+		this.imagenBala_1d.src = this.srcImagenes+"disparo_1d.png";
+		this.imagenBala_2d.src = this.srcImagenes+"disparo_2d.png";
+		this.imagenBala_3d.src = this.srcImagenes+"disparo_3d.png";
 
 		/*var imagenJ2 = new Image();
 		imagenJ2.src = "src/personaje_1.png";*/
-		
-		//this.jugador = new Jugador(this.imagenJ1_stand, (1 * this.cellSize), (1 * this.cellSize), 4, 2, 8);
-		//Jugador (sprite,x,y,velocidad,cadencia,margen)
 		
 		var posiciones = [];
 		for (i = 0;i<mapa.jugador.length;i++){
@@ -75,7 +74,7 @@ function mundo() {
 		//Return a random number between 1 and 10:
 		//Math.floor((Math.random() * 10) + 1);
 		var posAleatoria = Math.floor((Math.random() * posiciones.length) + 0);
-
+		//Creamos el jugador en una de las posiciones de inicio aleatoriamente
 		this.jugador = new Jugador([imagenJ1_w,imagenJ1_s, imagenJ1_a, imagenJ1_d, imagenJ1_stand],
 			(posiciones[posAleatoria].posx * this.cellSize), (posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8);
 		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
@@ -87,24 +86,18 @@ function mundo() {
 				var imagen = new Image();
 				imagen.src = "src/"+mapa.filas[j].datos[i].tile+".png";
 				if (mapa.filas[j].datos[i].tile === "0"){
-					this.board[i][j] = new casilla(i,j,imagen, true, false);
+					this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile, i,j,imagen, true, false,this.srcImagenes);
 				}else{
 					if (mapa.filas[j].datos[i].tile === "1" || mapa.filas[j].datos[i].tile === "C"
 					|| mapa.filas[j].datos[i].tile === "8" || mapa.filas[j].datos[i].tile === "9"
 					|| mapa.filas[j].datos[i].tile === "A" || mapa.filas[j].datos[i].tile === "B"){
-						this.board[i][j] = new casilla(i,j,imagen, false, false);
+						this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile, i,j,imagen, false, false,this.srcImagenes);
 					}else{
-						this.board[i][j] = new casilla(i,j,imagen, false, true);
+						this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile,i,j,imagen, false, true,this.srcImagenes);
 					}
 				}
 			}
 		}
-
-		//Recorrer posiciones jugador inicio
-		//console.log(mapa.jugador[0].posx);
-		//console.log(mapa.jugador[0].posy);
-		//console.log(mapa.jugador[1].posx);
-		//console.log(mapa.jugador[1].posy);
 
 		var boardtemp = [];
 		//Ampliamos la board al tamaño del lienzo, de [18][18] pasa a [18*cellSize][18*cellSize] para mayor precision
@@ -148,6 +141,7 @@ function mundo() {
 			this.disparar(this.jugador);
 		}
 		/*
+		//Segundo jugador
 		//up arrow
 		if (keysDown[38]){
 			this.moverJugador(0, this.jugador2);
@@ -198,60 +192,6 @@ function mundo() {
 			//Error en el pintado porque aun no se ha cargado la imagen en firefox, en chrome no hay problema
 		}
 	}
-	
-	//Pintar en la casilla pinchada
-	/*this.onCanvasClick = function (evt) {
-		var x = evt.clientX - canvas.offsetLeft;
-		var y = evt.clientY - canvas.offsetTop;
-		
-		//Se divide entre cellSize para coger el menor valor para el board de esa casilla
-		//Luego se ira recorriendo en ponerImagenNueva hasta llegar al valor menor+cellSize-1
-		var boardX = Math.floor(parseInt(x / cellSize));
-		var boardY = Math.floor(parseInt(y / cellSize));
-		//console.log(boardX+" "+boardY);
-		
-		var imagen = null;
-		var mov = false;
-		
-		//estado = tecla del 1 al 8 que selecciona el tile a pintar
-		switch (estado){
-			case 1:
-				imagen = m_vert;
-				break;
-			case 2:
-				imagen = m_hor;
-				break;
-			case 3:
-				imagen = m_ArI;
-				break;
-			case 4:
-				imagen = m_ArD;
-				break;
-			case 5:
-				imagen = m_AbI;
-				break;
-			case 6:
-				imagen = m_AbD;
-				break;
-			case 7:
-				imagen = m_Fondo;
-				mov = true;
-				break;
-		}
-		if (imagen !== null)
-			m.ponerImagenNueva(boardX*cellSize, boardY*cellSize, imagen, mov);
-		
-		m.pintado();
-	}*/
-	
-	/*this.ponerImagenNueva = function (x, y, ima, m) {
-		//console.log(board);
-		for (i = 0;i<cellSize;i++){
-			for (j = 0;j<cellSize;j++){
-				board[x+i][y+j].setImagen(ima, m);
-			}
-		}
-	}*/
 	
 	//0 arriba, 1 abajo, 2 izquierda y 3 derecha
 	this.moverJugador = function (num, jugador) {
@@ -336,4 +276,58 @@ function mundo() {
 
 		return false;
 	}
+
+	//Pintar en la casilla pinchada
+	/*this.onCanvasClick = function (evt) {
+		var x = evt.clientX - canvas.offsetLeft;
+		var y = evt.clientY - canvas.offsetTop;
+		
+		//Se divide entre cellSize para coger el menor valor para el board de esa casilla
+		//Luego se ira recorriendo en ponerImagenNueva hasta llegar al valor menor+cellSize-1
+		var boardX = Math.floor(parseInt(x / cellSize));
+		var boardY = Math.floor(parseInt(y / cellSize));
+		//console.log(boardX+" "+boardY);
+		
+		var imagen = null;
+		var mov = false;
+		
+		//estado = tecla del 1 al 8 que selecciona el tile a pintar
+		switch (estado){
+			case 1:
+				imagen = m_vert;
+				break;
+			case 2:
+				imagen = m_hor;
+				break;
+			case 3:
+				imagen = m_ArI;
+				break;
+			case 4:
+				imagen = m_ArD;
+				break;
+			case 5:
+				imagen = m_AbI;
+				break;
+			case 6:
+				imagen = m_AbD;
+				break;
+			case 7:
+				imagen = m_Fondo;
+				mov = true;
+				break;
+		}
+		if (imagen !== null)
+			m.ponerImagenNueva(boardX*cellSize, boardY*cellSize, imagen, mov);
+		
+		m.pintado();
+	}*/
+	
+	/*this.ponerImagenNueva = function (x, y, ima, m) {
+		//console.log(board);
+		for (i = 0;i<cellSize;i++){
+			for (j = 0;j<cellSize;j++){
+				board[x+i][y+j].setImagen(ima, m);
+			}
+		}
+	}*/
 }
