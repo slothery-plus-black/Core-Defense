@@ -66,7 +66,18 @@ function mundo() {
 		
 		//this.jugador = new Jugador(this.imagenJ1_stand, (1 * this.cellSize), (1 * this.cellSize), 4, 2, 8);
 		//Jugador (sprite,x,y,velocidad,cadencia,margen)
-		this.jugador = new Jugador([imagenJ1_w,imagenJ1_s, imagenJ1_a, imagenJ1_d, imagenJ1_stand], (1 * this.cellSize), (1 * this.cellSize), 4, 2, 8);
+		
+		var posiciones = [];
+		for (i = 0;i<mapa.jugador.length;i++){
+			posiciones[i] = mapa.jugador[i];
+		}
+
+		//Return a random number between 1 and 10:
+		//Math.floor((Math.random() * 10) + 1);
+		var posAleatoria = Math.floor((Math.random() * posiciones.length) + 0);
+
+		this.jugador = new Jugador([imagenJ1_w,imagenJ1_s, imagenJ1_a, imagenJ1_d, imagenJ1_stand],
+			(posiciones[posAleatoria].posx * this.cellSize), (posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8);
 		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
 
 		//Casilla (x,y,imagen,movible,destructible)
