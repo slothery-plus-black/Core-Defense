@@ -145,6 +145,22 @@
         function j1s_false(){
             keysDown[83] = false;
         }
+
+        function j1a_true(){
+            keysDown[65] = true;
+        }
+
+        function j1a_false(){
+            keysDown[65] = false;
+        }
+        
+        function j1d_true(){
+            keysDown[68] = true;
+        }
+
+        function j1d_false(){
+            keysDown[68] = false;
+        }
         
 
     </script>
@@ -157,8 +173,8 @@
     <p align="center">
         <canvas id="j10" width="100" height="100" border="1" ontouchstart="j1w_true()" ontouchend="j1w_false()"></canvas>
         <canvas id="j11" width="100" height="100" border="1" ontouchstart="j1s_true()" ontouchend="j1s_false()"></canvas>
-        <canvas id="j12" width="100" height="100" border="1" ontouchstart="prueba()" ontouchend="prueba2()"></canvas>
-        <canvas id="j13" width="100" height="100" border="1" ontouchstart="prueba()" ontouchend="prueba2()"></canvas>
+        <canvas id="j12" width="100" height="100" border="1" ontouchstart="j1a_true()" ontouchend="j1a_false()"></canvas>
+        <canvas id="j13" width="100" height="100" border="1" ontouchstart="j1d_true()" ontouchend="j1d_false()"></canvas>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
