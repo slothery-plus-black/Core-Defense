@@ -67,12 +67,14 @@
 		});
 		$(document).keyup(function(e) {
 			keysDown[e.keyCode] = false;
-		});
+        });
+        
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
 			m.mover(keysDown);
 			m.pintado();
-		}
+        }
+        
         function startNS() {
 			if (!timerId) {
 				timerId = setInterval("computeNS()", 50);
@@ -135,10 +137,10 @@
         <img src="../images/titulo_movil.png">
     </p>
     <p align="center">
-        <button onmousedown="w_J1_true()" onmouseup="w_J1_false()" onmouseleave="w_J1_false()">Arriba</button>
-        <button onmousedown="s_J1_true()" onmouseup="s_J1_false()" onmouseleave="s_J1_false()">Abajo</button>
-        <button onmousedown="a_J1_true()" onmouseup="a_J1_false()" onmouseleave="a_J1_false()">Izquierda</button>
-        <button onmousedown="d_J1_true()" onmouseup="d_J1_false()" onmouseleave="d_J1_false()">Derecha</button>
+        <button touchstart="w_J1_true()" touchend="w_J1_false()" touchleave="w_J1_false()">Arriba</button>
+        <button touchstart="s_J1_true()" touchend="s_J1_false()" touchleave="s_J1_false()">Abajo</button>
+        <button touchstart="a_J1_true()" touchend="a_J1_false()" touchleave="a_J1_false()">Izquierda</button>
+        <button touchstart="d_J1_true()" touchend="d_J1_false()" touchleave="d_J1_false()">Derecha</button>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>

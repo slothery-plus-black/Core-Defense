@@ -67,12 +67,14 @@
 		});
 		$(document).keyup(function(e) {
 			keysDown[e.keyCode] = false;
-		});
+        });
+        
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
 			m.mover(keysDown);
 			m.pintado();
-		}
+        }
+        
         function startNS() {
 			if (!timerId) {
 				timerId = setInterval("computeNS()", 50);
