@@ -257,6 +257,7 @@ function mundo(cellsize, tam) {
 		for (i=0;i<this.enemigos.length;i++){
 			var jxOriginal = this.enemigos[i].posx;
 			var jyOriginal = this.enemigos[i].posy;
+            this.disparar(this.enemigos[i]);
 	
 			switch (this.enemigos[i].dir){
 				case 0:
@@ -294,6 +295,7 @@ function mundo(cellsize, tam) {
 	
 	this.disparar = function (jugador) {
 		if (jugador.canShoot()){
+            jugador.shoot();
 			switch(jugador.dir){
 				case 0:
 					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1w,this.imagenBala_2w,this.imagenBala_3w]);
@@ -308,7 +310,7 @@ function mundo(cellsize, tam) {
 					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
 					break;
 			}
-			jugador.shoot();
+			
 			jugador.animar(jugador.dir);
 		}
 	}
