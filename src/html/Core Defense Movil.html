@@ -68,13 +68,11 @@
 		$(document).keyup(function(e) {
 			keysDown[e.keyCode] = false;
 		});
-
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
 			m.mover(keysDown);
 			m.pintado();
 		}
-
         function startNS() {
 			if (!timerId) {
 				timerId = setInterval("computeNS()", 50);
@@ -108,35 +106,27 @@
         function w_J1_true(){
             keysDown[87] = true;
         }
-
         function w_J1_false(){
             keysDown[87] = false;
         }
-
         function s_J1_true(){
             keysDown[83] = true;
         }
-
         function s_J1_false(){
             keysDown[83] = false;
         }
-
         function a_J1_true(){
             keysDown[65] = true;
         }
-
         function a_J1_false(){
             keysDown[65] = false;
         }
-
         function d_J1_true(){
             keysDown[68] = true;
         }
-
         function d_J1_false(){
             keysDown[68] = false;
         }
-
     </script>
 </head>
 
