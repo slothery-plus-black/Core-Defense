@@ -41,8 +41,8 @@
         var context;
         var timerId = undefined; //undefined si esta parado.
 
-        var j1canvas;
-        var j1context;
+        var jcanvas;
+        var jcontext;
         
         //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
         //var rendija = true; //True si hay rendija activa
@@ -66,10 +66,10 @@
             
 
             for (i=0;i<4;i++){
-                j1canvas = document.getElementById("j1"+i);
-                j1context = j1canvas.getContext("2d");
-                j1context.rect(0,0,100,100);
-                j1context.stroke(); 
+                jcanvas = document.getElementById("j1"+i);
+                jcontext = jcanvas.getContext("2d");
+                jcontext.rect(0,0,100,100);
+                jcontext.stroke(); 
             }
             
             
@@ -128,41 +128,14 @@
         }*/
         
         startNS();
-
         
-        function j1w_true(){
-            keysDown[87] = true;
+        function moverJugadorTouch(key, accion){
+            keysDown[key] = accion;
         }
 
-        function j1w_false(){
-            keysDown[87] = false;
+        function pararJugadorTouch(key){
+            keysDown[key] = false;
         }
-        
-        function j1s_true(){
-            keysDown[83] = true;
-        }
-
-        function j1s_false(){
-            keysDown[83] = false;
-        }
-
-        function j1a_true(){
-            keysDown[65] = true;
-        }
-
-        function j1a_false(){
-            keysDown[65] = false;
-        }
-        
-        function j1d_true(){
-            keysDown[68] = true;
-        }
-
-        function j1d_false(){
-            keysDown[68] = false;
-        }
-        
-
     </script>
 </head>
 
@@ -171,10 +144,10 @@
         <img src="../images/titulo_movil.png">
     </p>
     <p align="center">
-        <canvas id="j10" width="100" height="100" border="1" ontouchstart="j1w_true()" ontouchend="j1w_false()"></canvas>
-        <canvas id="j11" width="100" height="100" border="1" ontouchstart="j1s_true()" ontouchend="j1s_false()"></canvas>
-        <canvas id="j12" width="100" height="100" border="1" ontouchstart="j1a_true()" ontouchend="j1a_false()"></canvas>
-        <canvas id="j13" width="100" height="100" border="1" ontouchstart="j1d_true()" ontouchend="j1d_false()"></canvas>
+        <canvas id="j10" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(87,true)" ontouchend="moverJugadorTouch(87,false)"></canvas>
+        <canvas id="j11" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(83,true)" ontouchend="moverJugadorTouch(83,false)"></canvas>
+        <canvas id="j12" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(65,true)" ontouchend="moverJugadorTouch(65,false)"></canvas>
+        <canvas id="j13" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(68,true)" ontouchend="moverJugadorTouch(68,false)"></canvas>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
