@@ -64,10 +64,14 @@
 				}
             });
             
-            j1canvas = document.getElementById("j1");
-            j1context = j1canvas.getContext("2d");
-            j1context.rect(0,0,720/4,100);
-            j1context.stroke(); 
+
+            for (i=0;i<4;i++){
+                j1canvas = document.getElementById("j1"+i);
+                j1context = j1canvas.getContext("2d");
+                j1context.rect(0,0,100,100);
+                j1context.stroke(); 
+            }
+            
             
             
             /*j1canvas.addEventListener("touchstart", function (e) {
@@ -126,12 +130,20 @@
         startNS();
 
         
-        function prueba(){
+        function j1w_true(){
             keysDown[87] = true;
         }
 
-        function prueba2(){
+        function j1w_false(){
             keysDown[87] = false;
+        }
+        
+        function j1s_true(){
+            keysDown[83] = true;
+        }
+
+        function j1s_false(){
+            keysDown[83] = false;
         }
         
 
@@ -143,7 +155,10 @@
         <img src="../images/titulo_movil.png">
     </p>
     <p align="center">
-        <canvas id="j1" width="720" height="100" border="1" ontouchstart="prueba()" ontouchend="prueba2()"></canvas>
+        <canvas id="j10" width="100" height="100" border="1" ontouchstart="j1w_true()" ontouchend="j1w_false()"></canvas>
+        <canvas id="j11" width="100" height="100" border="1" ontouchstart="j1s_true()" ontouchend="j1s_false()"></canvas>
+        <canvas id="j12" width="100" height="100" border="1" ontouchstart="prueba()" ontouchend="prueba2()"></canvas>
+        <canvas id="j13" width="100" height="100" border="1" ontouchstart="prueba()" ontouchend="prueba2()"></canvas>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
