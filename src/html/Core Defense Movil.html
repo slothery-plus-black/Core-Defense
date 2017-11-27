@@ -126,7 +126,7 @@
         }, false);*/
 
         function w_J1_true(){
-            
+            keysDown[87] = true;
         }
         function w_J1_false(){
             keysDown[87] = false;
@@ -158,13 +158,13 @@
 
 <body onload="initGame()" bgcolor="#37383C" oncontextmenu="return false;">
     <p align="center">
-        <img id = "im" src="../images/titulo_movil.png" class="botonJugador">
+        <img src="../images/titulo_movil.png" ontouchstart="w_J1_true()" ontouchend="w_J1_true()" ontouchleave="w_J1_true()">
     </p>
     <p align="center">
         <button id="w_j1" class="botonJugador">Arriba</button>
-        <button ontouchstart="s_J1_true()" ontouchend="s_J1_false()" ontouchleave="s_J1_false()" class="botonJugador">Abajo</button>
-        <button ontouchstart="a_J1_true()" ontouchend="a_J1_false()" ontouchleave="a_J1_false()" class="botonJugador">Izquierda</button>
-        <button ontouchstart="d_J1_true()" ontouchend="d_J1_false()" ontouchleave="d_J1_false()" class="botonJugador">Derecha</button>
+        <button ontouchstart="s_J1_true()" ontouchend="s_J1_false()" ontouchleave="s_J1_false()">Abajo</button>
+        <button ontouchstart="a_J1_true()" ontouchend="a_J1_false()" ontouchleave="a_J1_false()">Izquierda</button>
+        <button ontouchstart="d_J1_true()" ontouchend="d_J1_false()" ontouchleave="d_J1_false()">Derecha</button>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
