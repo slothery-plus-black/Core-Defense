@@ -312,6 +312,7 @@ function mundo() {
 					break;
 			}
 			jugador.shoot();
+			jugador.animar(jugador.dir);
 		}
 	}
 
