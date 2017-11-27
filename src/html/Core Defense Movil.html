@@ -1,175 +1,36 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<link rel="shortcut icon" type="image/x-icon" href="../images/sprite1.png">
+  <script>
+    function absorbEvent_(event) {
+      var e = event || window.event;
+      e.preventDefault && e.preventDefault();
+      e.stopPropagation && e.stopPropagation();
+      e.cancelBubble = true;
+      e.returnValue = false;
+      return false;
+    }
 
-    <title>Core Defense</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <style>
-        canvas {
-            position: relative;
-        }
-        
-        cellTime {
-            position: fixed;
-            right: 180px;
-            top: 570px;
-        }
-        
-        /* Esta clase define la anchura del contenido y la posicion centrada 
-           El contenido queda centrado y limitado, pero el pie
-           llegan hasta los limites del navegador.
-        */
-        .define {
-            width: 960px;
-            margin: 0 auto;
-        }
-    </style>
+    function preventLongPressMenu(node) {
+      node.ontouchstart = absorbEvent_;
+      node.ontouchmove = absorbEvent_;
+      node.ontouchend = absorbEvent_;
+      node.ontouchcancel = absorbEvent_;
+    }
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="../js/jugador.js"></script>
-	<script src="../js/casilla.js"></script>
-	<script src="../js/mundo.js"></script>
-	<script src="../js/shootingController.js"></script>
-    <script src="../js/bala.js"></script>
-    <script src="../js/enemigo1.js"></script>
-
-	<script type="text/javascript">
-        //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
-        var canvas;
-        var context;
-        var timerId = undefined; //undefined si esta parado.
-        
-        //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
-        //var rendija = true; //True si hay rendija activa
-		var m = new mundo(40,720); //Objeto mundo
-		var keysDown = {};//Para saber que teclas estan pulsadas
-        
-        //INICIALIZA TODO
-        function initGame() {
-            canvas = document.getElementById("game");
-            context = canvas.getContext("2d");
-            //canvas.addEventListener("click", m.onCanvasClick, false);
-			
-			$.ajax({
-				dataType: "json",
-				url: "../json/MapaFacil.json",
-				mimeType: "application/json",
-				success: function(result){
-					m.initMundo(context, result);
-				}
-			});
-        }
-		
-		$(document).keydown(function(e) {
-			keysDown[e.keyCode] = true;
-		});
-		$(document).keyup(function(e) {
-			keysDown[e.keyCode] = false;
-        });
-        
-        //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
-        function computeNS() {
-			m.mover(keysDown);
-			m.pintado();
-        }
-        
-        function startNS() {
-			if (!timerId) {
-				timerId = setInterval("computeNS()", 50);
-				//1000 1 frame por segundoS
-				//100 10 frames por segundo
-				//50 20 frames por segundo
-				//25 40 frames por segundo
-				
-				//var status = document.getElementById("status");
-				//status.innerHTML = "<b>Play</b>";
-			}
-        }
-		
-        //Para el tiempo de ejecucion
-        function stopNS() {
-			window.clearInterval(timerId);
-			timerId = undefined;
-        }
-		
-        //PARA TESTEO: Si pulsas stop detienes el juego y limpias todo
-        /*function clearBoard() {
-            m.initMundo();
-            m.pintado();
-            stopNS(); //(no tiene sentido ejecutar el mundo si esta vacio)
-            var status = document.getElementById("status");
-            status.innerHTML = "<b>Stop</b>";
-        }*/
-        
-        startNS();
-
-        /*var wj1 = document.getElementById('w_j1');
-        wj1.addEventListener('ontouchstart', function(e){
-            keysDown[87] = true;
-            e.preventDefault();
-        }, false);
-        wj1.addEventListener('ontouchend', function(e){
-            keysDown[87] = false;
-            e.preventDefault();
-        }, false);
-
-        var im = document.getElementById('im');
-        im.addEventListener('ontouchstart', function(e){
-            keysDown[87] = true;
-            e.preventDefault();
-        }, false);
-        im.addEventListener('ontouchend', function(e){
-            keysDown[87] = false;
-            e.preventDefault();
-        }, false);*/
-
-        function w_J1_true(){
-            keysDown[87] = true;
-        }
-        function w_J1_false(){
-            keysDown[87] = false;
-        }
-        function s_J1_true(){
-            keysDown[83] = true;
-        }
-        function s_J1_false(){
-            keysDown[83] = false;
-        }
-        function a_J1_true(){
-            keysDown[65] = true;
-        }
-        function a_J1_false(){
-            keysDown[65] = false;
-        }
-        function d_J1_true(){
-            keysDown[68] = true;
-        }
-        function d_J1_false(){
-            keysDown[68] = false;
-        }
-        
-        function contextMenu(){
-            return false;
-        }
-    </script>
+    function init() {
+      preventLongPressMenu(document.getElementByTagName('body img'));
+    }
+  </script>
+  <style>
+    *:not(input):not(textarea) {
+        -webkit-user-select: none; /* disable selection/Copy of UIWebView */
+        -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
+        user-select: none;
+    }
+  </style>
 </head>
-
-<body onload="initGame()" bgcolor="#37383C" oncontextmenu="return false;">
-    <p align="center">
-        <img src="../images/titulo_movil.png" ontouchstart="w_J1_false()" ontouchend="w_J1_false()" ontouchleave="w_J1_false()" ontouchcancel="w_J1_false()">
-    </p>
-    <p align="center">
-        <button id="w_j1" class="botonJugador">Arriba</button>
-        <button ontouchstart="s_J1_true()" ontouchend="s_J1_false()" ontouchleave="s_J1_false()">Abajo</button>
-        <button ontouchstart="a_J1_true()" ontouchend="a_J1_false()" ontouchleave="a_J1_false()">Izquierda</button>
-        <button ontouchstart="d_J1_true()" ontouchend="d_J1_false()" ontouchleave="d_J1_false()">Derecha</button>
-    </p>
-    <p align="center">
-        <canvas id="game" width="720" height="720" border="1"></canvas>
-    </p>
-    <p align="center"></p>
+<body onload="init()" id="theimage" >
+  <img src="http://www.google.com/logos/arthurboyd2010-hp.jpg" width="400">
 </body>
-
 </html>
