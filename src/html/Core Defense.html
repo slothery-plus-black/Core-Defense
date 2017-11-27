@@ -34,6 +34,7 @@
 	<script src="../js/shootingController.js"></script>
     <script src="../js/bala.js"></script>
     <script src="../js/enemigo1.js"></script>
+    <script src="../js/spawner.js"></script>
 
 	<script type="text/javascript">
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
@@ -74,7 +75,6 @@
 			m.mover(keysDown);
 			m.pintado();
         }
-        
         function startNS() {
 			if (!timerId) {
 				timerId = setInterval("computeNS()", 50);

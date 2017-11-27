@@ -29,6 +29,8 @@ function mundo(cellsize, tam) {
 	this.imagenBala_3d = new Image();
 
 	this.enemigos = [];
+    
+    
 
 	this.initMundo = function (context, mapa) {
 		this.board = [];
@@ -85,10 +87,10 @@ function mundo(cellsize, tam) {
 		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
 
 		//enemigo
-		for (i = 0;i<10;i++){
-			this.enemigos[i] = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (1 * this.cellSize), 2, 0.5, 8);
+		/*for (i = 0;i<10;i++){
+			this.enemigos[i] = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (9 * this.cellSize), 2, 0.5, 8);
 		}
-		
+		*/
 
 		//Casilla (x,y,imagen,movible,destructible)
 		for (i = 0;i<this.x;i++){
