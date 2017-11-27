@@ -12,7 +12,7 @@ function mundo() {
 	this.sc = new shootingController();
 	this.cargado = false;
 
-	this.srcImagenes = "src/images/";
+	this.srcImagenes = "../images/";
 
 	//Imagenes de balas
 	this.imagenBala_1w = new Image();
@@ -27,6 +27,8 @@ function mundo() {
 	this.imagenBala_1d = new Image();
 	this.imagenBala_2d = new Image();
 	this.imagenBala_3d = new Image();
+
+	this.enemigo1;
 
 	this.initMundo = function (context, mapa) {
 		this.board = [];
@@ -45,6 +47,9 @@ function mundo() {
 		imagenJ1_s.src = this.srcImagenes+"sprite1_abajo.png";
 		imagenJ1_a.src = this.srcImagenes+"sprite1_izquierda.png";
 		imagenJ1_d.src = this.srcImagenes+"sprite1_derecha.png";
+
+		enemigo1_stand = new Image();
+		enemigo1_stand.src = this.srcImagenes+"enemigo_1.png";
 
 		//Imagenes balas
 		this.imagenBala_1w.src = this.srcImagenes+"disparo_1w.png";
@@ -78,6 +83,9 @@ function mundo() {
 		this.jugador = new Jugador([imagenJ1_w,imagenJ1_s, imagenJ1_a, imagenJ1_d, imagenJ1_stand],
 			(posiciones[posAleatoria].posx * this.cellSize), (posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8);
 		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
+
+		//enemigo
+		this.enemigo1 = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (1 * this.cellSize), 2, 1, 8);
 
 		//Casilla (x,y,imagen,movible,destructible)
 		for (i = 0;i<this.x;i++){
@@ -182,6 +190,7 @@ function mundo() {
 
 			//Impresion de las balas
 			this.sc.renderBalas();
+			this.pintar(this.enemigo1.sprite, this.enemigo1.posx,this.enemigo1.posy);
 		}
 	}
 
