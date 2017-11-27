@@ -104,23 +104,23 @@
         }*/
         
         startNS();
-        
+
         var wj1 = document.getElementById('w_j1');
-        wj1.addEventListener('touchstart', function(e){
+        wj1.addEventListener('ontouchstart', function(e){
             keysDown[87] = true;
             e.preventDefault();
         }, false);
-        wj1.addEventListener('touchend', function(e){
+        wj1.addEventListener('ontouchend', function(e){
             keysDown[87] = false;
             e.preventDefault();
         }, false);
 
         var im = document.getElementById('im');
-        im.addEventListener('touchstart', function(e){
+        im.addEventListener('ontouchstart', function(e){
             keysDown[87] = true;
             e.preventDefault();
         }, false);
-        im.addEventListener('touchend', function(e){
+        im.addEventListener('ontouchend', function(e){
             keysDown[87] = false;
             e.preventDefault();
         }, false);
