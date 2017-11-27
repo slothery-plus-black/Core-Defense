@@ -1,10 +1,10 @@
 //Objeto mundo, contiene el mapa y los objetos que lo contiene.
-function mundo() {
+function mundo(cellsize, tam) {
 	this.board = [];
 	this.jugador;
 	this.jugador2;
-	this.cellSize = 40; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
-	this.x = (720) / this.cellSize, //Número de CASILLAS horizontales
+	this.cellSize = cellsize; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
+	this.x = (tam) / this.cellSize, //Número de CASILLAS horizontales
 	this.y = this.x; //Verticales
 
 	this.context;
@@ -28,7 +28,7 @@ function mundo() {
 	this.imagenBala_2d = new Image();
 	this.imagenBala_3d = new Image();
 
-	this.enemigo1;
+	this.enemigos = [];
 
 	this.initMundo = function (context, mapa) {
 		this.board = [];
@@ -85,7 +85,10 @@ function mundo() {
 		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
 
 		//enemigo
-		this.enemigo1 = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (1 * this.cellSize), 2, 1, 8);
+		for (i = 0;i<10;i++){
+			this.enemigos[i] = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (1 * this.cellSize), 2, 1, 8);
+		}
+		
 
 		//Casilla (x,y,imagen,movible,destructible)
 		for (i = 0;i<this.x;i++){
@@ -174,7 +177,6 @@ function mundo() {
 
 	this.pintado = function () {
 		if (this.cargado){
-			///////Falta mover enemigos
 			this.moverEnemigos();
 
 			for (i = 0; i < this.x; i++) {
@@ -190,7 +192,9 @@ function mundo() {
 
 			//Impresion de las balas
 			this.sc.renderBalas();
-			this.pintar(this.enemigo1.sprite, this.enemigo1.posx,this.enemigo1.posy);
+
+			this.pintarEnemigos();
+			//this.pintar(this.enemigo1.sprite, this.enemigo1.posx,this.enemigo1.posy);
 		}
 	}
 
@@ -199,6 +203,12 @@ function mundo() {
 			this.context.drawImage(img, x, y);
 		} catch(err) {
 			//Error en el pintado porque aun no se ha cargado la imagen en firefox, en chrome no hay problema
+		}
+	}
+
+	this.pintarEnemigos = function(){
+		for (i=0;i<this.enemigos.length;i++){
+			this.pintar(this.enemigos[i].sprite, this.enemigos[i].posx,this.enemigos[i].posy);
 		}
 	}
 	
@@ -241,7 +251,45 @@ function mundo() {
 	}
 
 	this.moverEnemigos = function(){
+		//Actualiza la direccion en la que mira
+		//this.enemigo1.dir=1;
 
+		for (i=0;i<this.enemigos.length;i++){
+			var jxOriginal = this.enemigos[i].posx;
+			var jyOriginal = this.enemigos[i].posy;
+	
+			switch (this.enemigos[i].dir){
+				case 0:
+					this.enemigos[i].posy = this.enemigos[i].posy - this.enemigos[i].velocidad;
+					if (this.enemigos[i].posy < 0)
+					this.enemigos[i].posy = 0;
+					break;
+				case 1:
+					this.enemigos[i].posy = this.enemigos[i].posy + this.enemigos[i].velocidad;
+					if (this.enemigos[i].posy >= (this.y*this.cellSize)-this.enemigos[i].velocidad)
+					this.enemigos[i].posy = (this.y*this.cellSize)-this.enemigos[i].velocidad;
+					break;
+				case 2:
+					this.enemigos[i].posx = this.enemigos[i].posx - this.enemigos[i].velocidad;
+					if (this.enemigos[i].posx < 0)
+					this.enemigos[i].posx = 0;
+					break;
+				case 3:
+					this.enemigos[i].posx = this.enemigos[i].posx + this.enemigos[i].velocidad;
+					if (this.enemigos[i].posx >= (this.x*this.cellSize)-this.enemigos[i].velocidad)
+					this.enemigos[i].posx = (this.x*this.cellSize)-this.enemigos[i].velocidad;
+					break;
+			}
+			
+			if (this.colision(this.enemigos[i].posx,this.enemigos[i].posy,this.enemigos[i].margen)){
+				this.enemigos[i].posx = jxOriginal;
+				this.enemigos[i].posy = jyOriginal;
+				this.enemigos[i].dir = Math.floor((Math.random() * 4) + 0);
+			}
+		}
+		
+
+		//jugador.animar(num);
 	}
 	
 	this.disparar = function (jugador) {

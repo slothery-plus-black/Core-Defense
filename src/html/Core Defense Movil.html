@@ -2,6 +2,8 @@
 <html>
 
 <head>
+	<link rel="shortcut icon" type="image/x-icon" href="../images/sprite1.png">
+
     <title>Core Defense</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
@@ -26,370 +28,71 @@
     </style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	
-    <script type="text/javascript">
-		$( document ).ready(function() {
-			initGame();
-		});
-	
+	<script src="../js/jugador.js"></script>
+	<script src="../js/casilla.js"></script>
+	<script src="../js/mundo.js"></script>
+	<script src="../js/shootingController.js"></script>
+    <script src="../js/bala.js"></script>
+    <script src="../js/enemigo1.js"></script>
+
+	<script type="text/javascript">
         //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
-        var cellSize = 40; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
-        var x = (720) / cellSize, //Número de CASILLAS horizontales
-            y = x; //Verticales
-        var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
-        var rendija = true; //True si hay rendija activa
-        var m = new mundo(); //Objeto mundo
-        var m_vert = new Image();
-		var m_hor = new Image();
-		var m_ArI = new Image();
-		var m_ArD = new Image();
-		var m_AbI = new Image();
-		var m_AbD = new Image();
-		var m_Fondo = new Image();
-		var m_Bordes = new Image();
-		var m_Core0 = new Image();
-		var m_Core1 = new Image();
-		var m_Core2 = new Image();
-		var m_Core3 = new Image();
-		var m_Aparicion = new Image();
-		
-		var estado = 0;//Para saber que "tile" se esta usando
-		
-		var personaje_1 = new Image();
-		
-        //Carga de Sprites
-        function loadImages(){
-			//Tiles
-            m_vert.src = 'src/2.png';
-			m_hor.src = 'src/3.png';
-			m_ArI.src = 'src/4.png';
-			m_ArD.src = 'src/5.png';
-			m_AbI.src = 'src/7.png';
-			m_AbD.src = 'src/6.png';
-			m_Fondo.src = 'src/0.png';
-			m_Bordes.src = 'src/1.png';
-			m_Core0.src = 'src/8.png';
-			m_Core1.src = 'src/9.png';
-			m_Core2.src = 'src/A.png';
-			m_Core3.src = 'src/B.png';
-			m_Aparicion.src = 'src/C.png';
-			
-			//Personajes
-			personaje_1.src = 'src/sprite1.png';
-        }
-		
-        //PARA TESTEO: Pinta la rendija del mapa
-        /*function pintarRendija() {
-            if (rendija) {
-                extra = 0;
-                rendija = false;
-            } else if (rendija == false) {
-                m.pintado();
-                rendija = true;
-                extra = 1;
-                //Dibuja la reja
-                for (var h = 0; h <= x * cellSize; h = h + cellSize) {
-                    context.moveTo(h, 0);
-                    context.lineTo(h, y * cellSize);
-                }
-                for (var v = 0; v <= y * cellSize; v = v + 10) {
-                    context.moveTo(0, v);
-                    context.lineTo(x * cellSize, v);
-                }
-                //Hace visible la reja
-                context.strokeStyle = "#27282C";
-                context.stroke();
-            }
-            m.pintado();
-        }*/
-
+        
+        //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
+        //var rendija = true; //True si hay rendija activa
+		var m = new mundo(40,720); //Objeto mundo
+		var keysDown = {};//Para saber que teclas estan pulsadas
+        
         //INICIALIZA TODO
         function initGame() {
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
-            canvas.addEventListener("click", m.onCanvasClick, false);
-            loadImages();
-            m.initMundo();
-            m.pintado();
-        }
-
-        //Objeto casilla, con la imagen y si se puede mover por ella
-        function casilla(imagen,mov) {
-            //this.stat = 0;
-            /*var aliveTime = 0;
-            this.turnoMas = function () {
-                aliveTime++;
-            }
-            this.getTiempo = function () {
-                return aliveTime;
-            }
-            this.setTiempo = function (time) {
-                aliveTime = time + 1;
-            }*/
-			this.movible = mov;
-			this.image = imagen;
+            //canvas.addEventListener("click", m.onCanvasClick, false);
 			
-			this.setImagen = function(imagen, mov){
-				this.image = imagen;
-				this.movible = mov;
-			}
+			$.ajax({
+				dataType: "json",
+				url: "../json/MapaFacil.json",
+				mimeType: "application/json",
+				success: function(result){
+					m.initMundo(context, result);
+				}
+			});
         }
-        
-        //Objeto jugador, tiene su sprite, sus posiciones en x e y ademas de la velocidad
-        function Jugador(spr,x,y,vel) {
-			//Velocidad del jugador debe ser multiplo de cellsize
-			this.sprite = spr;
-			this.posx = x;
-			this.posy = y;
-			this.velocidad = vel;
-        }
+		
+		$(document).keydown(function(e) {
+			keysDown[e.keyCode] = true;
+		});
+		$(document).keyup(function(e) {
+			keysDown[e.keyCode] = false;
+		});
 
-        //Objeto mundo, contiene el mapa y los objetos que lo contiene.
-        function mundo() {
-            var board = [];
-			var jugador;
-            // var hcells = x; //número de células horizontales
-            // var y = y; //número de células verticales
-
-            this.initMundo = function () {
-				//Aqui hay que leer la estructura del mapa y cargarlo
-                board = [];
-                for (i = 0; i < x; i++) {
-                    board[i] = [];
-                    for (j = 0; j < y; j++) {
-                        board[i][j] = new casilla(m_Fondo, true); //CREA UNA casilla VACIA
-						
-						//Prueba para poner un jugador
-						if (i === 1 && j ===1){
-							jugador = new Jugador(personaje_1, (i * cellSize), (j * cellSize), 8);
-						}
-						
-						//Bordes
-						if (i === 0 || i === x-1){
-							board[i][j] = new casilla(m_Bordes, false);
-						}
-						if (j === 0 || j === y-1){
-							board[i][j] = new casilla(m_Bordes, false);
-						}
-						
-						//Esquinas
-						if (i === 0 && j ===0){
-							board[i][j] = new casilla(m_Bordes, false);
-						}
-						
-						if (i === x-1 && j ===0){
-							board[i][j] = new casilla(m_Bordes, false);
-						}
-						
-						if (i === 0 && j ===y-1){
-							board[i][j] = new casilla(m_Bordes, false);
-						}
-						
-						if (i === x-1 && j ===y-1){
-							board[i][j] = new casilla(m_Bordes, false);
-						}
-						
-						//Apariciones
-						if (i === 8 && j === 0){
-							board[i][j] = new casilla(m_Aparicion, false);
-						}
-						if (i === 9 && j === 0){
-							board[i][j] = new casilla(m_Aparicion, false);
-						}
-						if (i === 0 && j === 8){
-							board[i][j] = new casilla(m_Aparicion, false);
-						}
-						if (i === 0 && j === 9){
-							board[i][j] = new casilla(m_Aparicion, false);
-						}
-						
-						/*if (i === 8 && j === 8){
-							board[i][j] = new casilla(m_Aparicion, false);
-						}
-						if (i === 8 && j === 9){
-							board[i][j] = new casilla(m_Aparicion, false);
-						}
-						if (i === 0 && j === 8){
-							board[i][j] = new casilla(m_Aparicion, false);
-						}
-						if (i === 0 && j === 9){
-							board[i][j] = new casilla(m_Aparicion, false);
-						}
-						*/
-						//Centro
-						if (i === 8 && j === 8){
-							board[i][j] = new casilla(m_Core0, false);
-						}
-						if (i === 9 && j === 8){
-							board[i][j] = new casilla(m_Core1, false);
-						}
-						if (i === 8 && j === 9){
-							board[i][j] = new casilla(m_Core2, false);
-						}
-						if (i === 9 && j === 9){
-							board[i][j] = new casilla(m_Core3, false);
-						}
-                    }
-                }
-            }
-
-            this.pintado = function () {
-                for (i = 0; i < x; i++) {
-                    for (j = 0; j < y; j++) {
-						//Caso 0 el que no tiene nada, los demás los diferentes tiles
-						/*switch (board[i][j].image){
-							case 0:
-								context.fillStyle = "rgb(100,100,100)";
-								context.fillRect(i * cellSize + extra, j * cellSize + extra, cellSize - extra, cellSize - extra);
-								break;
-							case 1:
-								context.drawImage(m_vert,i * cellSize, j * cellSize);
-								break;
-							case 2:
-								context.drawImage(m_hor,i * cellSize, j * cellSize);
-								break;
-							case 3:
-								context.drawImage(m_ArI,i * cellSize, j * cellSize);
-								break;
-							case 4:
-								context.drawImage(m_ArD,i * cellSize, j * cellSize);
-								break;
-							case 5:
-								context.drawImage(m_AbI,i * cellSize, j * cellSize);
-								break;
-							case 6:
-								context.drawImage(m_AbD,i * cellSize, j * cellSize);
-								break;
-							case 7:
-								context.drawImage(m_Fondo,i * cellSize, j * cellSize);
-								break;
-							case 8:
-								context.drawImage(m_Origen,i * cellSize, j * cellSize);
-								break;
-						}*/
-						//context.globalAlpha = 1.0;
-						context.drawImage(board[i][j].image,i * cellSize, j * cellSize);
-                    }
-                }
-				
-				//Para imprimir si tiene algun personaje
-				if (jugador !== null){
-					//context.globalAlpha = 0.7;
-					context.drawImage(jugador.sprite,jugador.posx, jugador.posy);
-				}
-            }
-            
-            //PARA TESTEO: Pintar en la casilla pinchada
-            this.onCanvasClick = function (evt) {
-                var x = evt.clientX - canvas.offsetLeft;
-                var y = evt.clientY - canvas.offsetTop;
-                var boardX = parseInt(x / cellSize);
-                var boardY = parseInt(y / cellSize);
-                
-				//estado = tecla del 1 al 8 que selecciona el tile a pintar
-				switch (estado){
-					case 1:
-						board[boardX][boardY].setImagen(m_vert, false);
-						break;
-					case 2:
-						board[boardX][boardY].setImagen(m_hor, false);
-						break;
-					case 3:
-						board[boardX][boardY].setImagen(m_ArI, false);
-						break;
-					case 4:
-						board[boardX][boardY].setImagen(m_ArD, false);
-						break;
-					case 5:
-						board[boardX][boardY].setImagen(m_AbI, false);
-						break;
-					case 6:
-						board[boardX][boardY].setImagen(m_AbD, false);
-						break;
-					case 7:
-						board[boardX][boardY].setImagen(m_Fondo, true);
-						break;
-					case 8:
-						board[boardX][boardY].setImagen(m_Origen, false);
-						break;
-				}
-				
-                m.pintado();
-            }
-            
-            //Devuelve si tiene un bloque o lo que sea.
-            this.hasBlock = function(x,y) {
-				return board[x][y];
-			}
-			
-			//0 arriba, 1 abajo, 2 izquierda y 3 derecha
-			this.moverJugador = function (num) {
-				var jxOriginal = jugador.posx;
-				var jyOriginal = jugador.posy;
-				
-				switch (num){
-					case 0:
-						jugador.posy = jugador.posy - jugador.velocidad;
-						if (jugador.posy < 0)
-							jugador.posy = 0;
-						break;
-					case 1:
-						jugador.posy = jugador.posy + jugador.velocidad;
-						if (jugador.posy >= (y*cellSize)-jugador.velocidad)
-							jugador.posy = (y*cellSize)-jugador.velocidad;
-						break;
-					case 2:
-						jugador.posx = jugador.posx - jugador.velocidad;
-						if (jugador.posx < 0)
-							jugador.posx = 0;
-						break;
-					case 3:
-						jugador.posx = jugador.posx + jugador.velocidad;
-						if (jugador.posx >= (x*cellSize)-jugador.velocidad)
-							jugador.posx = (x*cellSize)-jugador.velocidad;
-						break;
-				}
-				
-				if (!board[Math.floor(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true
-				|| !board[Math.ceil(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
-				|| !board[Math.floor(jugador.posx / cellSize)][Math.ceil(jugador.posy / cellSize)].movible === true
-				|| !board[Math.ceil(jugador.posx / cellSize)][Math.floor(jugador.posy / cellSize)].movible === true){
-					jugador.posx = jxOriginal;
-					jugador.posy = jyOriginal;
-				}
-			}
-        }
-        
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
-            m.pintado();
-			
-        }
-        
-        //PARA TESTEO: Si pulsas play empieza el bucle
+			m.mover(keysDown);
+			m.pintado();
+		}
+
         function startNS() {
-            if (!timerId) {
-                timerId = setInterval("computeNS()", 25);
-				//1000 1 frame por segundo
+			if (!timerId) {
+				timerId = setInterval("computeNS()", 50);
+				//1000 1 frame por segundoS
 				//100 10 frames por segundo
 				//50 20 frames por segundo
 				//25 40 frames por segundo
 				
-                //var status = document.getElementById("status");
-                //status.innerHTML = "<b>Play</b>";
-            }
+				//var status = document.getElementById("status");
+				//status.innerHTML = "<b>Play</b>";
+			}
         }
 		
-        //Para el tiempo de ejecucion, se llama desde stop
-        /*function stopNS() {
-            clearInterval(timerId);
-            timerId = undefined;
-            var status = document.getElementById("status");
-            status.innerHTML = "<b>Pausa</b>";
-        }*/
+        //Para el tiempo de ejecucion
+        function stopNS() {
+			window.clearInterval(timerId);
+			timerId = undefined;
+        }
 		
         //PARA TESTEO: Si pulsas stop detienes el juego y limpias todo
         /*function clearBoard() {
@@ -399,73 +102,58 @@
             var status = document.getElementById("status");
             status.innerHTML = "<b>Stop</b>";
         }*/
-		
-		//Para saber cuando se pulsan las teclas
-		document.onkeypress = function(evt) {
-			evt = evt || window.event;
-			var charCode = evt.keyCode || evt.which;
-			var charStr = String.fromCharCode(charCode);
-			
-			//console.log(charStr);
-			
-			switch (charStr){
-				case "1":
-					estado = 1;
-					break;
-				case "2":
-					estado = 2;
-					break;
-				case "3":
-					estado = 3;
-					break;
-				case "4":
-					estado = 4;
-					break;
-				case "5":
-					estado = 5;
-					break;
-				case "6":
-					estado = 6;
-					break;
-				case "7":
-					estado = 7;
-					break;
-				case "8":
-					estado = 8;
-					break;
-					
-				case "w":
-				case "W":
-					m.moverJugador(0);
-					break;
-				case "s":
-				case "S":
-					m.moverJugador(1);
-					break;
-				case "a":
-				case "A":
-					m.moverJugador(2);
-					break;
-				case "d":
-				case "D":
-					m.moverJugador(3);
-					break;
-			}
-		};
-		
-		startNS();
+        
+        startNS();
+        
+        function w_J1_true(){
+            keysDown[87] = true;
+        }
+
+        function w_J1_false(){
+            keysDown[87] = false;
+        }
+
+        function s_J1_true(){
+            keysDown[83] = true;
+        }
+
+        function s_J1_false(){
+            keysDown[83] = false;
+        }
+
+        function a_J1_true(){
+            keysDown[65] = true;
+        }
+
+        function a_J1_false(){
+            keysDown[65] = false;
+        }
+
+        function d_J1_true(){
+            keysDown[68] = true;
+        }
+
+        function d_J1_false(){
+            keysDown[68] = false;
+        }
+
     </script>
 </head>
 
 <body onload="initGame()" bgcolor="#37383C">
     <p align="center">
-        <img src="src/titulo.png">
+        <img src="../images/titulo_movil.png">
+    </p>
+    <p align="center">
+        <button onmousedown="w_J1_true()" onmouseup="w_J1_false()" onmouseleave="w_J1_false()">Arriba</button>
+        <button onmousedown="s_J1_true()" onmouseup="s_J1_false()" onmouseleave="s_J1_false()">Abajo</button>
+        <button onmousedown="a_J1_true()" onmouseup="a_J1_false()" onmouseleave="a_J1_false()">Izquierda</button>
+        <button onmousedown="d_J1_true()" onmouseup="d_J1_false()" onmouseleave="d_J1_false()">Derecha</button>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
     </p>
-    <p align="center">
-        <span id="cellTime" style="color: #FF920E;"></span></p>
+    <p align="center"></p>
 </body>
 
 </html>
