@@ -40,6 +40,9 @@
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
+
+        var j1canvas;
+        var j1context;
         
         //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
         //var rendija = true; //True si hay rendija activa
@@ -59,7 +62,13 @@
 				success: function(result){
 					m.initMundo(context, result);
 				}
-			});
+            });
+            
+            j1canvas = document.getElementById("j1");
+            j1context = canvas.getContext("2d");
+            var img = new Image();
+            img.src = "../images/personaje_1.png";
+            j1context.drawImage(img,100, 10);
         }
 		
 		$(document).keydown(function(e) {
@@ -105,58 +114,9 @@
         
         startNS();
 
-        /*var wj1 = document.getElementById('w_j1');
-        wj1.addEventListener('ontouchstart', function(e){
-            keysDown[87] = true;
-            e.preventDefault();
-        }, false);
-        wj1.addEventListener('ontouchend', function(e){
-            keysDown[87] = false;
-            e.preventDefault();
-        }, false);
-
-        var im = document.getElementById('im');
-        im.addEventListener('ontouchstart', function(e){
-            keysDown[87] = true;
-            e.preventDefault();
-        }, false);
-        im.addEventListener('ontouchend', function(e){
-            keysDown[87] = false;
-            e.preventDefault();
-        }, false);*/
-
-        function w_J1_true(){
-            keysDown[87] = true;
-        }
-        function w_J1_false(){
-            keysDown[87] = false;
-        }
-        function s_J1_true(){
-            keysDown[83] = true;
-        }
-        function s_J1_false(){
-            keysDown[83] = false;
-        }
-        function a_J1_true(){
-            keysDown[65] = true;
-        }
-        function a_J1_false(){
-            keysDown[65] = false;
-        }
-        function d_J1_true(){
-            keysDown[68] = true;
-        }
-        function d_J1_false(){
-            keysDown[68] = false;
-        }
-        
-        function contextMenu(){
-            return false;
-        }
-
         
 
-        j1context.drawImage(img, 0, 0);
+        
 
     </script>
 </head>
@@ -166,7 +126,7 @@
         <img src="../images/titulo_movil.png">
     </p>
     <p align="center">
-        <canvas id="j1" width="360" height="720" border="1"></canvas>
+        <canvas id="j1" width="720" height="100" border="1"></canvas>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
