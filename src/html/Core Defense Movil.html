@@ -7,9 +7,9 @@
     <title>Core Defense</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
-        canvas {
+        /*canvas {
             position: relative;
-        }
+        }*/
         
         cellTime {
             position: fixed;
@@ -65,7 +65,9 @@
             });
             
             j1canvas = document.getElementById("j1");
-            j1context = canvas.getContext("2d");
+            j1context = j1canvas.getContext("2d");
+            j1context.rect(20,20,150,100);
+            j1context.stroke(); 
             var img = new Image();
             img.src = "../images/personaje_1.png";
             j1context.drawImage(img,100, 10);
@@ -115,7 +117,13 @@
         startNS();
 
         
+        function prueba(){
+            keysDown[87] = true;
+        }
 
+        function prueba(){
+            keysDown[87] = false;
+        }
         
 
     </script>
@@ -126,7 +134,7 @@
         <img src="../images/titulo_movil.png">
     </p>
     <p align="center">
-        <canvas id="j1" width="720" height="100" border="1"></canvas>
+        <canvas id="j1" width="720" height="100" border="1" ontouchstart="prueba()" ontouchend="prueba2()"></canvas>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
