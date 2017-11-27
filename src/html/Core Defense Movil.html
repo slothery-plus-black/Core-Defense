@@ -21,6 +21,10 @@
     function init() {
       preventLongPressMenu(document.getElementById("theimage"));
     }
+
+    window.oncontextmenu = function() {
+        return false;
+};
   </script>
   <style>
     *:not(input):not(textarea) {
