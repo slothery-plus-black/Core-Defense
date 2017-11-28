@@ -64,26 +64,13 @@
 				}
             });
             
-
-            for (i=0;i<4;i++){
+            //Dibujando los cuadrados de movimiento
+            for (i=0;i<5;i++){
                 jcanvas = document.getElementById("j1"+i);
                 jcontext = jcanvas.getContext("2d");
                 jcontext.rect(0,0,100,100);
                 jcontext.stroke(); 
             }
-            
-            
-            
-            /*j1canvas.addEventListener("touchstart", function (e) {
-                keysDown[87] = true;
-                /*mousePos = getTouchPos(canvas, e);
-                var touch = e.touches[0];
-                var mouseEvent = new MouseEvent("mousedown", {
-                    clientX: touch.clientX,
-                    clientY: touch.clientY
-                });
-                canvas.dispatchEvent(mouseEvent);
-                }, false);*/
         }
 		
 		$(document).keydown(function(e) {
@@ -148,6 +135,7 @@
         <canvas id="j11" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(83,true)" ontouchend="moverJugadorTouch(83,false)"></canvas>
         <canvas id="j12" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(65,true)" ontouchend="moverJugadorTouch(65,false)"></canvas>
         <canvas id="j13" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(68,true)" ontouchend="moverJugadorTouch(68,false)"></canvas>
+        <canvas id="j14" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(70,true)" ontouchend="moverJugadorTouch(70,false)"></canvas>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
