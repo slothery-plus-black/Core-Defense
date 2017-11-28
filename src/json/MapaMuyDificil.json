@@ -119,7 +119,7 @@
 				{"columna":"11","tile":"0"},
 				{"columna":"12","tile":"1"},
 				{"columna":"13","tile":"3"},
-				{"columna":"14","tile":"3"},
+				{"columna":"14","tile":"10"},
 				{"columna":"15","tile":"5"},
 				{"columna":"16","tile":"0"},
 				{"columna":"17","tile":"1"}
@@ -333,7 +333,7 @@
 				{"columna":"0","tile":"1"},
 				{"columna":"1","tile":"0"},
 				{"columna":"2","tile":"7"},
-				{"columna":"3","tile":"3"},
+				{"columna":"3","tile":"E"},
 				{"columna":"4","tile":"3"},
 				{"columna":"5","tile":"1"},
 				{"columna":"6","tile":"0"},
