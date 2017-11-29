@@ -40,9 +40,6 @@
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
-
-        var jcanvas;
-        var jcontext;
         
         //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
         //var rendija = true; //True si hay rendija activa
@@ -53,7 +50,6 @@
         function initGame() {
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
-            //canvas.addEventListener("click", m.onCanvasClick, false);
 			
 			$.ajax({
 				dataType: "json",
@@ -66,19 +62,28 @@
             
             //Dibujando los cuadrados de movimiento
             for (i=0;i<5;i++){
-                jcanvas = document.getElementById("j1"+i);
-                jcontext = jcanvas.getContext("2d");
-                jcontext.rect(0,0,100,100);
-                jcontext.stroke(); 
+
+                var img = new Image();
+                img.i = i;
+                img.src = "../images/boton_j"+i+".png";
+                
+                img.onload = function() {
+                    var jcanvas = document.getElementById("j1"+this.i);
+                    var jcontext = jcanvas.getContext("2d");
+                    jcontext.drawImage(this, 0, 0);
+                    jcontext.rect(0,0,174,152);
+                    jcontext.stroke();
+                }
+                
             }
         }
-		
-		$(document).keydown(function(e) {
+
+		/*$(document).keydown(function(e) {
 			keysDown[e.keyCode] = true;
 		});
 		$(document).keyup(function(e) {
 			keysDown[e.keyCode] = false;
-        });
+        });*/
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
@@ -131,11 +136,11 @@
         <img src="../images/titulo_movil.png">
     </p>
     <p align="center">
-        <canvas id="j10" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(87,true)" ontouchend="moverJugadorTouch(87,false)"></canvas>
-        <canvas id="j11" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(83,true)" ontouchend="moverJugadorTouch(83,false)"></canvas>
-        <canvas id="j12" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(65,true)" ontouchend="moverJugadorTouch(65,false)"></canvas>
-        <canvas id="j13" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(68,true)" ontouchend="moverJugadorTouch(68,false)"></canvas>
-        <canvas id="j14" width="100" height="100" border="1" ontouchstart="moverJugadorTouch(70,true)" ontouchend="moverJugadorTouch(70,false)"></canvas>
+        <canvas id="j10" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(87,true)" ontouchend="moverJugadorTouch(87,false)"></canvas>
+        <canvas id="j11" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(83,true)" ontouchend="moverJugadorTouch(83,false)"></canvas>
+        <canvas id="j12" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(65,true)" ontouchend="moverJugadorTouch(65,false)"></canvas>
+        <canvas id="j13" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(68,true)" ontouchend="moverJugadorTouch(68,false)"></canvas>
+        <canvas id="j14" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(70,true)" ontouchend="moverJugadorTouch(70,false)"></canvas>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
