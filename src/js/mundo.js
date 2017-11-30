@@ -27,6 +27,19 @@ function mundo(cellsize, tam) {
 	this.imagenBala_1d = new Image();
 	this.imagenBala_2d = new Image();
 	this.imagenBala_3d = new Image();
+	//De enemigos
+	this.imagenBala_1wE = new Image();
+	this.imagenBala_2wE = new Image();
+	this.imagenBala_3wE = new Image();
+	this.imagenBala_1sE = new Image();
+	this.imagenBala_2sE = new Image();
+	this.imagenBala_3sE = new Image();
+	this.imagenBala_1aE = new Image();
+	this.imagenBala_2aE = new Image();
+	this.imagenBala_3aE = new Image();
+	this.imagenBala_1dE = new Image();
+	this.imagenBala_2dE = new Image();
+	this.imagenBala_3dE = new Image();
 
 	this.enemigos = [];
     
@@ -70,6 +83,23 @@ function mundo(cellsize, tam) {
 		this.imagenBala_2d.src = this.srcImagenes+"disparo_2d.png";
 		this.imagenBala_3d.src = this.srcImagenes+"disparo_3d.png";
 
+		//Imagenes balas Enemigos
+		this.imagenBala_1wE.src = this.srcImagenes+"disparo_1wE.png";
+		this.imagenBala_2wE.src = this.srcImagenes+"disparo_2wE.png";
+		this.imagenBala_3wE.src = this.srcImagenes+"disparo_3wE.png";
+
+		this.imagenBala_1sE.src = this.srcImagenes+"disparo_1sE.png";
+		this.imagenBala_2sE.src = this.srcImagenes+"disparo_2sE.png";
+		this.imagenBala_3sE.src = this.srcImagenes+"disparo_3sE.png";
+
+		this.imagenBala_1aE.src = this.srcImagenes+"disparo_1aE.png";
+		this.imagenBala_2aE.src = this.srcImagenes+"disparo_2aE.png";
+		this.imagenBala_3aE.src = this.srcImagenes+"disparo_3aE.png";
+
+		this.imagenBala_1dE.src = this.srcImagenes+"disparo_1dE.png";
+		this.imagenBala_2dE.src = this.srcImagenes+"disparo_2dE.png";
+		this.imagenBala_3dE.src = this.srcImagenes+"disparo_3dE.png";
+
 		/*var imagenJ2 = new Image();
 		imagenJ2.src = "src/personaje_1.png";*/
 		
@@ -87,10 +117,10 @@ function mundo(cellsize, tam) {
 		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
 
 		//enemigo
-		/*for (i = 0;i<10;i++){
+		for (i = 0;i<10;i++){
 			this.enemigos[i] = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (9 * this.cellSize), 2, 0.5, 8);
 		}
-		*/
+		
 
 		//Casilla (x,y,imagen,movible,destructible)
 		for (i = 0;i<this.x;i++){
@@ -262,7 +292,7 @@ function mundo(cellsize, tam) {
 		for (i=0;i<this.enemigos.length;i++){
 			var jxOriginal = this.enemigos[i].posx;
 			var jyOriginal = this.enemigos[i].posy;
-            this.disparar(this.enemigos[i]);
+            this.dispararEnemigo(this.enemigos[i]);
 	
 			switch (this.enemigos[i].dir){
 				case 0:
@@ -294,8 +324,6 @@ function mundo(cellsize, tam) {
 			}
 		}
 		
-
-		//jugador.animar(num);
 	}
 	
 	this.disparar = function (jugador) {
@@ -313,6 +341,28 @@ function mundo(cellsize, tam) {
 					break;
 				case 3:
 					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
+					break;
+			}
+			
+			jugador.animar(jugador.dir);
+		}
+	}
+
+	this.dispararEnemigo = function (jugador) {
+		if (jugador.canShoot()){
+            jugador.shoot();
+			switch(jugador.dir){
+				case 0:
+					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1wE,this.imagenBala_2wE,this.imagenBala_3wE]);
+					break;
+				case 1:
+					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1sE,this.imagenBala_2sE,this.imagenBala_3sE]);
+					break;
+				case 2:
+					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1aE,this.imagenBala_2aE,this.imagenBala_3aE]);
+					break;
+				case 3:
+					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1dE,this.imagenBala_2dE,this.imagenBala_3dE]);
 					break;
 			}
 			

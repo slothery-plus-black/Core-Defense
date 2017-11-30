@@ -4,8 +4,8 @@ function gusanoSpawner(arrayEnemigos) {
 	var cadencia = 1;
     
     this.start = function(x,y){
-        setInterval("crearEnemigo(x,y)", 2000/cadencia);
-        setInterval("aumentar()", 10000);
+        setInterval(crearEnemigo(x,y), 2000/cadencia);
+        setInterval(aumentar(), 10000);
     }
     
     var crearEnemigo = function(x,y){
