@@ -1,12 +1,10 @@
 //Spawner
 function gusanoSpawner(arrayEnemigos) {
     this.enemigos = arrayEnemigos;
-    this.cadencia = 0.5;
+    this.cadencia = 1;
     this.timer = undefined;
     this.timerReinicio = undefined;
     var random;
-    var probabilidad1 = 2;
-    var probabilidad2 = 0.4;
     this.start = function(x,y,sprite){
         //var _this = this;
         //setInterval(this.crearEnemigo(_this, x,y,sprite), 2000/this.cadencia);
@@ -16,7 +14,7 @@ function gusanoSpawner(arrayEnemigos) {
             _this.crearEnemigo(_this,x,y,sprite);
         }, 2000/this.cadencia, this);
 
-       /* this.timerReinicio = setInterval(function(_this) {
+        this.timerReinicio = setInterval(function(_this) {
            // _this.cadencia = _this.cadencia*1.2 ;
 
             window.clearInterval(_this.timer);
@@ -32,38 +30,24 @@ function gusanoSpawner(arrayEnemigos) {
         setInterval(function(_this) {
             _this.parar();
         }, 30000, this);
-   */ }
+    }
     
     this.crearEnemigo = function(_this, x,y, sprite){
-        //Aparición de gusanos
-        random = (Math.random() * 10);
-        if (random<probabilidad1)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo1(sprite,x,y, 2, 0.5, 8);}
-        
-        //Aparicion de virus
-        random = (Math.random() * 10);
-        if (random<probabilidad2)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo2(sprite,x,y, 2, 0.5, 8);}
-        
-        //Aparición del troyano
-         random = (Math.random() * 10);
-        if (random<probabilidad2)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo3(sprite,x,y, 2, 0.5, 8,this);}
-        
-        //Aumentar probabilidad
-        probabilidad1 +=0.02;
-        probabilidad2 +=0.01;
+        //console.log("crear");
+        _this.enemigos[_this.enemigos.length] = new Enemigo1(sprite,x,y, 2, 0.5, 8);
+        random = Math.floor((Math.random() * 10) + 0);
+        if (random<5){_this.enemigos[_this.enemigos.length] = new Enemigo2(sprite,x,y, 2, 0.5, 8);}
     }
     
     this.aumentar = function(){
         this.cadencia++;
     }
 
-   /* this.parar = function(){
+    this.parar = function(){
         window.clearInterval(this.timer);
         this.timer = undefined;
         window.clearInterval(this.timerReinicio);
         this.timerReinicio = undefined;
     }
-    */
+    
 }

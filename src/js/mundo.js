@@ -119,7 +119,13 @@ function mundo(cellsize, tam) {
 
 		
 		this.spawns[0] = new gusanoSpawner([]);
-		this.spawns[0].start(1*cellsize,1*cellsize,enemigo1_stand);
+		this.spawns[0].start(1*cellsize,8*cellsize,enemigo1_stand);
+        this.spawns[1] = new gusanoSpawner([]);
+		this.spawns[1].start(8*cellsize,1*cellsize,enemigo1_stand);
+        this.spawns[2] = new gusanoSpawner([]);
+		this.spawns[2].start(16*cellsize,8*cellsize,enemigo1_stand);
+        this.spawns[3] = new gusanoSpawner([]);
+		this.spawns[3].start(8*cellsize,16*cellsize,enemigo1_stand);
 
 		//enemigo
 		/*for (i = 0;i<10;i++){
@@ -214,9 +220,23 @@ function mundo(cellsize, tam) {
 			this.disparar(this.jugador2);
 		}*/
 	}
+    
+    //Si hace un check de los enemigos vivos, si están muertos los mata de verdad.
+    this.checkAlives = function(){
+        for(i=0;i<this.spawns.length;i++){
+			for (j=0;j<this.spawns[i].enemigos.length;j++){
+            
+                if(!this.spawns[i].enemigos[j].isAlive){
+                this.spawns[i].enemigos.splice(j,1);  //Función para borrar un elemento de un array.
+                }
+            }
+        }
+        
+    }
 
 	this.pintado = function () {
 		if (this.cargado){
+            this.checkAlives();
 			this.moverEnemigos();
 
 			for (i = 0; i < this.x; i++) {
@@ -412,7 +432,7 @@ function mundo(cellsize, tam) {
 					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1dE,this.imagenBala_2dE,this.imagenBala_3dE]);
 					break;
 			}
-			
+			jugador.puedeDisparar = false;
 			jugador.animar(jugador.dir);
 		}
 	}
