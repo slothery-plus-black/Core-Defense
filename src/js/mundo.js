@@ -99,14 +99,17 @@ function mundo(cellsize, tam) {
 				var imagen = new Image();
 				imagen.src = this.srcImagenes+""+mapa.filas[j].datos[i].tile+".png";
 				if (mapa.filas[j].datos[i].tile === "0"){
-					this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile, i,j,imagen, true, false,this.srcImagenes);
+					this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile, i,j,imagen, true, false,this.srcImagenes,false);
 				}else{
-					if (mapa.filas[j].datos[i].tile === "1" || mapa.filas[j].datos[i].tile === "C"
-					|| mapa.filas[j].datos[i].tile === "8" || mapa.filas[j].datos[i].tile === "9"
-					|| mapa.filas[j].datos[i].tile === "A" || mapa.filas[j].datos[i].tile === "B"){
-						this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile, i,j,imagen, false, false,this.srcImagenes);
+					if (mapa.filas[j].datos[i].tile === "1" || mapa.filas[j].datos[i].tile === "C"){
+						this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile, i,j,imagen, false, false,this.srcImagenes,false);
 					}else{
-						this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile,i,j,imagen, false, true,this.srcImagenes);
+						if (mapa.filas[j].datos[i].tile === "8" || mapa.filas[j].datos[i].tile === "9"
+						|| mapa.filas[j].datos[i].tile === "A" || mapa.filas[j].datos[i].tile === "B"){
+							this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile,i,j,imagen, false, true,this.srcImagenes,true);
+						}else{
+							this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile,i,j,imagen, false, true,this.srcImagenes,false);
+						}
 					}
 				}
 			}

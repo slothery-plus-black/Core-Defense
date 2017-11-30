@@ -7,12 +7,12 @@ function SceneManager(){
         //etc
     }
     var clearscene = function(){
-        var canvas= document.getElementById('canvas');
+        var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0,  canvas.width, canvas.height);
     }
     
-    this.startScene(num){
+    this.startScene = function(num){
         clearscene();
         scene[num].init();
     }

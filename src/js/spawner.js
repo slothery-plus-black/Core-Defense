@@ -12,6 +12,8 @@ function gusanoSpawner(arrayEnemigos) {
         enemigos[enemigos.length] = new Enemigo1(enemigo1_stand,x,y, 2, 0.5, 8);
     }
     
-    var aumentar = function(){ cadencia++ }*/
+    var aumentar = function(){
+        cadencia++;
+    }
     
 }
