@@ -42,7 +42,8 @@ function mundo(cellsize, tam) {
 	this.imagenBala_3dE = new Image();
 
 	this.enemigos = [];
-    
+	
+	this.spawns = [];
     
 
 	this.initMundo = function (context, mapa) {
@@ -116,10 +117,14 @@ function mundo(cellsize, tam) {
 			(posiciones[posAleatoria].posx * this.cellSize), (posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8);
 		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
 
+		
+		this.spawns[0] = new gusanoSpawner([]);
+		this.spawns[0].start(1*cellsize,1*cellsize,enemigo1_stand);
+
 		//enemigo
-		for (i = 0;i<10;i++){
+		/*for (i = 0;i<10;i++){
 			this.enemigos[i] = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (9 * this.cellSize), 2, 0.5, 8);
-		}
+		}*/
 		
 
 		//Casilla (x,y,imagen,movible,destructible)
@@ -242,9 +247,14 @@ function mundo(cellsize, tam) {
 	}
 
 	this.pintarEnemigos = function(){
-		for (i=0;i<this.enemigos.length;i++){
-			this.pintar(this.enemigos[i].sprite, this.enemigos[i].posx,this.enemigos[i].posy);
+		for(i=0;i<this.spawns.length;i++){
+			for (j=0;j<this.spawns[i].enemigos.length;j++){
+				this.pintar(this.spawns[i].enemigos[j].sprite, this.spawns[i].enemigos[j].posx,this.spawns[i].enemigos[j].posy);
+			}
 		}
+		/*for (i=0;i<this.enemigos.length;i++){
+			this.pintar(this.enemigos[i].sprite, this.enemigos[i].posx,this.enemigos[i].posy);
+		}*/
 	}
 	
 	//0 arriba, 1 abajo, 2 izquierda y 3 derecha
@@ -289,7 +299,44 @@ function mundo(cellsize, tam) {
 		//Actualiza la direccion en la que mira
 		//this.enemigo1.dir=1;
 
-		for (i=0;i<this.enemigos.length;i++){
+		for(i=0;i<this.spawns.length;i++){
+			for (j=0;j<this.spawns[i].enemigos.length;j++){
+				var jxOriginal = this.spawns[i].enemigos[j].posx;
+				var jyOriginal = this.spawns[i].enemigos[j].posy;
+				this.dispararEnemigo(this.spawns[i].enemigos[j]);
+		
+				switch (this.spawns[i].enemigos[j].dir){
+					case 0:
+					this.spawns[i].enemigos[j].posy = this.spawns[i].enemigos[j].posy - this.spawns[i].enemigos[j].velocidad;
+						if (this.spawns[i].enemigos[j].posy < 0)
+						this.spawns[i].enemigos[j].posy = 0;
+						break;
+					case 1:
+					this.spawns[i].enemigos[j].posy = this.spawns[i].enemigos[j].posy + this.spawns[i].enemigos[j].velocidad;
+						if (this.spawns[i].enemigos[j].posy >= (this.y*this.cellSize)-this.spawns[i].enemigos[j].velocidad)
+						this.spawns[i].enemigos[j].posy = (this.y*this.cellSize)-this.spawns[i].enemigos[j].velocidad;
+						break;
+					case 2:
+					this.spawns[i].enemigos[j].posx = this.spawns[i].enemigos[j].posx - this.spawns[i].enemigos[j].velocidad;
+						if (this.spawns[i].enemigos[j].posx < 0)
+						this.spawns[i].enemigos[j].posx = 0;
+						break;
+					case 3:
+					this.spawns[i].enemigos[j].posx = this.spawns[i].enemigos[j].posx + this.spawns[i].enemigos[j].velocidad;
+						if (this.spawns[i].enemigos[j].posx >= (this.x*this.cellSize)-this.spawns[i].enemigos[j].velocidad)
+						this.spawns[i].enemigos[j].posx = (this.x*this.cellSize)-this.spawns[i].enemigos[j].velocidad;
+						break;
+				}
+				
+				if (this.colision(this.spawns[i].enemigos[j].posx,this.spawns[i].enemigos[j].posy,this.spawns[i].enemigos[j].margen)){
+					this.spawns[i].enemigos[j].posx = jxOriginal;
+					this.spawns[i].enemigos[j].posy = jyOriginal;
+					this.spawns[i].enemigos[j].dir = Math.floor((Math.random() * 4) + 0);
+				}
+			}
+		}
+
+		/*for (i=0;i<this.enemigos.length;i++){
 			var jxOriginal = this.enemigos[i].posx;
 			var jyOriginal = this.enemigos[i].posy;
             this.dispararEnemigo(this.enemigos[i]);
@@ -322,7 +369,7 @@ function mundo(cellsize, tam) {
 				this.enemigos[i].posy = jyOriginal;
 				this.enemigos[i].dir = Math.floor((Math.random() * 4) + 0);
 			}
-		}
+		}*/
 		
 	}
 	
