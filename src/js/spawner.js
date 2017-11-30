@@ -1,38 +1,18 @@
 //Spawner
 function gusanoSpawner(arrayEnemigos) {
     this.enemigos = arrayEnemigos;
-    this.cadencia = 0.5;
     this.timer = undefined;
     this.timerReinicio = undefined;
     var random;
-    var probabilidad1 = 2;
-    var probabilidad2 = 0.4;
+    var probabilidad1 = 2;  //Probabilidad del 20%, para los gusanos
+    var probabilidad2 = 0.4;    //4%, para los 
     this.start = function(x,y,sprite){
-        //var _this = this;
-        //setInterval(this.crearEnemigo(_this, x,y,sprite), 2000/this.cadencia);
-        //setInterval(this.aumentar(), 10000);
-
+        
         this.timer = setInterval(function(_this) {
             _this.crearEnemigo(_this,x,y,sprite);
-        }, 2000/this.cadencia, this);
-
-       /* this.timerReinicio = setInterval(function(_this) {
-           // _this.cadencia = _this.cadencia*1.2 ;
-
-            window.clearInterval(_this.timer);
-            _this.timer = undefined;
-
-            _this.timer = setInterval(function(__this) {
-                __this.crearEnemigo(__this,x,y,sprite);
-            }, 2000/_this.cadencia, _this);
-
         }, 4000, this);
 
-
-        setInterval(function(_this) {
-            _this.parar();
-        }, 30000, this);
-   */ }
+    }
     
     this.crearEnemigo = function(_this, x,y, sprite){
         //Aparición de gusanos
@@ -55,15 +35,4 @@ function gusanoSpawner(arrayEnemigos) {
         probabilidad2 +=0.01;
     }
     
-    this.aumentar = function(){
-        this.cadencia++;
-    }
-
-   /* this.parar = function(){
-        window.clearInterval(this.timer);
-        this.timer = undefined;
-        window.clearInterval(this.timerReinicio);
-        this.timerReinicio = undefined;
-    }
-    */
 }
