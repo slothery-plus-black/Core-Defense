@@ -1,5 +1,5 @@
 //Objeto jugador, tiene su sprite, sus posiciones en x e y ademas de la velocidad
-function Enemigo1(spr,x,y,vel,cadencia,margen,vida) {
+function Enemigo1(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
 	this.sprite = spr;
@@ -11,6 +11,9 @@ function Enemigo1(spr,x,y,vel,cadencia,margen,vida) {
 	this.puedeDisparar = true;
     this.margen = margen;
     this.vida = vida;
+
+    this.animacionDestruccion=1;
+    this.spritesAnimacionDestruccion = spritesAnimacionDestruccion;
 
 	this.shoot = function(){
 		this.puedeDisparar = false;
@@ -62,10 +65,28 @@ function Enemigo1(spr,x,y,vel,cadencia,margen,vida) {
     }
 
     this.daniar = function(){
+        if (this.vida > 0)
         this.vida--;
     }
+
+    this.destruir = function(){
+		
+		var _this = this;
+
+		//Se va a llamar a si misma para ir avanzando la animacion de destruccion del tile
+		setTimeout(function(){
+			if (_this.animacionDestruccion <=8){
+                _this.sprite = _this.spritesAnimacionDestruccion[_this.animacionDestruccion];
+                _this.animacionDestruccion++;
+                _this.destruir();
+			}else{
+				//_this.spritesAnimacionDestruccion[_this.animacionDestruccion]
+				_this.isAlive = false;
+			}
+		}, 50);
+	}
 }
-function Enemigo2(spr,x,y,vel,cadencia,margen,vida) {
+function Enemigo2(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
 	this.sprite = spr;
@@ -78,6 +99,9 @@ function Enemigo2(spr,x,y,vel,cadencia,margen,vida) {
 	this.margen = margen;
     var random;
     this.vida = vida;
+
+    this.animacionDestruccion = 1;
+    this.spritesAnimacionDestruccion = spritesAnimacionDestruccion;
 
 	this.shoot = function(){
 		this.puedeDisparar = false;
@@ -126,10 +150,28 @@ function Enemigo2(spr,x,y,vel,cadencia,margen,vida) {
         }
     }
     this.daniar = function(){
-        this.vida--;
+        if (this.vida > 0)
+            this.vida--;
+    }
+
+    this.destruir = function(){
+		
+		var _this = this;
+
+		//Se va a llamar a si misma para ir avanzando la animacion de destruccion del tile
+		setTimeout(function(){
+			if (_this.animacionDestruccion <=8){
+                _this.sprite = _this.spritesAnimacionDestruccion[_this.animacionDestruccion];
+                _this.animacionDestruccion++;
+                _this.destruir();
+			}else{
+				//_this.spritesAnimacionDestruccion[_this.animacionDestruccion]
+				_this.isAlive = false;
+			}
+        }, 50);
     }
 }
-function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spawnPadre) {
+function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion,spawnPadre,spriteGusano,spriteVirus) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
 	this.sprite = spr;
@@ -140,6 +182,12 @@ function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spawnPadre) {
     var timeleft=6;
     this.spawn = spawnPadre;
     this.vida = vida;
+
+    this.spriteGusano = spriteGusano;
+    this.spriteVirus = spriteVirus;
+
+    this.animacionDestruccion = 1;
+    this.spritesAnimacionDestruccion=spritesAnimacionDestruccion;
     
 	this.cadencia = setInterval(function(_this) {
             
@@ -147,13 +195,13 @@ function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spawnPadre) {
         _this.apuntarNucleo();  //Se direcciona
         
         //Si se le ha acabado el tiempo
-        if (timeleft==0){
-            
+        if (timeleft==0 && _this.vida >0){
+            //_this, x,y, spriteGusano,spriteVirus,spriteTroyano,spritesAnimacionDestruccion
             //Spawnea 3 enemigos
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.sprite);
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.sprite);
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.sprite);
-             _this.spawn = null;
+            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.spriteGusano,_this.spriteVirus,_this.sprite,spritesAnimacionDestruccion);
+            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.spriteGusano,_this.spriteVirus,_this.sprite,spritesAnimacionDestruccion);
+            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.spriteGusano,_this.spriteVirus,_this.sprite,spritesAnimacionDestruccion);
+            _this.spawn = null;
             
             //Se muere
             _this.isAlive = false;
@@ -201,6 +249,24 @@ function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spawnPadre) {
         }
     }
     this.daniar = function(){
+        if (this.vida > 0)
         this.vida--;
+    }
+
+    this.destruir = function(){
+		
+		var _this = this;
+
+		//Se va a llamar a si misma para ir avanzando la animacion de destruccion del tile
+		setTimeout(function(){
+			if (_this.animacionDestruccion <=8){
+                _this.sprite = _this.spritesAnimacionDestruccion[_this.animacionDestruccion];
+                _this.animacionDestruccion++;
+                _this.destruir();
+			}else{
+				//_this.spritesAnimacionDestruccion[_this.animacionDestruccion]
+                _this.isAlive = false;
+			}
+        }, 50);
     }
 }

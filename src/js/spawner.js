@@ -6,29 +6,29 @@ function gusanoSpawner(arrayEnemigos) {
     var random;
     var probabilidad1 = 2;  //Probabilidad del 20%, para los gusanos
     var probabilidad2 = 0.4;    //4%, para los 
-    this.start = function(x,y,spriteG,spriteV,spriteT){
+    this.start = function(x,y,spriteG,spriteV,spriteT,spritesAnimacionDestruccion){
         
         this.timer = setInterval(function(_this) {
-            _this.crearEnemigo(_this,x,y,spriteG,spriteV,spriteT);
+            _this.crearEnemigo(_this,x,y,spriteG,spriteV,spriteT,spritesAnimacionDestruccion);
         }, 4000, this);
 
     }
     
-    this.crearEnemigo = function(_this, x,y, spriteGusano,spriteVirus,spriteTroyano){
+    this.crearEnemigo = function(_this, x,y, spriteGusano,spriteVirus,spriteTroyano,spritesAnimacionDestruccion){
         //Aparición de gusanos
         random = (Math.random() * 10);
         if (random<probabilidad1)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo1(spriteGusano,x,y, 2, 0.5, 8,1);}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo1(spriteGusano,x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);}
         
         //Aparicion de virus
         random = (Math.random() * 10);
         if (random<probabilidad2)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo2(spriteVirus,x,y, 2, 0.5, 8,1);}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo2(spriteVirus,x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);}
         
         //Aparición del troyano
          random = (Math.random() * 10);
-        if (random<probabilidad2)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo3(spriteTroyano,x,y, 2, 0.5, 8,1,this);}
+        /*if (random<probabilidad2)
+        {_this.enemigos[_this.enemigos.length] = new Enemigo3(spriteTroyano,x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,this);}*/
         
         //Aumentar probabilidad
         probabilidad1 +=0.02;
@@ -37,9 +37,15 @@ function gusanoSpawner(arrayEnemigos) {
 
     this.verificarMuertes = function(){
         for (var i = 0;i<this.enemigos.length;i++){
-            if (this.enemigos[i].vida <= 0){
-                this.enemigos.splice(i,1);
+            if (this.enemigos[i].vida == 0){
+                
+                this.enemigos[i].destruir();
             }
+
+            /*if (this.enemigos[i].vida < 0){
+                
+                this.enemigos.splice(i,1);
+            }*/
         }
     }
     

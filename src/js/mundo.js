@@ -74,6 +74,23 @@ function mundo(cellsize, tam) {
 		enemigoT_stand = new Image();
 		enemigoT_stand.src = this.srcImagenes+"enemigo_3.png";
 
+		enemigo_explosion1 = new Image();
+		enemigo_explosion1.src = this.srcImagenes+"explosion_1.png";
+		enemigo_explosion2 = new Image();
+		enemigo_explosion2.src = this.srcImagenes+"explosion_2.png";
+		enemigo_explosion3 = new Image();
+		enemigo_explosion3.src = this.srcImagenes+"explosion_3.png";
+		enemigo_explosion4 = new Image();
+		enemigo_explosion4.src = this.srcImagenes+"explosion_4.png";
+		enemigo_explosion5 = new Image();
+		enemigo_explosion5.src = this.srcImagenes+"explosion_5.png";
+		enemigo_explosion6 = new Image();
+		enemigo_explosion6.src = this.srcImagenes+"explosion_6.png";
+		enemigo_explosion7 = new Image();
+		enemigo_explosion7.src = this.srcImagenes+"explosion_7.png";
+		enemigo_explosion8 = new Image();
+		enemigo_explosion8.src = this.srcImagenes+"explosion_8.png";
+
 		//Imagenes balas
 		this.imagenBala_1w.src = this.srcImagenes+"disparo_1w.png";
 		this.imagenBala_2w.src = this.srcImagenes+"disparo_2w.png";
@@ -126,13 +143,17 @@ function mundo(cellsize, tam) {
 
 		
 		this.spawns[0] = new gusanoSpawner([]);
-		this.spawns[0].start(1*cellsize,8*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand);
+		this.spawns[0].start(1*cellsize,8*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand,
+			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
         this.spawns[1] = new gusanoSpawner([]);
-		this.spawns[1].start(8*cellsize,1*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand);
+		this.spawns[1].start(8*cellsize,1*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand,
+			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
         this.spawns[2] = new gusanoSpawner([]);
-		this.spawns[2].start(16*cellsize,8*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand);
+		this.spawns[2].start(16*cellsize,8*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand,
+			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
         this.spawns[3] = new gusanoSpawner([]);
-		this.spawns[3].start(8*cellsize,16*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand);
+		this.spawns[3].start(8*cellsize,16*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand,
+			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 
 		//enemigo
 		/*for (i = 0;i<10;i++){
@@ -250,6 +271,7 @@ function mundo(cellsize, tam) {
 
 	this.verificarMuertes = function(){
 		for(var i=0;i<this.spawns.length;i++){
+			//Para hacer animacion de destruccion
 			this.spawns[i].verificarMuertes();
 		}
 		
@@ -414,7 +436,7 @@ function mundo(cellsize, tam) {
 	}
 
 	this.dispararEnemigo = function (ene) {
-		if (ene.canShoot()){
+		if (ene.canShoot() && ene.vida >0){
             ene.shoot();
 			switch(ene.dir){
 				case 0:
