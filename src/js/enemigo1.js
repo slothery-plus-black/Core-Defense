@@ -1,5 +1,5 @@
 //Objeto jugador, tiene su sprite, sus posiciones en x e y ademas de la velocidad
-function Enemigo1(spr,x,y,vel,cadencia,margen) {
+function Enemigo1(spr,x,y,vel,cadencia,margen,vida) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
 	this.sprite = spr;
@@ -9,7 +9,8 @@ function Enemigo1(spr,x,y,vel,cadencia,margen) {
 	this.dir = 0;
 	this.cadencia = cadencia;//disparos por segundo
 	this.puedeDisparar = true;
-	this.margen = margen;
+    this.margen = margen;
+    this.vida = vida;
 
 	this.shoot = function(){
 		this.puedeDisparar = false;
@@ -59,8 +60,12 @@ function Enemigo1(spr,x,y,vel,cadencia,margen) {
             this.dir = dirY;
         }
     }
+
+    this.daniar = function(){
+        this.vida--;
+    }
 }
-function Enemigo2(spr,x,y,vel,cadencia,margen) {
+function Enemigo2(spr,x,y,vel,cadencia,margen,vida) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
 	this.sprite = spr;
@@ -72,6 +77,7 @@ function Enemigo2(spr,x,y,vel,cadencia,margen) {
 	this.puedeDisparar = true;
 	this.margen = margen;
     var random;
+    this.vida = vida;
 
 	this.shoot = function(){
 		this.puedeDisparar = false;
@@ -119,8 +125,11 @@ function Enemigo2(spr,x,y,vel,cadencia,margen) {
             this.dir = dirY;
         }
     }
+    this.daniar = function(){
+        this.vida--;
+    }
 }
-function Enemigo3(spr,x,y,vel,cadencia,margen,spawnPadre) {
+function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spawnPadre) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
 	this.sprite = spr;
@@ -130,6 +139,7 @@ function Enemigo3(spr,x,y,vel,cadencia,margen,spawnPadre) {
 	this.dir = 0;
     var timeleft=6;
     this.spawn = spawnPadre;
+    this.vida = vida;
     
 	this.cadencia = setInterval(function(_this) {
             
@@ -148,15 +158,11 @@ function Enemigo3(spr,x,y,vel,cadencia,margen,spawnPadre) {
             //Se muere
             _this.isAlive = false;
         }
-        
-        },2000,this);
+    },2000,this);
     
 	this.puedeDisparar = false;
 	this.margen = margen;
     var random; //Variable auxiliar
-   
-
-	
     
 
 	this.canShoot = function(){
@@ -187,11 +193,14 @@ function Enemigo3(spr,x,y,vel,cadencia,margen,spawnPadre) {
             dirY=0;
         }
         random = Math.floor((Math.random() * 2) + 0);
-        if (random==0){
+        if (random===0){
             this.dir = dirX;
         }
         else {
             this.dir = dirY;
         }
+    }
+    this.daniar = function(){
+        this.vida--;
     }
 }

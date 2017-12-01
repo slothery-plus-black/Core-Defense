@@ -10,6 +10,7 @@ function mundo(cellsize, tam) {
 	this.context;
 
 	this.sc = new shootingController();
+	this.scEnemigos = new shootingController();
 	this.cargado = false;
 
 	this.srcImagenes = "../images/";
@@ -64,8 +65,14 @@ function mundo(cellsize, tam) {
 		imagenJ1_a.src = this.srcImagenes+"sprite1_izquierda.png";
 		imagenJ1_d.src = this.srcImagenes+"sprite1_derecha.png";
 
-		enemigo1_stand = new Image();
-		enemigo1_stand.src = this.srcImagenes+"enemigo_1.png";
+		enemigoG_stand = new Image();
+		enemigoG_stand.src = this.srcImagenes+"enemigo_1.png";
+
+		enemigoV_stand = new Image();
+		enemigoV_stand.src = this.srcImagenes+"enemigo_2.png";
+
+		enemigoT_stand = new Image();
+		enemigoT_stand.src = this.srcImagenes+"enemigo_3.png";
 
 		//Imagenes balas
 		this.imagenBala_1w.src = this.srcImagenes+"disparo_1w.png";
@@ -105,7 +112,7 @@ function mundo(cellsize, tam) {
 		imagenJ2.src = "src/personaje_1.png";*/
 		
 		var posiciones = [];
-		for (i = 0;i<mapa.jugador.length;i++){
+		for (var i = 0;i<mapa.jugador.length;i++){
 			posiciones[i] = mapa.jugador[i];
 		}
 
@@ -119,13 +126,13 @@ function mundo(cellsize, tam) {
 
 		
 		this.spawns[0] = new gusanoSpawner([]);
-		this.spawns[0].start(1*cellsize,8*cellsize,enemigo1_stand);
+		this.spawns[0].start(1*cellsize,8*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand);
         this.spawns[1] = new gusanoSpawner([]);
-		this.spawns[1].start(8*cellsize,1*cellsize,enemigo1_stand);
+		this.spawns[1].start(8*cellsize,1*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand);
         this.spawns[2] = new gusanoSpawner([]);
-		this.spawns[2].start(16*cellsize,8*cellsize,enemigo1_stand);
+		this.spawns[2].start(16*cellsize,8*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand);
         this.spawns[3] = new gusanoSpawner([]);
-		this.spawns[3].start(8*cellsize,16*cellsize,enemigo1_stand);
+		this.spawns[3].start(8*cellsize,16*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand);
 
 		//enemigo
 		/*for (i = 0;i<10;i++){
@@ -134,9 +141,9 @@ function mundo(cellsize, tam) {
 		
 
 		//Casilla (x,y,imagen,movible,destructible)
-		for (i = 0;i<this.x;i++){
+		for (var i = 0;i<this.x;i++){
 			this.board[i] = [];
-			for (j=0;j<this.y;j++){
+			for (var j=0;j<this.y;j++){
 				var imagen = new Image();
 				imagen.src = this.srcImagenes+""+mapa.filas[j].datos[i].tile+".png";
 				if (mapa.filas[j].datos[i].tile === "0"){
@@ -158,9 +165,9 @@ function mundo(cellsize, tam) {
 
 		var boardtemp = [];
 		//Ampliamos la board al tamaño del lienzo, de [18][18] pasa a [18*cellSize][18*cellSize] para mayor precision
-		for (i = 0;i<this.x*this.cellSize;i++){
+		for (var i = 0;i<this.x*this.cellSize;i++){
 			boardtemp[i] = [];
-			for (j = 0;j<this.y*this.cellSize;j++){
+			for (var j = 0;j<this.y*this.cellSize;j++){
 				//Se copia la imagen de la x,y hasta la x+cellSize-1,y+cellSize-1 para que contengan la misma informacion
 				boardtemp[i][j] = this.board[Math.floor(i/this.cellSize)][Math.floor(j/this.cellSize)];
 			}
@@ -170,6 +177,7 @@ function mundo(cellsize, tam) {
 
 		//sc (context, board, cellSize, margenBalas, velocidad)
 		this.sc.init(this.context,this.board, this.cellSize, 12, 20);
+		this.scEnemigos.init(this.context,this.board, this.cellSize, 12, 20);
 	}
 
 	this.mover = function (keysDown) {
@@ -223,24 +231,44 @@ function mundo(cellsize, tam) {
     
     //Si hace un check de los enemigos vivos, si están muertos los mata de verdad.
     this.checkAlives = function(){
-        for(i=0;i<this.spawns.length;i++){
-			for (j=0;j<this.spawns[i].enemigos.length;j++){
-            
+        for(var i=0;i<this.spawns.length;i++){
+			for (var j=0;j<this.spawns[i].enemigos.length;j++){
                 if(!this.spawns[i].enemigos[j].isAlive){
-                this.spawns[i].enemigos.splice(j,1);  //Función para borrar un elemento de un array.
+                	this.spawns[i].enemigos.splice(j,1);  //Función para borrar un elemento de un array.
                 }
             }
         }
-        
-    }
+	}
+	
+	this.colisionesDisparos = function(){
+		for(var i=0;i<this.spawns.length;i++){
+			this.sc.colisionEnemigos(this.spawns[i].enemigos);
+        }
+
+		this.scEnemigos.colisionObjeto(this.jugador);
+	}
+
+	this.verificarMuertes = function(){
+		for(var i=0;i<this.spawns.length;i++){
+			this.spawns[i].verificarMuertes();
+		}
+		
+		if (this.jugador.vida<=0){
+			//console.log("jugador muerto");
+		}
+	}
 
 	this.pintado = function () {
 		if (this.cargado){
+			//this.scEnemigos.shoot(1+cellsize,1+cellsize,1, [this.imagenJ1_stand]);
+
             this.checkAlives();
 			this.moverEnemigos();
 
-			for (i = 0; i < this.x; i++) {
-				for (j = 0; j < this.y; j++) {
+			this.colisionesDisparos();
+
+			for (var i = 0; i < this.x; i++) {
+				for (var j = 0; j < this.y; j++) {
 					this.pintar(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
 				}
 			}
@@ -252,6 +280,9 @@ function mundo(cellsize, tam) {
 
 			//Impresion de las balas
 			this.sc.renderBalas();
+			this.scEnemigos.renderBalas();
+
+			this.verificarMuertes();
 
 			this.pintarEnemigos();
 			//this.pintar(this.enemigo1.sprite, this.enemigo1.posx,this.enemigo1.posy);
@@ -267,8 +298,8 @@ function mundo(cellsize, tam) {
 	}
 
 	this.pintarEnemigos = function(){
-		for(i=0;i<this.spawns.length;i++){
-			for (j=0;j<this.spawns[i].enemigos.length;j++){
+		for(var i=0;i<this.spawns.length;i++){
+			for (var j=0;j<this.spawns[i].enemigos.length;j++){
 				this.pintar(this.spawns[i].enemigos[j].sprite, this.spawns[i].enemigos[j].posx,this.spawns[i].enemigos[j].posy);
 			}
 		}
@@ -319,8 +350,8 @@ function mundo(cellsize, tam) {
 		//Actualiza la direccion en la que mira
 		//this.enemigo1.dir=1;
 
-		for(i=0;i<this.spawns.length;i++){
-			for (j=0;j<this.spawns[i].enemigos.length;j++){
+		for(var i=0;i<this.spawns.length;i++){
+			for (var j=0;j<this.spawns[i].enemigos.length;j++){
 				var jxOriginal = this.spawns[i].enemigos[j].posx;
 				var jyOriginal = this.spawns[i].enemigos[j].posy;
 				this.dispararEnemigo(this.spawns[i].enemigos[j]);
@@ -355,42 +386,6 @@ function mundo(cellsize, tam) {
 				}
 			}
 		}
-
-		/*for (i=0;i<this.enemigos.length;i++){
-			var jxOriginal = this.enemigos[i].posx;
-			var jyOriginal = this.enemigos[i].posy;
-            this.dispararEnemigo(this.enemigos[i]);
-	
-			switch (this.enemigos[i].dir){
-				case 0:
-					this.enemigos[i].posy = this.enemigos[i].posy - this.enemigos[i].velocidad;
-					if (this.enemigos[i].posy < 0)
-					this.enemigos[i].posy = 0;
-					break;
-				case 1:
-					this.enemigos[i].posy = this.enemigos[i].posy + this.enemigos[i].velocidad;
-					if (this.enemigos[i].posy >= (this.y*this.cellSize)-this.enemigos[i].velocidad)
-					this.enemigos[i].posy = (this.y*this.cellSize)-this.enemigos[i].velocidad;
-					break;
-				case 2:
-					this.enemigos[i].posx = this.enemigos[i].posx - this.enemigos[i].velocidad;
-					if (this.enemigos[i].posx < 0)
-					this.enemigos[i].posx = 0;
-					break;
-				case 3:
-					this.enemigos[i].posx = this.enemigos[i].posx + this.enemigos[i].velocidad;
-					if (this.enemigos[i].posx >= (this.x*this.cellSize)-this.enemigos[i].velocidad)
-					this.enemigos[i].posx = (this.x*this.cellSize)-this.enemigos[i].velocidad;
-					break;
-			}
-			
-			if (this.colision(this.enemigos[i].posx,this.enemigos[i].posy,this.enemigos[i].margen)){
-				this.enemigos[i].posx = jxOriginal;
-				this.enemigos[i].posy = jyOriginal;
-				this.enemigos[i].dir = Math.floor((Math.random() * 4) + 0);
-			}
-		}*/
-		
 	}
 	
 	this.disparar = function (jugador) {
@@ -410,30 +405,33 @@ function mundo(cellsize, tam) {
 					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1d,this.imagenBala_2d,this.imagenBala_3d]);
 					break;
 			}
-			
+
+			/*this.sc.shoot(1*this.cellSize, 1*this.cellSize, 1, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
+			this.sc.shoot(1*this.cellSize, 16*this.cellSize, 0, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
+			this.sc.shoot(1*this.cellSize, 11*this.cellSize, 3, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);*/
 			jugador.animar(jugador.dir);
 		}
 	}
 
-	this.dispararEnemigo = function (jugador) {
-		if (jugador.canShoot()){
-            jugador.shoot();
-			switch(jugador.dir){
+	this.dispararEnemigo = function (ene) {
+		if (ene.canShoot()){
+            ene.shoot();
+			switch(ene.dir){
 				case 0:
-					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1wE,this.imagenBala_2wE,this.imagenBala_3wE]);
+					this.scEnemigos.shoot(ene.posx, ene.posy, ene.dir, [this.imagenBala_1wE,this.imagenBala_2wE,this.imagenBala_3wE]);
 					break;
 				case 1:
-					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1sE,this.imagenBala_2sE,this.imagenBala_3sE]);
+					this.scEnemigos.shoot(ene.posx, ene.posy, ene.dir, [this.imagenBala_1sE,this.imagenBala_2sE,this.imagenBala_3sE]);
 					break;
 				case 2:
-					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1aE,this.imagenBala_2aE,this.imagenBala_3aE]);
+					this.scEnemigos.shoot(ene.posx, ene.posy, ene.dir, [this.imagenBala_1aE,this.imagenBala_2aE,this.imagenBala_3aE]);
 					break;
 				case 3:
-					this.sc.shoot(jugador.posx, jugador.posy, jugador.dir, [this.imagenBala_1dE,this.imagenBala_2dE,this.imagenBala_3dE]);
+					this.scEnemigos.shoot(ene.posx, ene.posy, ene.dir, [this.imagenBala_1dE,this.imagenBala_2dE,this.imagenBala_3dE]);
 					break;
 			}
-			jugador.puedeDisparar = false;
-			jugador.animar(jugador.dir);
+			ene.puedeDisparar = false;
+			ene.animar(ene.dir);
 		}
 	}
 

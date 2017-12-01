@@ -11,6 +11,7 @@ function Jugador(spr,x,y,vel,cadencia,margen) {
 	this.margen = margen;
 	this.animacion = this.sprite.length;
 	this.tiempo = 0;
+	this.vida = 3;
 
 	this.shoot = function(){
 		this.puedeDisparar = false;
@@ -39,5 +40,10 @@ function Jugador(spr,x,y,vel,cadencia,margen) {
 	this.animar = function(num){
 		this.animacion = num;
 		this.tiempo = 0;
+	}
+
+	this.daniar = function(){
+		this.vida--;
+		console.log("dañado jugador");
 	}
 }

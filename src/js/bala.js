@@ -35,4 +35,14 @@ function bala(x,y,dir,imagen, vel){
 
 		return this.image[this.animacion];
 	}
+
+	this.colisionObjeto = function(objeto,cellSize,margenBala){
+		if (objeto.posx <= this.x+cellSize-margenBala && objeto.posy <= this.y+cellSize-margenBala
+		&& objeto.posx+cellSize >= this.x+margenBala && objeto.posy+cellSize >= this.y+margenBala){
+			objeto.daniar();
+			return true;
+		}
+
+		return false;
+	}
 }

@@ -91,4 +91,23 @@ function shootingController(){
 	this.removeBala = function(bala,pos){
 		this.balas.splice(pos,1);
 	}
+
+	this.colisionObjeto = function(objeto){
+		//Si la bala está en una casilla con un objeto, se destruye ella y el objeto con el que ha chocado
+		if (objeto.vida > 0){
+			for (var i = 0;i<this.balas.length;i++){
+				if (this.balas[i].colisionObjeto(objeto,this.cellSize,this.margenBala)){
+					this.removeBala(this.balas[i],i);
+				}
+			}
+		}
+	}
+
+	this.colisionEnemigos = function(enemigos){
+		//Si la bala está en una casilla con un objeto, se destruye ella y el objeto con el que ha chocado
+		for (var i = 0; i<enemigos.length;i++){
+			this.colisionObjeto(enemigos[i]);
+		}
+		
+	}
 }
