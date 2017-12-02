@@ -41,6 +41,12 @@
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
+
+        //Variable de la dificultad para un jugador: 0 facil, 1 medio y 2 dificil
+        //Para el multi: 3 facil, 4 medio y 5 dificil
+        var stringValue = window.localStorage.getItem("dificultad");
+        console.log(stringValue);
+
         
         //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
         //var rendija = true; //True si hay rendija activa
