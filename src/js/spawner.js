@@ -7,10 +7,10 @@ function gusanoSpawner(arrayEnemigos) {
     var random;
     var probabilidad1 = 2;  //Probabilidad del 20%, para los gusanos
     var probabilidad2 = 0.4;    //4%, para los 
-    this.start = function(x,y,spriteG,spriteV,spriteT,spritesAnimacionDestruccion){
+    this.start = function(x,y,spritesAnimacionDestruccion){
         
         this.timer = setInterval(function(_this) {
-            _this.crearEnemigo(_this,x,y,spriteG,spriteV,spriteT,spritesAnimacionDestruccion);
+            _this.crearEnemigo(_this,x,y,spritesAnimacionDestruccion);
         }, 4000, this);
 
     }
@@ -29,7 +29,7 @@ function gusanoSpawner(arrayEnemigos) {
         
         //Aparición del troyano
          random = (Math.random() * 10);
-        if (random<234)
+        if (random<probabilidad2)
         {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,3,spritesAnimacionDestruccion,this);}
         
         
@@ -44,8 +44,9 @@ function gusanoSpawner(arrayEnemigos) {
     this.verificarMuertes = function(){
         for (var i = 0;i<this.enemigos.length;i++){
             if (this.enemigos[i].vida == 0){
-                
-                this.enemigos[i].destruir(this.enemigos,i);
+             
+               this.enemigos.splice(i,1);
+                //this.enemigos[i].destruir(this.enemigos,i);
             }
         }
     }

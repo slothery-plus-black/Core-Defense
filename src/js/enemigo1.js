@@ -104,7 +104,6 @@ function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
 
 function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion) {
     //Velocidad del jugador debe ser multiplo de cellsize
-    this.isAlive = true;
     var anim = [];
     anim[0] = new Image();
     anim[0].src = "../images/enemigo_2.png";
@@ -205,7 +204,7 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
 
         //var _this = this;
         this.animar = function () {
-            if (animacionDestruccion >= 8) {
+            if (animacionDestruccion >= 7) {
                 animacionDestruccion = 0;
             } else {
                 animacionDestruccion++;
@@ -218,13 +217,12 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.kill = function (enemigos, i) {
         setTimeout(function (enemigos, i) {
             enemigos.splice(i, 1);
-        }, 400, enemigos, i);
+        }, 350, enemigos, i);
     }
 }
 
 function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion, spawnPadre) {
     //Velocidad del jugador debe ser multiplo de cellsize
-    this.isAlive = true;
     var anim = [];
     anim[0] = new Image();
     anim[0].src = "../images/enemigo_3.png";
@@ -244,7 +242,7 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.posy = y;
     this.velocidad = vel * 0.5;
     this.dir = 0;
-    var timeleft = 6;
+    this.timeleft = 6;
     this.spawn = spawnPadre;
     this.vida = vida;
     var aniNum = 0;
@@ -254,39 +252,34 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.spritesAnimacionDestruccion = spritesAnimacionDestruccion;
 
     this.cadencia = setInterval(function (_this) {
+        if(_this.vida !=0){
+            _this.timeleft--;
+            _this.apuntarNucleo(); //Se direcciona
 
-        timeleft--;
-        _this.apuntarNucleo(); //Se direcciona
-
-        //Si se le ha acabado el tiempo
-        if (timeleft == 0 && _this.vida > 0) {
-            //_this, x,y, spriteGusano,spriteVirus,spriteTroyano,spritesAnimacionDestruccion
+            //Si se le ha acabado el tiempo
+            if (_this.timeleft == 0 && _this.vida > 0) {
             
-
-            //Spawnea 3 enemigos
-            _this.spawn.spawnearGusano(_this.spawn, _this.posx, _this.posy, spritesAnimacionDestruccion);
-            _this.spawn.spawnearGusano(_this.spawn, _this.posx, _this.posy, spritesAnimacionDestruccion);
-            _this.spawn.spawnearGusano(_this.spawn, _this.posx, _this.posy, spritesAnimacionDestruccion);
+                //Spawnea 3 enemigos
+                _this.spawn.spawnearGusano(_this.spawn, _this.posx, _this.posy, spritesAnimacionDestruccion);
+                _this.spawn.spawnearGusano(_this.spawn, _this.posx, _this.posy, spritesAnimacionDestruccion);
+                _this.spawn.spawnearGusano(_this.spawn, _this.posx, _this.posy, spritesAnimacionDestruccion);
             
-            //Se muere
-            _this.vida = 0;
-
-
+                //Se muere
+                _this.vida = 0;
+            }
+            
         }
+        
     }, 2000, this);
 
     this.puedeDisparar = false;
     this.margen = margen;
     var random; //Variable auxiliar
 
-
     this.canShoot = function () {
         return this.puedeDisparar;
     }
 
-    this.cogerSprite = function () {
-        return this.sprite[this.dir];
-    }
 
     this.animar = function () {
         if (this.dir != 0) {
@@ -327,14 +320,13 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
             this.dir = dirY;
         }
     }
+    
     this.daniar = function () {
         if (this.vida > 0)
             this.vida--;
     }
 
     this.destruir = function (enemigos, i) {
-
-        
         this.animar = function () {
             if (animacionDestruccion >= 8) {
                 animacionDestruccion = 0;
@@ -346,6 +338,7 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
         this.kill(enemigos, i);
 
     }
+    
     this.kill = function (enemigos, i) {
         setTimeout(function (enemigos, i) {
             enemigos.splice(i, 1);
