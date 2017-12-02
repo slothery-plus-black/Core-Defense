@@ -68,14 +68,6 @@ function mundo(cellsize, tam) {
 		imagenJ1_a.src = this.srcImagenes+"sprite1_izquierda.png";
 		imagenJ1_d.src = this.srcImagenes+"sprite1_derecha.png";
 
-		enemigoG_stand = new Image();
-		enemigoG_stand.src = this.srcImagenes+"enemigo_1.png";
-
-		enemigoV_stand = new Image();
-		enemigoV_stand.src = this.srcImagenes+"enemigo_2.png";
-
-		enemigoT_stand = new Image();
-		enemigoT_stand.src = this.srcImagenes+"enemigo_3.png";
 
 		enemigo_explosion1 = new Image();
 		enemigo_explosion1.src = this.srcImagenes+"explosion_1.png";
@@ -146,22 +138,18 @@ function mundo(cellsize, tam) {
 
 		
 		this.spawns[0] = new gusanoSpawner([]);
-		this.spawns[0].start(1*cellsize,8*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand,
+		this.spawns[0].start(1*cellsize,8*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
         this.spawns[1] = new gusanoSpawner([]);
-		this.spawns[1].start(8*cellsize,1*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand,
+		this.spawns[1].start(8*cellsize,1*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
         this.spawns[2] = new gusanoSpawner([]);
-		this.spawns[2].start(16*cellsize,8*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand,
+		this.spawns[2].start(16*cellsize,8*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
         this.spawns[3] = new gusanoSpawner([]);
-		this.spawns[3].start(8*cellsize,16*cellsize,enemigoG_stand,enemigoV_stand,enemigoT_stand,
+		this.spawns[3].start(8*cellsize,16*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 
-		//enemigo
-		/*for (i = 0;i<10;i++){
-			this.enemigos[i] = new Enemigo1(enemigo1_stand,(1 * this.cellSize), (9 * this.cellSize), 2, 0.5, 8);
-		}*/
 		
 
 		//Casilla (x,y,imagen,movible,destructible)

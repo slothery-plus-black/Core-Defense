@@ -1,8 +1,9 @@
 //Objeto jugador, tiene su sprite, sus posiciones en x e y ademas de la velocidad
-function Enemigo1(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
+function Enemigo1(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
-	this.sprite = spr;
+	this.sprite = new Image();
+    this.sprite.src = "../images/enemigo_1.png";
 	this.posx = x;
 	this.posy = y;
 	this.velocidad = vel;
@@ -86,10 +87,11 @@ function Enemigo1(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) 
 		}, 50);
 	}
 }
-function Enemigo2(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
+function Enemigo2(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
-	this.sprite = spr;
+	this.sprite = new Image();
+    this.sprite.src = "../images/enemigo_2.png";
 	this.posx = x;
 	this.posy = y;
 	this.velocidad = vel*1.5;
@@ -171,10 +173,12 @@ function Enemigo2(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) 
         }, 50);
     }
 }
-function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion,spawnPadre,spriteGusano,spriteVirus) {
+function Enemigo3(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion,spawnPadre) {
 	//Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
-	this.sprite = spr;
+    enemigoV_stand = new Image();
+	this.sprite = new Image();
+    this.sprite.src = "../images/enemigo_3.png";
 	this.posx = x;
 	this.posy = y;
 	this.velocidad = vel*0.5;
@@ -183,9 +187,7 @@ function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion,s
     this.spawn = spawnPadre;
     this.vida = vida;
 
-    this.spriteGusano = spriteGusano;
-    this.spriteVirus = spriteVirus;
-
+    
     this.animacionDestruccion = 1;
     this.spritesAnimacionDestruccion=spritesAnimacionDestruccion;
     
@@ -197,14 +199,15 @@ function Enemigo3(spr,x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion,s
         //Si se le ha acabado el tiempo
         if (timeleft==0 && _this.vida >0){
             //_this, x,y, spriteGusano,spriteVirus,spriteTroyano,spritesAnimacionDestruccion
-            //Spawnea 3 enemigos
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.spriteGusano,_this.spriteVirus,_this.sprite,spritesAnimacionDestruccion);
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.spriteGusano,_this.spriteVirus,_this.sprite,spritesAnimacionDestruccion);
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,_this.spriteGusano,_this.spriteVirus,_this.sprite,spritesAnimacionDestruccion);
-            _this.spawn = null;
-            
             //Se muere
-            _this.isAlive = false;
+            _this.vida=0;
+            
+            //Spawnea 3 enemigos
+            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
+            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
+            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
+            
+            
         }
     },2000,this);
     

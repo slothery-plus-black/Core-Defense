@@ -14,21 +14,23 @@ function gusanoSpawner(arrayEnemigos) {
 
     }
     
-    this.crearEnemigo = function(_this, x,y, spriteGusano,spriteVirus,spriteTroyano,spritesAnimacionDestruccion){
+    this.crearEnemigo = function(_this, x,y,spritesAnimacionDestruccion){
         //Aparición de gusanos
         random = (Math.random() * 10);
         if (random<probabilidad1)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo1(spriteGusano,x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);}
         
         //Aparicion de virus
         random = (Math.random() * 10);
         if (random<probabilidad2)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo2(spriteVirus,x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);}
+        
         
         //Aparición del troyano
          random = (Math.random() * 10);
-        /*if (random<probabilidad2)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo3(spriteTroyano,x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,this);}*/
+        if (random<probabilidad2)
+        {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,3,spritesAnimacionDestruccion,this);}
+        
         
         //Aumentar probabilidad
         probabilidad1 +=0.02;
