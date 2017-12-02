@@ -49,7 +49,7 @@ function Jugador(spr,x,y,vel,cadencia,margen) {
     this.morir= function(mundo,sprExplosion){
         this.sprite = sprExplosion;
         mundo.pintar(this.sprite, this.posx, this.posy);
-        this.vel = 0;
+        this.velocidad = 0;
         this.puedeDisparar = false;
         
     }

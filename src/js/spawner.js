@@ -36,6 +36,9 @@ function gusanoSpawner(arrayEnemigos) {
         probabilidad1 +=0.02;
         probabilidad2 +=0.01;
     }
+    this.spawnearGusano = function(_this, x,y,spritesAnimacionDestruccion){
+        _this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);
+    }
 
     this.verificarMuertes = function(){
         for (var i = 0;i<this.enemigos.length;i++){

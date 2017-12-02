@@ -204,9 +204,9 @@ function Enemigo3(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion,spawn
             _this.vida=0;
             
             //Spawnea 3 enemigos
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
-            _this.spawn.crearEnemigo(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
+            _this.spawn.spawnearGusano(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
+            _this.spawn.spawnearGusano(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
+            _this.spawn.spawnearGusano(_this.spawn,_this.posx,_this.posy,spritesAnimacionDestruccion);
             
             
         }
