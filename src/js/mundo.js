@@ -480,7 +480,7 @@ function mundo(cellsize, tam) {
     
     
     this.gameOver = function(){
-        this.jugador.morir(this,enemigo_explosion3);
+        this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
         setTimeout(stopNS,3000);
     }
 	//Pintar en la casilla pinchada
