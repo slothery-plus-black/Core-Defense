@@ -1,0 +1,77 @@
+<!doctype html>
+<!-- Referencia del idioma -->
+<html lang="en">
+  <head>
+	<!-- Icono que aparece en las pestañas -->
+	<link rel="shortcut icon" type="image/x-icon" href="src/images/sprite1.png">
+	<title>Core Defense</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<style>
+		img {
+			position: absolute;
+		}
+		
+		.fondo {
+			left: 0px;
+			top: 0px;
+		}
+
+		.creditos {
+			left: 123px;
+			top: 35px;
+		}
+
+		.opciones {
+			left: 325px;
+			top: 35px;
+		}
+
+		.instrucciones {
+			left: 718px;
+			top: 35px;
+		}
+
+		.soloplay {
+			left: 718px;
+			top: 400px;
+		}
+
+		.multijugador {
+			left: 718px;
+			top: 750px;
+		}
+	</style>
+	<script type="text/javascript">
+        function unJugador() {
+			window.location.href = "Core Defense.html";
+		}
+		function multijugador() {
+			window.location.href = "Core Defense.html";
+		}
+		function unJugadorMovil() {
+			window.location.href = "Core Defense Movil.html";
+		}
+		function multijugadorMovil() {
+			window.location.href = "Core Defense Movil.html";
+		}
+    </script>
+  </head>
+  <body>
+	<p align="center">
+		<img src = "../images/fondo.png" style="z-index: 0" class="fondo"/>
+
+		<a href="../html/Contacto.html">
+			<img src = "../images/CREDITOS_BUTTON.png" class="creditos" style="z-index: 1"/>
+		</a>
+		
+		<img src = "../images/OPCIONES_BUTTON.png" class="opciones" style="z-index: 1"/>
+		<img src = "../images/INDTRUCCIONES_BUTTON.png" class="instrucciones" style="z-index: 1"/>
+
+		<img src = "../images/UNJUGADOR_BUTTON.png" class="soloplay" style="z-index: 1"
+		onclick="unJugador()" ontouchstart="unJugadorMovil()"/>
+		<img src = "../images/MULTIJUGADOR_BUTTON.png" class="multijugador" style="z-index: 1"
+		onclick="multijugador()" ontouchstart="multijugadorMovil()"/>
+	</p>
+  </body>
+</html>
