@@ -1,5 +1,5 @@
 //Objeto casilla, con la imagen y si se puede mover por ella
-function casilla(nombre,x,y,image,mov,destructible,srcImagenes, core) {
+function casilla(nombre,x,y,image,mov,destructible,srcImagenes, core, mundo) {
 	this.nombre = nombre;
 	this.movible = mov;
 	this.image = image;
@@ -11,6 +11,7 @@ function casilla(nombre,x,y,image,mov,destructible,srcImagenes, core) {
 	this.destruido = false;
 
 	this.core = core;
+	this.mundo = mundo;
 	
 	this.setImagen = function(image, mov){
 		this.image = image;
@@ -46,6 +47,10 @@ function casilla(nombre,x,y,image,mov,destructible,srcImagenes, core) {
 				var img = new Image();
 				img.src = _this.srcImagenes+""+_this.nombre+"-"+_this.golpes+".png";
 				_this.setImagen(img,true);
+
+				if (_this.core){
+					_this.mundo.cores--;
+				}
 			}else{
 				var img = new Image();
 				img.src = _this.srcImagenes+""+_this.nombre+"-"+_this.golpes+".png";

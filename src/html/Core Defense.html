@@ -46,7 +46,7 @@
         //var rendija = true; //True si hay rendija activa
 		var m = new mundo(40,720); //Objeto mundo
 		var keysDown = {};//Para saber que teclas estan pulsadas
-        
+        this.fin = false;
         //INICIALIZA TODO
         function initGame() {
             canvas = document.getElementById("game");
@@ -72,8 +72,22 @@
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
-			m.mover(keysDown);
-			m.pintado();
+            if (!m.fin){
+                m.mover(keysDown);
+                m.pintado();
+            }else{
+                
+                if (!this.fin){
+                    this.fin = true;
+                    setTimeout(function(){
+                        //Fin del juego
+                        window.clearInterval(timerId);
+			            timerId = undefined;
+                    }, 1000);
+                    
+                }
+                
+            }
         }
         function startNS() {
 			if (!timerId) {

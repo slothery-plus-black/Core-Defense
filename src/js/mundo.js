@@ -45,6 +45,9 @@ function mundo(cellsize, tam) {
 	this.enemigos = [];
 	
 	this.spawns = [];
+
+	this.fin = false;
+	this.cores = 4;
     
 
 	this.initMundo = function (context, mapa) {
@@ -175,7 +178,7 @@ function mundo(cellsize, tam) {
 					}else{
 						if (mapa.filas[j].datos[i].tile === "8" || mapa.filas[j].datos[i].tile === "9"
 						|| mapa.filas[j].datos[i].tile === "A" || mapa.filas[j].datos[i].tile === "B"){
-							this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile,i,j,imagen, false, true,this.srcImagenes,true);
+							this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile,i,j,imagen, false, true,this.srcImagenes,true,this);
 						}else{
 							this.board[i][j] = new casilla(mapa.filas[j].datos[i].tile,i,j,imagen, false, true,this.srcImagenes,false);
 						}
@@ -276,12 +279,19 @@ function mundo(cellsize, tam) {
 		}
 		
 		if (this.jugador.vida<=0){
+			this.fin = true;
 			//console.log("jugador muerto");
 		}
 	}
 
 	this.pintado = function () {
-		if (this.cargado){
+		if (this.cores <= 0){
+			this.fin = true;
+			this.jugador.sprite = enemigo_explosion3;
+			this.pintar(this.jugador.sprite, this.jugador.posx, this.jugador.posy);
+		}
+
+		if (this.cargado && !this.fin){
 			//this.scEnemigos.shoot(1+cellsize,1+cellsize,1, [this.imagenJ1_stand]);
 
             this.checkAlives();

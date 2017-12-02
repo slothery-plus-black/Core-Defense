@@ -97,6 +97,7 @@ function shootingController(){
 		if (objeto.vida > 0){
 			for (var i = 0;i<this.balas.length;i++){
 				if (this.balas[i].colisionObjeto(objeto,this.cellSize,this.margenBala)){
+					////////////////////Administrar puntuacion falta
 					this.removeBala(this.balas[i],i);
 				}
 			}
