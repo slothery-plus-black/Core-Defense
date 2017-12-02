@@ -9,6 +9,24 @@ function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     anim[1].src = "../images/enemigo_1_pata1.png";
     anim[2] = new Image();
     anim[2].src = "../images/enemigo_1_pata2.png";
+    anim[3] = new Image();
+    anim[3].src = "../images/enemigo_1_down.png";
+    anim[4] = new Image();
+    anim[4].src = "../images/enemigo_1_pata1_down.png";
+    anim[5] = new Image();
+    anim[5].src = "../images/enemigo_1_pata2_down.png";
+    anim[6] = new Image();
+    anim[6].src = "../images/enemigo_1_up.png";
+    anim[7] = new Image();
+    anim[7].src = "../images/enemigo_1_pata1_up.png";
+    anim[8] = new Image();
+    anim[8].src = "../images/enemigo_1_pata2_up.png";
+    anim[9] = new Image();
+    anim[9].src = "../images/enemigo_1_right.png";
+    anim[10] = new Image();
+    anim[10].src = "../images/enemigo_1_pata1_right.png";
+    anim[11] = new Image();
+    anim[11].src = "../images/enemigo_1_pata2_right.png";
     var aniNum = 0;
     this.sprite = anim;
     this.posx = x;
@@ -47,11 +65,35 @@ function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     }
 
     this.animar = function () {
-        if (aniNum >= 2) {
-            aniNum = 0;
-        } else {
-            aniNum += 1;
+        if (this.dir == 2) {
+            if (aniNum >= 2) {
+                aniNum = 0;
+            } else {
+                aniNum += 1;
+            }
+        } 
+        else if(this.dir ==1) {
+            if ((aniNum < 3) || (aniNum >= 5)) {
+                aniNum = 3;
+            } else {
+                aniNum++;
+            }
         }
+        else if(this.dir ==0) {
+            if ((aniNum < 6) || (aniNum >= 8)) {
+                aniNum = 6;
+            } else {
+                aniNum++;
+            }
+        }
+        else if(this.dir ==3) {
+            if ((aniNum < 9) || (aniNum >= 11)) {
+                aniNum = 9;
+            } else {
+                aniNum++;
+            }
+        }
+
         return this.sprite[aniNum];
     }
 
