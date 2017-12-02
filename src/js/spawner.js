@@ -6,7 +6,8 @@ function gusanoSpawner(arrayEnemigos) {
     this.timerReinicio = undefined;
     var random;
     var probabilidad1 = 2;  //Probabilidad del 20%, para los gusanos
-    var probabilidad2 = 0.4;    //4%, para los 
+    var probabilidad2 = 0.4;    //4%, para los virus
+    var probabilidad3 = 0.4;    //4% para los troyanos
     this.start = function(x,y,spritesAnimacionDestruccion){
         
         this.timer = setInterval(function(_this) {
@@ -29,13 +30,14 @@ function gusanoSpawner(arrayEnemigos) {
         
         //Aparición del troyano
          random = (Math.random() * 10);
-        if (random<probabilidad2)
+        if (random<probabilidad3)
         {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,3,spritesAnimacionDestruccion,this);}
         
         
         //Aumentar probabilidad
         probabilidad1 +=0.02;
         probabilidad2 +=0.01;
+        probabilidad3 +=0.01;
     }
     this.spawnearGusano = function(_this, x,y,spritesAnimacionDestruccion){
         _this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);

@@ -321,21 +321,21 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
 
     this.animar = function () {
         if (this.dir != 0) {
-            if (aniNum >= 2) {
+            if (aniNum >= 4) {
                 aniNum = 0;
             } else {
                 aniNum += 1;
             }
         } 
         else {
-            if ((aniNum < 3) || (aniNum >= 5)) {
-                aniNum = 3;
+            if ((aniNum < 6) || (aniNum >= 10)) {
+                aniNum = 6;
             } else {
-                aniNum++;
+                aniNum+=1;
             }
         }
 
-        return this.sprite[aniNum];
+        return this.sprite[Math.floor(aniNum/2)];
     }
 
     this.apuntarNucleo = function () {
