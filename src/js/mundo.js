@@ -257,7 +257,7 @@ function mundo(cellsize, tam) {
 		
 		if (this.jugador.vida<=0){
 			
-            stopNS();
+            this.gameOver();
 			//console.log("jugador muerto");
 		}
 	}
@@ -467,7 +467,7 @@ function mundo(cellsize, tam) {
     
     
     this.gameOver = function(){
-        this.jugador.morir(this,enemigo_explosion3)
+        this.jugador.morir(this,enemigo_explosion3);
         setTimeout(stopNS,3000);
     }
 	//Pintar en la casilla pinchada
