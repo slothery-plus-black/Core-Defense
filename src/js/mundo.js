@@ -309,7 +309,7 @@ function mundo(cellsize, tam) {
 	this.pintarEnemigos = function(){
 		for(var i=0;i<this.spawns.length;i++){
 			for (var j=0;j<this.spawns[i].enemigos.length;j++){
-				this.pintar(this.spawns[i].enemigos[j].sprite, this.spawns[i].enemigos[j].posx,this.spawns[i].enemigos[j].posy);
+				this.pintar(this.spawns[i].enemigos[j].animar(), this.spawns[i].enemigos[j].posx,this.spawns[i].enemigos[j].posy);
 			}
 		}
 		/*for (i=0;i<this.enemigos.length;i++){

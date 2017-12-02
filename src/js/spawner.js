@@ -29,7 +29,7 @@ function gusanoSpawner(arrayEnemigos) {
         
         //Aparición del troyano
          random = (Math.random() * 10);
-        if (random<probabilidad2)
+        if (random<234)
         {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,3,spritesAnimacionDestruccion,this);}
         
         
