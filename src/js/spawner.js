@@ -1,5 +1,6 @@
 //Spawner
 function gusanoSpawner(arrayEnemigos) {
+    _this = this;
     this.enemigos = arrayEnemigos;
     this.timer = undefined;
     this.timerReinicio = undefined;
@@ -44,7 +45,7 @@ function gusanoSpawner(arrayEnemigos) {
         for (var i = 0;i<this.enemigos.length;i++){
             if (this.enemigos[i].vida == 0){
                 
-                this.enemigos[i].destruir(this,i);
+                this.enemigos[i].destruir(this.enemigos,i);
             }
         }
     }

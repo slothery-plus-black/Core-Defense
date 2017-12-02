@@ -70,10 +70,9 @@ function Enemigo1(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
         this.vida--;
     }
 
-    this.destruir = function(){
+    this.destruir = function(enemigos,i){
 		
 		var _this = this;
-
 		//Se va a llamar a si misma para ir avanzando la animacion de destruccion del tile
 		setTimeout(function(){
 			if (_this.animacionDestruccion <=8){
@@ -82,7 +81,7 @@ function Enemigo1(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
                 _this.destruir();
 			}else{
 				//_this.spritesAnimacionDestruccion[_this.animacionDestruccion]
-				_this.isAlive = false;
+				enemigos.splice(i,1);
 			}
 		}, 50);
 	}
@@ -269,7 +268,7 @@ function Enemigo3(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion,spawn
                 _this.destruir();
 			}else{
 				//_this.spritesAnimacionDestruccion[_this.animacionDestruccion]
-                _this.isAlive = false;
+                enemigos.splice(i,1);
 			}
         }, 50);
     }
