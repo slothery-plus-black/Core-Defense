@@ -41,13 +41,8 @@ function gusanoSpawner(arrayEnemigos) {
         for (var i = 0;i<this.enemigos.length;i++){
             if (this.enemigos[i].vida == 0){
                 
-                this.enemigos[i].destruir();
+                this.enemigos[i].destruir(this,i);
             }
-
-            /*if (this.enemigos[i].vida < 0){
-                
-                this.enemigos.splice(i,1);
-            }*/
         }
     }
     

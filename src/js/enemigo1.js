@@ -156,7 +156,7 @@ function Enemigo2(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
             this.vida--;
     }
 
-    this.destruir = function(){
+    this.destruir = function(enemigos,i){
 		
 		var _this = this;
 
@@ -168,7 +168,8 @@ function Enemigo2(x,y,vel,cadencia,margen,vida,spritesAnimacionDestruccion) {
                 _this.destruir();
 			}else{
 				//_this.spritesAnimacionDestruccion[_this.animacionDestruccion]
-				_this.isAlive = false;
+				
+                enemigos.splice(i,1);
 			}
         }, 50);
     }

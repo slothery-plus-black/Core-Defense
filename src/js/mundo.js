@@ -28,7 +28,8 @@ function mundo(cellsize, tam) {
 	this.imagenBala_1d = new Image();
 	this.imagenBala_2d = new Image();
 	this.imagenBala_3d = new Image();
-	//De enemigos
+	
+    //De enemigos
 	this.imagenBala_1wE = new Image();
 	this.imagenBala_2wE = new Image();
 	this.imagenBala_3wE = new Image();
@@ -241,17 +242,7 @@ function mundo(cellsize, tam) {
 		}*/
 	}
     
-    //Si hace un check de los enemigos vivos, si están muertos los mata de verdad.
-    this.checkAlives = function(){
-        for(var i=0;i<this.spawns.length;i++){
-			for (var j=0;j<this.spawns[i].enemigos.length;j++){
-                if(!this.spawns[i].enemigos[j].isAlive){
-                	this.spawns[i].enemigos.splice(j,1);  //Función para borrar un elemento de un array.
-                }
-            }
-        }
-	}
-	
+    
 	this.colisionesDisparos = function(){
 		for(var i=0;i<this.spawns.length;i++){
 			this.sc.colisionEnemigos(this.spawns[i].enemigos);
@@ -282,7 +273,7 @@ function mundo(cellsize, tam) {
 		if (this.cargado && !this.fin){
 			//this.scEnemigos.shoot(1+cellsize,1+cellsize,1, [this.imagenJ1_stand]);
 
-            this.checkAlives();
+            //this.checkAlives();
 			this.moverEnemigos();
 
 			this.colisionesDisparos();
