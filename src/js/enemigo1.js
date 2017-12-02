@@ -19,6 +19,7 @@ function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.puedeDisparar = true;
     this.margen = margen;
     this.vida = vida;
+    this.i = 0;
 
     var animacionDestruccion = 0;
     this.spritesAnimacionDestruccion = spritesAnimacionDestruccion;
@@ -81,25 +82,22 @@ function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
             this.vida--;
     }
 
-    this.destruir = function (enemigos, i) {
-
+    this.destruir = function (_this, i) {
+        this.i = i;
         //var _this = this;
         this.animar = function () {
             if (animacionDestruccion >= 8) {
                 animacionDestruccion = 0;
+                _this.kill(this.i);
             } else {
                 animacionDestruccion++;
             }
             return this.spritesAnimacionDestruccion[animacionDestruccion];
         }
-        this.kill(enemigos, i);
+       
 
     }
-    this.kill = function (enemigos, i) {
-        setTimeout(function (enemigos, i) {
-            enemigos.splice(i, 1);
-        }, 400, enemigos, i);
-    }
+    
 }
 
 function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion) {
@@ -133,7 +131,8 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     var random;
     this.vida = vida;
     var aniNum = 0;
-
+    this.i = 0;
+    
     var animacionDestruccion = 0;
     this.spritesAnimacionDestruccion = spritesAnimacionDestruccion;
 
@@ -200,24 +199,20 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
             this.vida--;
     }
 
-    this.destruir = function (enemigos, i) {
-
+    this.destruir = function (_this, i) {
+        this.i = i;
         //var _this = this;
         this.animar = function () {
-            if (animacionDestruccion >= 7) {
+            if (animacionDestruccion >= 8) {
                 animacionDestruccion = 0;
+                _this.kill(this.i);
             } else {
                 animacionDestruccion++;
             }
             return this.spritesAnimacionDestruccion[animacionDestruccion];
         }
-        this.kill(enemigos, i);
+       
 
-    }
-    this.kill = function (enemigos, i) {
-        setTimeout(function (enemigos, i) {
-            enemigos.splice(i, 1);
-        }, 350, enemigos, i);
     }
 }
 
@@ -246,6 +241,7 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.spawn = spawnPadre;
     this.vida = vida;
     var aniNum = 0;
+    this.i = 0;
 
 
     var animacionDestruccion = 0;
@@ -326,23 +322,20 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
             this.vida--;
     }
 
-    this.destruir = function (enemigos, i) {
+    this.destruir = function (_this, i) {
+        this.i = i;
+        //var _this = this;
         this.animar = function () {
             if (animacionDestruccion >= 8) {
                 animacionDestruccion = 0;
+                _this.kill(this.i);
             } else {
                 animacionDestruccion++;
             }
             return this.spritesAnimacionDestruccion[animacionDestruccion];
         }
-        this.kill(enemigos, i);
+       
 
-    }
-    
-    this.kill = function (enemigos, i) {
-        setTimeout(function (enemigos, i) {
-            enemigos.splice(i, 1);
-        }, 400, enemigos, i);
     }
 
 }

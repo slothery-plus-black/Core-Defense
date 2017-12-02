@@ -44,11 +44,12 @@ function gusanoSpawner(arrayEnemigos) {
     this.verificarMuertes = function(){
         for (var i = 0;i<this.enemigos.length;i++){
             if (this.enemigos[i].vida == 0){
-             
-               this.enemigos.splice(i,1);
-                //this.enemigos[i].destruir(this.enemigos,i);
+                this.enemigos[i].destruir(this,i);
             }
         }
+    }
+    this.kill = function(i){
+        this.enemigos.splice(i,1);
     }
     
 }

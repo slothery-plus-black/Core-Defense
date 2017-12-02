@@ -307,9 +307,22 @@ function mundo(cellsize, tam) {
 	}
 
 	this.pintarEnemigos = function(){
+        var temp;
+        var tempx;
+        var tempy;
 		for(var i=0;i<this.spawns.length;i++){
 			for (var j=0;j<this.spawns[i].enemigos.length;j++){
-				this.pintar(this.spawns[i].enemigos[j].animar(), this.spawns[i].enemigos[j].posx,this.spawns[i].enemigos[j].posy);
+                try {
+                    tempx = this.spawns[i].enemigos[j].posx;
+                    tempy = this.spawns[i].enemigos[j].posy;
+                    temp = this.spawns[i].enemigos[j].animar();
+                }
+                catch(err) {
+                    temp = enemigo_explosion8;
+                    tempx = -10;
+                    tempy = -10;
+                }
+				this.pintar(temp, tempx,tempy);
 			}
 		}
 		/*for (i=0;i<this.enemigos.length;i++){
