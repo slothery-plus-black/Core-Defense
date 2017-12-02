@@ -46,8 +46,6 @@ function mundo(cellsize, tam) {
 	this.enemigos = [];
 	
 	this.spawns = [];
-
-	this.fin = false;
 	this.cores = 4;
     
 
@@ -258,19 +256,19 @@ function mundo(cellsize, tam) {
 		}
 		
 		if (this.jugador.vida<=0){
-			this.fin = true;
+			
+            stopNS();
 			//console.log("jugador muerto");
 		}
 	}
 
 	this.pintado = function () {
 		if (this.cores <= 0){
-			this.fin = true;
-			this.jugador.sprite = enemigo_explosion3;
-			this.pintar(this.jugador.sprite, this.jugador.posx, this.jugador.posy);
+			this.gameOver();
+            
 		}
 
-		if (this.cargado && !this.fin){
+		if (this.cargado){
 			//this.scEnemigos.shoot(1+cellsize,1+cellsize,1, [this.imagenJ1_stand]);
 
             //this.checkAlives();
@@ -466,7 +464,12 @@ function mundo(cellsize, tam) {
 
 		return false;
 	}
-
+    
+    
+    this.gameOver = function(){
+        this.jugador.morir(this,enemigo_explosion3)
+        setTimeout(stopNS,3000);
+    }
 	//Pintar en la casilla pinchada
 	/*this.onCanvasClick = function (evt) {
 		var x = evt.clientX - canvas.offsetLeft;
