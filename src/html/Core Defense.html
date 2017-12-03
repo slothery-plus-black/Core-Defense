@@ -44,10 +44,10 @@
 
         //Variable de la dificultad para un jugador: 0 facil, 1 medio y 2 dificil
         //Para el multi: 3 facil, 4 medio y 5 dificil
-        var stringValue = window.localStorage.getItem("dificultad");
-        console.log("Dificultad "+stringValue);
-        stringValue = window.localStorage.getItem("jugadores");
-        console.log("Jugadores "+stringValue);
+        var dificultad = window.localStorage.getItem("dificultad");
+        console.log("Dificultad "+dificultad);
+        var jugadores = window.localStorage.getItem("jugadores");
+        console.log("Jugadores "+jugadores);
 
         
         //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
@@ -60,10 +60,24 @@
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
             //canvas.addEventListener("click", m.onCanvasClick, false);
-			
+
+            var archivo ="../json/MapaFacil.json";
+
+            switch (dificultad){
+                case "1":
+                    archivo ="../json/MapaMedio.json"
+                    break;
+                case "2":
+                    archivo ="../json/MapaDificil.json"
+                    break;
+                case "3":
+                    archivo ="../json/MapaMuyDificil.json"
+                    break;
+            }
+
 			$.ajax({
 				dataType: "json",
-				url: "../json/MapaFacil.json",
+				url: archivo,
 				mimeType: "application/json",
 				success: function(result){
 					m.initMundo(context, result);
