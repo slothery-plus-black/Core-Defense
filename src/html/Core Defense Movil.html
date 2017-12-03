@@ -75,6 +75,8 @@
 
             if (jugadores === "2"){
                 multiplayer = true;
+                var controles2 = document.getElementById('controlesJ2');
+			    controles2.style.display='block';
             }
 
             var sonido = window.localStorage.getItem("sonido");
@@ -171,7 +173,7 @@
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
     </p>
-    <p align="center">
+    <p id="controlesJ2" align="center" style ="display:none">
         <canvas id="j5" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(38,true)" ontouchend="moverJugadorTouch(38,false)"></canvas>
         <canvas id="j6" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(40,true)" ontouchend="moverJugadorTouch(40,false)"></canvas>
         <canvas id="j7" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(37,true)" ontouchend="moverJugadorTouch(37,false)"></canvas>
