@@ -6,6 +6,7 @@ function mundo(cellsize, tam) {
 
 	this.multiplayer = false;
 	this.sonido = "on";
+	this.idioma = "es";
 
 	this.cellSize = cellsize; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
 	this.x = (tam) / this.cellSize, //Número de CASILLAS horizontales
@@ -52,11 +53,12 @@ function mundo(cellsize, tam) {
 	this.spawns = [];
 	this.cores = 4;
 
-	this.initMundo = function (context, mapa, multi, sound) {
+	this.initMundo = function (context, mapa, multi, sound, idio) {
 		this.board = [];
 
 		this.multiplayer = multi;
 		this.sonido = sound;
+		this.idioma = idio;
 		
 		this.context = context;
 
@@ -290,7 +292,7 @@ function mundo(cellsize, tam) {
 				this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			}
 		}
-		
+
 		if (this.multiplayer){
 			if (this.jugador2.vida<=0){
 				this.jugador2.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);

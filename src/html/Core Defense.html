@@ -78,13 +78,14 @@
             }
 
             var sonido = window.localStorage.getItem("sonido");
+            var idioma = window.localStorage.getItem("idioma");
 
 			$.ajax({
 				dataType: "json",
 				url: archivo,
 				mimeType: "application/json",
 				success: function(result){
-					m.initMundo(context, result, multiplayer, sonido);
+					m.initMundo(context, result, multiplayer, sonido, idioma);
 				}
 			});
         }
