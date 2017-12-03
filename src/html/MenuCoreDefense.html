@@ -154,14 +154,16 @@
 			divMostrar.style.display='block';
 		}
 		//Carga el juego segun la dificultad
-		function jugar(dificultad){
-			window.localStorage.setItem("dificultad", dificultad)
+		function jugar(dificultad, jugadores){
+			window.localStorage.setItem("dificultad", dificultad);
+			window.localStorage.setItem("jugadores", jugadores);
 
 			window.location.href = "Core Defense.html";
 		}
 		//Carga el juego segun la dificultad en version movil
-		function jugarMovil(dificultad){
-			window.localStorage.setItem("dificultad", dificultad)
+		function jugarMovil(dificultad, jugadores){
+			window.localStorage.setItem("dificultad", dificultad);
+			window.localStorage.setItem("jugadores", jugadores);
 			
 			window.location.href = "Core Defense Movil.html";
 		}
@@ -338,13 +340,13 @@
 		<img id="fondosoloplayer" src = "../images/NIVELES_UNJUGADOR.png" style="z-index: 0" class="fondo"/>
 
 		<img id="facil" src = "../images/FACIL_BUTTON.png" class="dificultadFacil" style="z-index: 1"
-		onclick="jugar(0)" ontouchstart="jugarMovil(0)"/>
+		onclick="jugar(0,1)" ontouchstart="jugarMovil(0,1)"/>
 
 		<img id="medio" src = "../images/MEDIO_BUTTON.png" class="dificultadMedio" style="z-index: 1"
-		onclick="jugar(1)" ontouchstart="jugarMovil(1)"/>
+		onclick="jugar(1,1)" ontouchstart="jugarMovil(1,1)"/>
 
 		<img id="dificil" src = "../images/DIFICIL_BUTTON.png" class="dificultadDificil" style="z-index: 1"
-		onclick="jugar(2)" ontouchstart="jugarMovil(2)"/>
+		onclick="jugar(2,1)" ontouchstart="jugarMovil(2,1)"/>
 
 		<img src = "../images/BOTONATRAS.png" class="botonAtras" style="z-index: 1"
 		onclick="atras()" ontouchstart="atras()"/>
@@ -354,13 +356,13 @@
 		<img id="fondomultiplayer" src = "../images/NIVELES_MULTIJUGADOR.png" style="z-index: 0" class="fondo"/>
 
 		<img id="facilm" src = "../images/FACIL_BUTTON.png" class="dificultadFacil" style="z-index: 1"
-		onclick="jugar(1)" ontouchstart="jugarMovil(3)"/>
+		onclick="jugar(1,2)" ontouchstart="jugarMovil(3,2)"/>
 
 		<img id="mediom" src = "../images/MEDIO_BUTTON.png" class="dificultadMedio" style="z-index: 1"
-		onclick="jugar(2)" ontouchstart="jugarMovil(4)"/>
+		onclick="jugar(2,2)" ontouchstart="jugarMovil(4,2)"/>
 
 		<img id="dificilm" src = "../images/DIFICIL_BUTTON.png" class="dificultadDificil" style="z-index: 1"
-		onclick="jugar(3)" ontouchstart="jugarMovil(5)"/>
+		onclick="jugar(3,2)" ontouchstart="jugarMovil(5,2)"/>
 
 		<img src = "../images/BOTONATRAS.png" class="botonAtras" style="z-index: 1"
 		onclick="atras()" ontouchstart="atras()"/>

@@ -45,7 +45,9 @@
         //Variable de la dificultad para un jugador: 0 facil, 1 medio y 2 dificil
         //Para el multi: 3 facil, 4 medio y 5 dificil
         var stringValue = window.localStorage.getItem("dificultad");
-        console.log(stringValue);
+        console.log("Dificultad "+stringValue);
+        stringValue = window.localStorage.getItem("jugadores");
+        console.log("Jugadores "+stringValue);
 
         
         //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
