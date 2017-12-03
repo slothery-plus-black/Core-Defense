@@ -33,32 +33,83 @@
 		}
 
 		.soloplay {
-			left: 718px;
-			top: 400px;
+			left: 960px;
+			top: 774px;
 		}
 
 		.multijugador {
-			left: 718px;
-			top: 750px;
+			left: 960px;
+			top: 920px;
+		}
+
+		.dificultadFacil {
+			left: 650px;
+			top: 500px;
+		}
+		.dificultadMedio {
+			left: 650px;
+			top: 650px;
+		}
+		.dificultadDificil {
+			left: 650px;
+			top: 800px;
+		}
+
+		.botonAtras {
+			left: 1500px;
+			top: 850px;
 		}
 	</style>
 	<script type="text/javascript">
+		//Muestra el parrafo de soloplayer
         function unJugador() {
-			window.location.href = "Core Defense.html";
+			var divOcultar = document.getElementById('menu');
+			divOcultar.style.display='none';
+
+			var divOcultar = document.getElementById('menuMultiplayer');
+			divOcultar.style.display='none';
+
+			var divMostrar = document.getElementById('menuSoloPlayer');
+			divMostrar.style.display='block';
 		}
+		//Muestra el parrafo del multijugador
 		function multijugador() {
+			var divOcultar = document.getElementById('menu');
+			divOcultar.style.display='none';
+
+			var divOcultar = document.getElementById('menuSoloPlayer');
+			divOcultar.style.display='none';
+
+			var divMostrar = document.getElementById('menuMultiplayer');
+			divMostrar.style.display='block';
+		}
+		//Vuelve al menú
+		function atras(){
+			var divOcultar = document.getElementById('menuSoloPlayer');
+			divOcultar.style.display='none';
+
+			var divOcultar = document.getElementById('menuMultiplayer');
+			divOcultar.style.display='none';
+
+			var divMostrar = document.getElementById('menu');
+			divMostrar.style.display='block';
+		}
+		//Carga el juego segun la dificultad
+		function jugar(dificultad){
+			window.localStorage.setItem("dificultad", dificultad)
+
 			window.location.href = "Core Defense.html";
 		}
-		function unJugadorMovil() {
-			window.location.href = "Core Defense Movil.html";
-		}
-		function multijugadorMovil() {
+		//Carga el juego segun la dificultad en version movil
+		function jugarMovil(dificultad){
+			window.localStorage.setItem("dificultad", dificultad)
+			
 			window.location.href = "Core Defense Movil.html";
 		}
     </script>
   </head>
   <body>
-	<p align="center">
+	<p align="center" id ="menu">
 		<img src = "../images/fondo.png" style="z-index: 0" class="fondo"/>
 
 		<a href="../html/Contacto.html">
@@ -69,9 +120,41 @@
 		<img src = "../images/INDTRUCCIONES_BUTTON.png" class="instrucciones" style="z-index: 1"/>
 
 		<img src = "../images/UNJUGADOR_BUTTON.png" class="soloplay" style="z-index: 1"
-		onclick="unJugador()" ontouchstart="unJugadorMovil()"/>
+		onclick="unJugador()" ontouchstart="unJugador()"/>
 		<img src = "../images/MULTIJUGADOR_BUTTON.png" class="multijugador" style="z-index: 1"
-		onclick="multijugador()" ontouchstart="multijugadorMovil()"/>
+		onclick="multijugador()" ontouchstart="multijugador()"/>
+	</p>
+
+	<p id="menuSoloPlayer" align = "center" style ="display:none">
+		<img src = "../images/NIVELES_UNJUGADOR.png" style="z-index: 0" class="fondo"/>
+
+		<img src = "../images/FACIL_BUTTON.png" class="dificultadFacil" style="z-index: 1"
+		onclick="jugar(0)" ontouchstart="jugarMovil(0)"/>
+
+		<img src = "../images/MEDIO_BUTTON.png" class="dificultadMedio" style="z-index: 1"
+		onclick="jugar(1)" ontouchstart="jugarMovil(1)"/>
+
+		<img src = "../images/DIFICIL_BUTTON.png" class="dificultadDificil" style="z-index: 1"
+		onclick="jugar(2)" ontouchstart="jugarMovil(2)"/>
+
+		<img src = "../images/BOTONATRAS.png" class="botonAtras" style="z-index: 1"
+		onclick="atras()" ontouchstart="atras()"/>
+	</p>
+
+	<p id="menuMultiplayer" align = "center" style ="display:none">
+		<img src = "../images/NIVELES_MULTIJUGADOR.png" style="z-index: 0" class="fondo"/>
+
+		<img src = "../images/FACIL_BUTTON.png" class="dificultadFacil" style="z-index: 1"
+		onclick="jugar(1)" ontouchstart="jugarMovil(3)"/>
+
+		<img src = "../images/MEDIO_BUTTON.png" class="dificultadMedio" style="z-index: 1"
+		onclick="jugar(2)" ontouchstart="jugarMovil(4)"/>
+
+		<img src = "../images/DIFICIL_BUTTON.png" class="dificultadDificil" style="z-index: 1"
+		onclick="jugar(3)" ontouchstart="jugarMovil(5)"/>
+
+		<img src = "../images/BOTONATRAS.png" class="botonAtras" style="z-index: 1"
+		onclick="atras()" ontouchstart="atras()"/>
 	</p>
   </body>
 </html>
