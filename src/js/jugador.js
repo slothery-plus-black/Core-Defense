@@ -44,8 +44,9 @@ function Jugador(spr,x,y,vel,cadencia,margen) {
 
 	this.daniar = function(){
 		this.vida--;
-		console.log("dañado jugador");
+		//console.log("dañado jugador");
 	}
+	
     this.morir= function(mundo,sprExplosion){
         this.sprite = sprExplosion;
         mundo.pintar(this.sprite, this.posx, this.posy);

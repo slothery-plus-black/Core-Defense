@@ -7,9 +7,9 @@
     <title>Core Defense</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
-        /*canvas {
+        canvas {
             position: relative;
-        }*/
+        }
         
         cellTime {
             position: fixed;
@@ -27,48 +27,75 @@
         }
     </style>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="../js/jugador.js"></script>
 	<script src="../js/casilla.js"></script>
 	<script src="../js/mundo.js"></script>
 	<script src="../js/shootingController.js"></script>
     <script src="../js/bala.js"></script>
     <script src="../js/enemigo1.js"></script>
+    <script src="../js/spawner.js"></script>
 
 	<script type="text/javascript">
-        //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
-        
-        //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
-        //var rendija = true; //True si hay rendija activa
+
+        //Variable de la dificultad para un jugador: 0 facil, 1 medio y 2 dificil
+        //Para el multi: 3 facil, 4 medio y 5 dificil
+        var dificultad = window.localStorage.getItem("dificultad");
+        //console.log("Dificultad "+dificultad);
+        var jugadores = window.localStorage.getItem("jugadores");
+        //console.log("Jugadores "+jugadores);
+
 		var m = new mundo(40,720); //Objeto mundo
 		var keysDown = {};//Para saber que teclas estan pulsadas
-        
+        this.fin = false;
+
         //INICIALIZA TODO
         function initGame() {
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
-			
+
+            var archivo ="../json/MapaFacil.json";
+
+            switch (dificultad){
+                case "1":
+                    archivo ="../json/MapaMedio.json"
+                    break;
+                case "2":
+                    archivo ="../json/MapaDificil.json"
+                    break;
+                case "3":
+                    archivo ="../json/MapaMuyDificil.json"
+                    break;
+            }
+
+            var multiplayer = false;
+
+            if (jugadores === "2"){
+                multiplayer = true;
+            }
+
+            var sonido = window.localStorage.getItem("sonido");
+
 			$.ajax({
 				dataType: "json",
-				url: "../json/MapaFacil.json",
+				url: archivo,
 				mimeType: "application/json",
 				success: function(result){
-					m.initMundo(context, result);
+					m.initMundo(context, result, multiplayer, sonido);
 				}
             });
             
-            //Dibujando los cuadrados de movimiento
-            for (i=0;i<5;i++){
+            for (var i=0;i<10;i++){
 
                 var img = new Image();
                 img.i = i;
                 img.src = "../images/boton_j"+i+".png";
                 
                 img.onload = function() {
-                    var jcanvas = document.getElementById("j1"+this.i);
+                    var jcanvas = document.getElementById("j"+this.i);
                     var jcontext = jcanvas.getContext("2d");
                     jcontext.drawImage(this, 0, 0);
                     jcontext.rect(0,0,174,152);
@@ -77,20 +104,33 @@
                 
             }
         }
-
-		/*$(document).keydown(function(e) {
+		
+		$(document).keydown(function(e) {
 			keysDown[e.keyCode] = true;
 		});
 		$(document).keyup(function(e) {
 			keysDown[e.keyCode] = false;
-        });*/
+        });
         
         //BUCLE DE EJECUCION DEL JUEGO, AQUÍ DEBEN INCLUIRSE LAS FUNCIONES QUE SE EJECUTEN CONTINUAMENTE
         function computeNS() {
-			m.mover(keysDown);
-			m.pintado();
+            if (!m.fin){
+                m.mover(keysDown);
+                m.pintado();
+            }else{
+                
+                if (!this.fin){
+                    this.fin = true;
+                    setTimeout(function(){
+                        //Fin del juego
+                        window.clearInterval(timerId);
+			            timerId = undefined;
+                    }, 1000);
+                    
+                }
+                
+            }
         }
-        
         function startNS() {
 			if (!timerId) {
 				timerId = setInterval("computeNS()", 50);
@@ -98,9 +138,6 @@
 				//100 10 frames por segundo
 				//50 20 frames por segundo
 				//25 40 frames por segundo
-				
-				//var status = document.getElementById("status");
-				//status.innerHTML = "<b>Play</b>";
 			}
         }
 		
@@ -109,17 +146,8 @@
 			window.clearInterval(timerId);
 			timerId = undefined;
         }
-		
-        //PARA TESTEO: Si pulsas stop detienes el juego y limpias todo
-        /*function clearBoard() {
-            m.initMundo();
-            m.pintado();
-            stopNS(); //(no tiene sentido ejecutar el mundo si esta vacio)
-            var status = document.getElementById("status");
-            status.innerHTML = "<b>Stop</b>";
-        }*/
         
-        startNS();
+		startNS();
         
         function moverJugadorTouch(key, accion){
             keysDown[key] = accion;
@@ -133,19 +161,22 @@
 
 <body onload="initGame()" bgcolor="#37383C">
     <p align="center">
-        <img src="../images/titulo_movil.png">
-    </p>
-    <p align="center">
-        <canvas id="j10" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(87,true)" ontouchend="moverJugadorTouch(87,false)"></canvas>
-        <canvas id="j11" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(83,true)" ontouchend="moverJugadorTouch(83,false)"></canvas>
-        <canvas id="j12" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(65,true)" ontouchend="moverJugadorTouch(65,false)"></canvas>
-        <canvas id="j13" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(68,true)" ontouchend="moverJugadorTouch(68,false)"></canvas>
-        <canvas id="j14" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(70,true)" ontouchend="moverJugadorTouch(70,false)"></canvas>
+        <canvas id="j0" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(87,true)" ontouchend="moverJugadorTouch(87,false)"></canvas>
+        <canvas id="j1" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(83,true)" ontouchend="moverJugadorTouch(83,false)"></canvas>
+        <canvas id="j2" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(65,true)" ontouchend="moverJugadorTouch(65,false)"></canvas>
+        <canvas id="j3" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(68,true)" ontouchend="moverJugadorTouch(68,false)"></canvas>
+        <canvas id="j4" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(70,true)" ontouchend="moverJugadorTouch(70,false)"></canvas>
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
     </p>
-    <p align="center"></p>
+    <p align="center">
+        <canvas id="j5" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(38,true)" ontouchend="moverJugadorTouch(38,false)"></canvas>
+        <canvas id="j6" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(40,true)" ontouchend="moverJugadorTouch(40,false)"></canvas>
+        <canvas id="j7" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(37,true)" ontouchend="moverJugadorTouch(37,false)"></canvas>
+        <canvas id="j8" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(39,true)" ontouchend="moverJugadorTouch(39,false)"></canvas>
+        <canvas id="j9" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(96,true)" ontouchend="moverJugadorTouch(96,false)"></canvas>
+    </p>
 </body>
 
 </html>

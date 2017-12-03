@@ -3,6 +3,10 @@ function mundo(cellsize, tam) {
 	this.board = [];
 	this.jugador;
 	this.jugador2;
+
+	this.multiplayer = false;
+	this.sonido = "on";
+
 	this.cellSize = cellsize; //No se especifica ancho ni alto por que seran cuadradras, cellsize*cellsize. 
 	this.x = (tam) / this.cellSize, //Número de CASILLAS horizontales
 	this.y = this.x; //Verticales
@@ -47,10 +51,12 @@ function mundo(cellsize, tam) {
 	
 	this.spawns = [];
 	this.cores = 4;
-    
 
-	this.initMundo = function (context, mapa) {
+	this.initMundo = function (context, mapa, multi, sound) {
 		this.board = [];
+
+		this.multiplayer = multi;
+		this.sonido = sound;
 		
 		this.context = context;
 
@@ -67,6 +73,20 @@ function mundo(cellsize, tam) {
 		imagenJ1_a.src = this.srcImagenes+"sprite1_izquierda.png";
 		imagenJ1_d.src = this.srcImagenes+"sprite1_derecha.png";
 
+		//Imagenes jugador2
+		if (this.multiplayer){
+			imagenJ2_stand = new Image();
+			imagenJ2_w = new Image();
+			imagenJ2_s = new Image();
+			imagenJ2_a = new Image();
+			imagenJ2_d = new Image();
+			
+			imagenJ2_stand.src = this.srcImagenes+"sprite1_jugador2.png";
+			imagenJ2_w.src = this.srcImagenes+"sprite1_arriba_jugador2.png";
+			imagenJ2_s.src = this.srcImagenes+"sprite1_abajo_jugador2.png";
+			imagenJ2_a.src = this.srcImagenes+"sprite1_izquierda_jugador2.png";
+			imagenJ2_d.src = this.srcImagenes+"sprite1_derecha_jugador2.png";
+		}
 
 		enemigo_explosion1 = new Image();
 		enemigo_explosion1.src = this.srcImagenes+"explosion_1.png";
@@ -119,9 +139,6 @@ function mundo(cellsize, tam) {
 		this.imagenBala_2dE.src = this.srcImagenes+"disparo_2dE.png";
 		this.imagenBala_3dE.src = this.srcImagenes+"disparo_3dE.png";
 
-		/*var imagenJ2 = new Image();
-		imagenJ2.src = "src/personaje_1.png";*/
-		
 		var posiciones = [];
 		for (var i = 0;i<mapa.jugador.length;i++){
 			posiciones[i] = mapa.jugador[i];
@@ -133,8 +150,16 @@ function mundo(cellsize, tam) {
 		//Creamos el jugador en una de las posiciones de inicio aleatoriamente
 		this.jugador = new Jugador([imagenJ1_w,imagenJ1_s, imagenJ1_a, imagenJ1_d, imagenJ1_stand],
 			(posiciones[posAleatoria].posx * this.cellSize), (posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8);
-		//this.jugador2 = new Jugador(imagenJ2, (1 * this.cellSize), (2 * this.cellSize), 4, 2, 8);
 
+		if (this.multiplayer){
+			var posAleatoria2 = Math.floor((Math.random() * posiciones.length) + 0);
+			do {
+				posAleatoria2 = Math.floor((Math.random() * posiciones.length) + 0);
+			}while(posAleatoria === posAleatoria2)
+
+			this.jugador2 = new Jugador([imagenJ2_w,imagenJ2_s, imagenJ2_a, imagenJ2_d, imagenJ2_stand],
+				(posiciones[posAleatoria2].posx * this.cellSize), (posiciones[posAleatoria2].posy * this.cellSize), 4, 2, 8);
+		}
 		
 		this.spawns[0] = new gusanoSpawner([]);
 		this.spawns[0].start(1*cellsize,8*cellsize,
@@ -148,8 +173,6 @@ function mundo(cellsize, tam) {
         this.spawns[3] = new gusanoSpawner([]);
 		this.spawns[3].start(8*cellsize,16*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
-
-		
 
 		//Casilla (x,y,imagen,movible,destructible)
 		for (var i = 0;i<this.x;i++){
@@ -216,30 +239,31 @@ function mundo(cellsize, tam) {
 		if (keysDown[32]){
 			this.disparar(this.jugador);
 		}
-		/*
+
 		//Segundo jugador
-		//up arrow
-		if (keysDown[38]){
-			this.moverJugador(0, this.jugador2);
+		if (this.multiplayer){
+			//up arrow
+			if (keysDown[38]){
+				this.moverJugador(0, this.jugador2);
+			}
+			//down arrow
+			if (keysDown[40]){
+				this.moverJugador(1, this.jugador2);
+			}
+			//left arrow
+			if (keysDown[37]){
+				this.moverJugador(2, this.jugador2);
+			}
+			//right arrow
+			if (keysDown[39]){
+				this.moverJugador(3, this.jugador2);
+			}
+			//0
+			if (keysDown[96]){
+				this.disparar(this.jugador2);
+			}
 		}
-		//down arrow
-		if (keysDown[40]){
-			this.moverJugador(1, this.jugador2);
-		}
-		//left arrow
-		if (keysDown[37]){
-			this.moverJugador(2, this.jugador2);
-		}
-		//right arrow
-		if (keysDown[39]){
-			this.moverJugador(3, this.jugador2);
-		}
-		//0
-		if (keysDown[96]){
-			this.disparar(this.jugador2);
-		}*/
 	}
-    
     
 	this.colisionesDisparos = function(){
 		for(var i=0;i<this.spawns.length;i++){
@@ -247,6 +271,10 @@ function mundo(cellsize, tam) {
         }
 
 		this.scEnemigos.colisionObjeto(this.jugador);
+
+		if (this.multiplayer){
+			this.scEnemigos.colisionObjeto(this.jugador2);
+		}
 	}
 
 	this.verificarMuertes = function(){
@@ -256,22 +284,32 @@ function mundo(cellsize, tam) {
 		}
 		
 		if (this.jugador.vida<=0){
-			
-            this.gameOver();
-			//console.log("jugador muerto");
+			if (!this.multiplayer){
+				this.gameOver();
+			}else{
+				this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
+			}
 		}
+		
+		if (this.multiplayer){
+			if (this.jugador2.vida<=0){
+				this.jugador2.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
+			}
+
+			if (this.jugador.vida<=0 && this.jugador2.vida<=0){
+				this.gameOver();
+			}
+		}
+		
+			
 	}
 
 	this.pintado = function () {
 		if (this.cores <= 0){
 			this.gameOver();
-            
 		}
 
 		if (this.cargado){
-			//this.scEnemigos.shoot(1+cellsize,1+cellsize,1, [this.imagenJ1_stand]);
-
-            //this.checkAlives();
 			this.moverEnemigos();
 
 			this.colisionesDisparos();
@@ -285,7 +323,10 @@ function mundo(cellsize, tam) {
 			//Para imprimir el personaje
 			this.pintar(this.jugador.cogerSprite(), this.jugador.posx, this.jugador.posy);
 			this.jugador.avanzarTiempo();
-			//this.pintar(this.jugador2.sprite, this.jugador2.posx, this.jugador2.posy);
+			if (this.multiplayer){
+				this.pintar(this.jugador2.cogerSprite(), this.jugador2.posx, this.jugador2.posy);
+				this.jugador2.avanzarTiempo();
+			}
 
 			//Impresion de las balas
 			this.sc.renderBalas();
@@ -294,7 +335,6 @@ function mundo(cellsize, tam) {
 			this.verificarMuertes();
 
 			this.pintarEnemigos();
-			//this.pintar(this.enemigo1.sprite, this.enemigo1.posx,this.enemigo1.posy);
 		}
 	}
 
@@ -325,9 +365,6 @@ function mundo(cellsize, tam) {
 				this.pintar(temp, tempx,tempy);
 			}
 		}
-		/*for (i=0;i<this.enemigos.length;i++){
-			this.pintar(this.enemigos[i].sprite, this.enemigos[i].posx,this.enemigos[i].posy);
-		}*/
 	}
 	
 	//0 arriba, 1 abajo, 2 izquierda y 3 derecha
@@ -370,8 +407,6 @@ function mundo(cellsize, tam) {
 
 	this.moverEnemigos = function(){
 		//Actualiza la direccion en la que mira
-		//this.enemigo1.dir=1;
-
 		for(var i=0;i<this.spawns.length;i++){
 			for (var j=0;j<this.spawns[i].enemigos.length;j++){
 				var jxOriginal = this.spawns[i].enemigos[j].posx;
@@ -428,9 +463,6 @@ function mundo(cellsize, tam) {
 					break;
 			}
 
-			/*this.sc.shoot(1*this.cellSize, 1*this.cellSize, 1, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
-			this.sc.shoot(1*this.cellSize, 16*this.cellSize, 0, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);
-			this.sc.shoot(1*this.cellSize, 11*this.cellSize, 3, [this.imagenBala_1s,this.imagenBala_2s,this.imagenBala_3s]);*/
 			jugador.animar(jugador.dir);
 		}
 	}
@@ -478,62 +510,14 @@ function mundo(cellsize, tam) {
 		return false;
 	}
     
-    
     this.gameOver = function(){
-        this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
-        setTimeout(stopNS,3000);
+		if (!this.multiplayer){
+			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
+			setTimeout(stopNS,3000);
+		}else{
+			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
+			this.jugador2.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
+			setTimeout(stopNS,3000);
+		}
     }
-	//Pintar en la casilla pinchada
-	/*this.onCanvasClick = function (evt) {
-		var x = evt.clientX - canvas.offsetLeft;
-		var y = evt.clientY - canvas.offsetTop;
-		
-		//Se divide entre cellSize para coger el menor valor para el board de esa casilla
-		//Luego se ira recorriendo en ponerImagenNueva hasta llegar al valor menor+cellSize-1
-		var boardX = Math.floor(parseInt(x / cellSize));
-		var boardY = Math.floor(parseInt(y / cellSize));
-		//console.log(boardX+" "+boardY);
-		
-		var imagen = null;
-		var mov = false;
-		
-		//estado = tecla del 1 al 8 que selecciona el tile a pintar
-		switch (estado){
-			case 1:
-				imagen = m_vert;
-				break;
-			case 2:
-				imagen = m_hor;
-				break;
-			case 3:
-				imagen = m_ArI;
-				break;
-			case 4:
-				imagen = m_ArD;
-				break;
-			case 5:
-				imagen = m_AbI;
-				break;
-			case 6:
-				imagen = m_AbD;
-				break;
-			case 7:
-				imagen = m_Fondo;
-				mov = true;
-				break;
-		}
-		if (imagen !== null)
-			m.ponerImagenNueva(boardX*cellSize, boardY*cellSize, imagen, mov);
-		
-		m.pintado();
-	}*/
-	
-	/*this.ponerImagenNueva = function (x, y, ima, m) {
-		//console.log(board);
-		for (i = 0;i<cellSize;i++){
-			for (j = 0;j<cellSize;j++){
-				board[x+i][y+j].setImagen(ima, m);
-			}
-		}
-	}*/
 }

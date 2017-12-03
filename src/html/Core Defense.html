@@ -37,7 +37,6 @@
     <script src="../js/spawner.js"></script>
 
 	<script type="text/javascript">
-        //!!!!!!!!!PUEDES SUSTITUIR CELLSIZE POR 5,10 O 20 PARA CAMBIAR EL NUMERO DE casillaS, sin embargo ya hay botones para eso.
         var canvas;
         var context;
         var timerId = undefined; //undefined si esta parado.
@@ -45,21 +44,18 @@
         //Variable de la dificultad para un jugador: 0 facil, 1 medio y 2 dificil
         //Para el multi: 3 facil, 4 medio y 5 dificil
         var dificultad = window.localStorage.getItem("dificultad");
-        console.log("Dificultad "+dificultad);
+        //console.log("Dificultad "+dificultad);
         var jugadores = window.localStorage.getItem("jugadores");
-        console.log("Jugadores "+jugadores);
-
+        //console.log("Jugadores "+jugadores);
         
-        //var extra = 1; //Separa 1 pixel entre casillas cuando hay rendija.
-        //var rendija = true; //True si hay rendija activa
 		var m = new mundo(40,720); //Objeto mundo
 		var keysDown = {};//Para saber que teclas estan pulsadas
         this.fin = false;
+
         //INICIALIZA TODO
         function initGame() {
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
-            //canvas.addEventListener("click", m.onCanvasClick, false);
 
             var archivo ="../json/MapaFacil.json";
 
@@ -75,12 +71,20 @@
                     break;
             }
 
+            var multiplayer = false;
+
+            if (jugadores === "2"){
+                multiplayer = true;
+            }
+
+            var sonido = window.localStorage.getItem("sonido");
+
 			$.ajax({
 				dataType: "json",
 				url: archivo,
 				mimeType: "application/json",
 				success: function(result){
-					m.initMundo(context, result);
+					m.initMundo(context, result, multiplayer, sonido);
 				}
 			});
         }
@@ -118,9 +122,6 @@
 				//100 10 frames por segundo
 				//50 20 frames por segundo
 				//25 40 frames por segundo
-				
-				//var status = document.getElementById("status");
-				//status.innerHTML = "<b>Play</b>";
 			}
         }
 		
@@ -129,15 +130,6 @@
 			window.clearInterval(timerId);
 			timerId = undefined;
         }
-		
-        //PARA TESTEO: Si pulsas stop detienes el juego y limpias todo
-        /*function clearBoard() {
-            m.initMundo();
-            m.pintado();
-            stopNS(); //(no tiene sentido ejecutar el mundo si esta vacio)
-            var status = document.getElementById("status");
-            status.innerHTML = "<b>Stop</b>";
-        }*/
         
 		startNS();
     </script>
