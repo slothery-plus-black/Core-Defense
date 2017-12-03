@@ -56,17 +56,42 @@
 		}
 
 		.botonAtras {
-			left: 1500px;
+			left: 1680px;
 			top: 850px;
+		}
+
+		.botonIdioma{
+			left: 1000px;
+			top: 540px;
+		}
+		.botonSonido{
+			left: 1000px;
+			top: 640px;
 		}
 	</style>
 	<script type="text/javascript">
+		if (window.localStorage.getItem("idioma") === null){
+			window.localStorage.setItem("idioma", "es");
+		}
+		if (window.localStorage.getItem("sonido") === null){
+			window.localStorage.setItem("sonido", "on");
+		}
+
+		var idioma = window.localStorage.getItem("idioma");
+		var sonido = window.localStorage.getItem("sonido");
+
+		//console.log("Idioma "+window.localStorage.getItem("idioma"));
+		//console.log("Sonido "+window.localStorage.getItem("sonido"));
+
 		//Muestra el parrafo de soloplayer
         function unJugador() {
 			var divOcultar = document.getElementById('menu');
 			divOcultar.style.display='none';
-
 			var divOcultar = document.getElementById('menuMultiplayer');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuInstrucciones');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuOpciones');
 			divOcultar.style.display='none';
 
 			var divMostrar = document.getElementById('menuSoloPlayer');
@@ -76,8 +101,11 @@
 		function multijugador() {
 			var divOcultar = document.getElementById('menu');
 			divOcultar.style.display='none';
-
 			var divOcultar = document.getElementById('menuSoloPlayer');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuInstrucciones');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuOpciones');
 			divOcultar.style.display='none';
 
 			var divMostrar = document.getElementById('menuMultiplayer');
@@ -87,11 +115,42 @@
 		function atras(){
 			var divOcultar = document.getElementById('menuSoloPlayer');
 			divOcultar.style.display='none';
-
 			var divOcultar = document.getElementById('menuMultiplayer');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuInstrucciones');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuOpciones');
 			divOcultar.style.display='none';
 
 			var divMostrar = document.getElementById('menu');
+			divMostrar.style.display='block';
+		}
+		//Muestra las instrucciones
+		function instrucciones(){
+			var divOcultar = document.getElementById('menuSoloPlayer');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuMultiplayer');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menu');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuOpciones');
+			divOcultar.style.display='none';
+
+			var divMostrar = document.getElementById('menuInstrucciones');
+			divMostrar.style.display='block';
+		}
+		//Muestra las opciones
+		function opciones(){
+			var divOcultar = document.getElementById('menuSoloPlayer');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuMultiplayer');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menu');
+			divOcultar.style.display='none';
+			var divOcultar = document.getElementById('menuInstrucciones');
+			divOcultar.style.display='none';
+
+			var divMostrar = document.getElementById('menuOpciones');
 			divMostrar.style.display='block';
 		}
 		//Carga el juego segun la dificultad
@@ -106,35 +165,185 @@
 			
 			window.location.href = "Core Defense Movil.html";
 		}
+		//Cambia el idioma
+		function cambiarIdioma(){
+			var stringValue = window.localStorage.getItem("idioma");
+
+			if (stringValue === "es"){
+				window.localStorage.setItem("idioma", "en");
+
+				var img = document.getElementById("creditos");
+				img.src = "../images/CREDITS_BUTTON.png";
+				img = document.getElementById("opciones");
+				img.src = "../images/OPTIONS_BUTTON.png";
+				img = document.getElementById("instrucciones");
+				img.src = "../images/INDTRUCTIONS_BUTTON.png";
+				img = document.getElementById("soloplayer");
+				img.src = "../images/SINGLEPLAYER_BUTTON.png";
+				img = document.getElementById("multiplayer");
+				img.src = "../images/MULTIPLAYER_BUTTON.png";
+				img = document.getElementById("fondosoloplayer");
+				img.src = "../images/NIVELES_SINGLEPLAYER.png";
+				img = document.getElementById("fondomultiplayer");
+				img.src = "../images/NIVELES_MULTIPLAYER.png";
+
+				img = document.getElementById("facil");
+				img.src = "../images/EASY_BUTTON.png";
+				img = document.getElementById("medio");
+				img.src = "../images/NORMAL_BUTTON.png";
+				img = document.getElementById("dificil");
+				img.src = "../images/HARD_BUTTON.png";
+
+				img = document.getElementById("facilm");
+				img.src = "../images/EASY_BUTTON.png";
+				img = document.getElementById("mediom");
+				img.src = "../images/NORMAL_BUTTON.png";
+				img = document.getElementById("dificilm");
+				img.src = "../images/HARD_BUTTON.png";
+
+				img = document.getElementById("fondoinstrucciones");
+				img.src = "../images/fondo_instrucciones_ingles.png";
+
+				img = document.getElementById("fondoopciones");
+				img.src = "../images/fondo_opciones_ingles.png";
+				img = document.getElementById("botonidioma");
+				img.src = "../images/boton ingles opciones.png";
+			}else{
+				window.localStorage.setItem("idioma", "es");
+
+				var img = document.getElementById("creditos");
+				img.src = "../images/CREDITOS_BUTTON.png";
+				img = document.getElementById("opciones");
+				img.src = "../images/OPCIONES_BUTTON.png";
+				img = document.getElementById("instrucciones");
+				img.src = "../images/INDTRUCCIONES_BUTTON.png";
+				img = document.getElementById("soloplayer");
+				img.src = "../images/UNJUGADOR_BUTTON.png";
+				img = document.getElementById("multiplayer");
+				img.src = "../images/MULTIJUGADOR_BUTTON.png";
+				img = document.getElementById("fondosoloplayer");
+				img.src = "../images/NIVELES_UNJUGADOR.png";
+				img = document.getElementById("fondomultiplayer");
+				img.src = "../images/NIVELES_MULTIJUGADOR.png";
+
+				img = document.getElementById("facil");
+				img.src = "../images/FACIL_BUTTON.png";
+				img = document.getElementById("medio");
+				img.src = "../images/MEDIO_BUTTON.png";
+				img = document.getElementById("dificil");
+				img.src = "../images/DIFICIL_BUTTON.png";
+
+				img = document.getElementById("facilm");
+				img.src = "../images/FACIL_BUTTON.png";
+				img = document.getElementById("mediom");
+				img.src = "../images/MEDIO_BUTTON.png";
+				img = document.getElementById("dificilm");
+				img.src = "../images/DIFICIL_BUTTON.png";
+
+				img = document.getElementById("fondoinstrucciones");
+				img.src = "../images/fondo_instrucciones_esp.png";
+
+				img = document.getElementById("fondoopciones");
+				img.src = "../images/fondo_opciones_esp.png";
+				img = document.getElementById("botonidioma");
+				img.src = "../images/boton españolopciones.png";
+			}
+		}
+		//Cambia el sonido
+		function cambiarSonido(){
+			var stringValue = window.localStorage.getItem("sonido");
+
+			if (stringValue === "off"){
+				window.localStorage.setItem("sonido", "on");
+
+				var img = document.getElementById("botonsonido");
+				img.src = "../images/boton on opciones.png";
+			}else{
+				window.localStorage.setItem("sonido", "off");
+
+				var img = document.getElementById("botonsonido");
+				img.src = "../images/boton off opciones.png";
+			}
+		}
+		//Por si se recarga la pagina que carge su configuracion si no esta por defecto
+		function initVariables(){
+			if (idioma === "en"){
+				var img = document.getElementById("creditos");
+				img.src = "../images/CREDITS_BUTTON.png";
+				img = document.getElementById("opciones");
+				img.src = "../images/OPTIONS_BUTTON.png";
+				img = document.getElementById("instrucciones");
+				img.src = "../images/INDTRUCTIONS_BUTTON.png";
+				img = document.getElementById("soloplayer");
+				img.src = "../images/SINGLEPLAYER_BUTTON.png";
+				img = document.getElementById("multiplayer");
+				img.src = "../images/MULTIPLAYER_BUTTON.png";
+				img = document.getElementById("fondosoloplayer");
+				img.src = "../images/NIVELES_SINGLEPLAYER.png";
+				img = document.getElementById("fondomultiplayer");
+				img.src = "../images/NIVELES_MULTIPLAYER.png";
+
+				img = document.getElementById("facil");
+				img.src = "../images/EASY_BUTTON.png";
+				img = document.getElementById("medio");
+				img.src = "../images/NORMAL_BUTTON.png";
+				img = document.getElementById("dificil");
+				img.src = "../images/HARD_BUTTON.png";
+
+				img = document.getElementById("facilm");
+				img.src = "../images/EASY_BUTTON.png";
+				img = document.getElementById("mediom");
+				img.src = "../images/NORMAL_BUTTON.png";
+				img = document.getElementById("dificilm");
+				img.src = "../images/HARD_BUTTON.png";
+
+				img = document.getElementById("fondoinstrucciones");
+				img.src = "../images/fondo_instrucciones_ingles.png";
+
+				img = document.getElementById("fondoopciones");
+				img.src = "../images/fondo_opciones_ingles.png";
+				img = document.getElementById("botonidioma");
+				img.src = "../images/boton ingles opciones.png";
+				
+			}
+			if (sonido === "off"){
+				var img = document.getElementById("botonsonido");
+				img.src = "../images/boton off opciones.png";
+			}
+		}
     </script>
   </head>
-  <body>
+
+  <body onload="initVariables()">
 	<p align="center" id ="menu">
 		<img src = "../images/fondo.png" style="z-index: 0" class="fondo"/>
 
 		<a href="../html/Contacto.html">
-			<img src = "../images/CREDITOS_BUTTON.png" class="creditos" style="z-index: 1"/>
+			<img id="creditos" src = "../images/CREDITOS_BUTTON.png" class="creditos" style="z-index: 1"/>
 		</a>
 		
-		<img src = "../images/OPCIONES_BUTTON.png" class="opciones" style="z-index: 1"/>
-		<img src = "../images/INDTRUCCIONES_BUTTON.png" class="instrucciones" style="z-index: 1"/>
+		<img id="opciones" src = "../images/OPCIONES_BUTTON.png" class="opciones" style="z-index: 1"
+		onclick="opciones()" ontouchstart="opciones()"/>
 
-		<img src = "../images/UNJUGADOR_BUTTON.png" class="soloplay" style="z-index: 1"
+		<img id="instrucciones" src = "../images/INDTRUCCIONES_BUTTON.png" class="instrucciones" style="z-index: 1"
+		onclick="instrucciones()" ontouchstart="instrucciones()"/>
+
+		<img id="soloplayer" src = "../images/UNJUGADOR_BUTTON.png" class="soloplay" style="z-index: 1"
 		onclick="unJugador()" ontouchstart="unJugador()"/>
-		<img src = "../images/MULTIJUGADOR_BUTTON.png" class="multijugador" style="z-index: 1"
+		<img id="multiplayer" src = "../images/MULTIJUGADOR_BUTTON.png" class="multijugador" style="z-index: 1"
 		onclick="multijugador()" ontouchstart="multijugador()"/>
 	</p>
 
 	<p id="menuSoloPlayer" align = "center" style ="display:none">
-		<img src = "../images/NIVELES_UNJUGADOR.png" style="z-index: 0" class="fondo"/>
+		<img id="fondosoloplayer" src = "../images/NIVELES_UNJUGADOR.png" style="z-index: 0" class="fondo"/>
 
-		<img src = "../images/FACIL_BUTTON.png" class="dificultadFacil" style="z-index: 1"
+		<img id="facil" src = "../images/FACIL_BUTTON.png" class="dificultadFacil" style="z-index: 1"
 		onclick="jugar(0)" ontouchstart="jugarMovil(0)"/>
 
-		<img src = "../images/MEDIO_BUTTON.png" class="dificultadMedio" style="z-index: 1"
+		<img id="medio" src = "../images/MEDIO_BUTTON.png" class="dificultadMedio" style="z-index: 1"
 		onclick="jugar(1)" ontouchstart="jugarMovil(1)"/>
 
-		<img src = "../images/DIFICIL_BUTTON.png" class="dificultadDificil" style="z-index: 1"
+		<img id="dificil" src = "../images/DIFICIL_BUTTON.png" class="dificultadDificil" style="z-index: 1"
 		onclick="jugar(2)" ontouchstart="jugarMovil(2)"/>
 
 		<img src = "../images/BOTONATRAS.png" class="botonAtras" style="z-index: 1"
@@ -142,16 +351,36 @@
 	</p>
 
 	<p id="menuMultiplayer" align = "center" style ="display:none">
-		<img src = "../images/NIVELES_MULTIJUGADOR.png" style="z-index: 0" class="fondo"/>
+		<img id="fondomultiplayer" src = "../images/NIVELES_MULTIJUGADOR.png" style="z-index: 0" class="fondo"/>
 
-		<img src = "../images/FACIL_BUTTON.png" class="dificultadFacil" style="z-index: 1"
+		<img id="facilm" src = "../images/FACIL_BUTTON.png" class="dificultadFacil" style="z-index: 1"
 		onclick="jugar(1)" ontouchstart="jugarMovil(3)"/>
 
-		<img src = "../images/MEDIO_BUTTON.png" class="dificultadMedio" style="z-index: 1"
+		<img id="mediom" src = "../images/MEDIO_BUTTON.png" class="dificultadMedio" style="z-index: 1"
 		onclick="jugar(2)" ontouchstart="jugarMovil(4)"/>
 
-		<img src = "../images/DIFICIL_BUTTON.png" class="dificultadDificil" style="z-index: 1"
+		<img id="dificilm" src = "../images/DIFICIL_BUTTON.png" class="dificultadDificil" style="z-index: 1"
 		onclick="jugar(3)" ontouchstart="jugarMovil(5)"/>
+
+		<img src = "../images/BOTONATRAS.png" class="botonAtras" style="z-index: 1"
+		onclick="atras()" ontouchstart="atras()"/>
+	</p>
+
+	<p id="menuInstrucciones" align = "center" style ="display:none">
+		<img id="fondoinstrucciones" src = "../images/fondo_instrucciones_esp.png" style="z-index: 0" class="fondo"/>
+
+		<img src = "../images/BOTONATRAS.png" class="botonAtras" style="z-index: 1"
+		onclick="atras()" ontouchstart="atras()"/>
+	</p>
+
+	<p id="menuOpciones" align = "center" style ="display:none">
+		<img id="fondoopciones" src = "../images/fondo_opciones_esp.png" style="z-index: 0" class="fondo"/>
+
+		<img id="botonidioma" src = "../images/boton españolopciones.png" class="botonIdioma" style="z-index: 1"
+		onclick="cambiarIdioma()" ontouchstart="cambiarIdioma()"/>
+
+		<img id="botonsonido" src = "../images/boton on opciones.png" class="botonSonido" style="z-index: 1"
+		onclick="cambiarSonido()" ontouchstart="cambiarSonido()"/>
 
 		<img src = "../images/BOTONATRAS.png" class="botonAtras" style="z-index: 1"
 		onclick="atras()" ontouchstart="atras()"/>
