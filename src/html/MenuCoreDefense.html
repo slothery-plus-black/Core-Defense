@@ -80,6 +80,8 @@
 		var idioma = window.localStorage.getItem("idioma");
 		var sonido = window.localStorage.getItem("sonido");
 
+		var versionMovil = false;
+
 		//console.log("Idioma "+window.localStorage.getItem("idioma"));
 		//console.log("Sonido "+window.localStorage.getItem("sonido"));
 
@@ -155,17 +157,17 @@
 		}
 		//Carga el juego segun la dificultad
 		function jugar(dificultad, jugadores){
+			
+
 			window.localStorage.setItem("dificultad", dificultad);
 			window.localStorage.setItem("jugadores", jugadores);
 
-			window.location.href = "Core Defense.html";
-		}
-		//Carga el juego segun la dificultad en version movil
-		function jugarMovil(dificultad, jugadores){
-			window.localStorage.setItem("dificultad", dificultad);
-			window.localStorage.setItem("jugadores", jugadores);
+			if (!versionMovil){
+				window.location.href = "Core Defense.html";
+			}else{
+				window.location.href = "Core Defense Movil.html";
+			}
 			
-			window.location.href = "Core Defense Movil.html";
 		}
 		//Cambia el idioma
 		function cambiarIdioma(){
@@ -315,19 +317,24 @@
 		}
 
 		if(navigator.userAgent.match(/iPad/i)){
-			alert("ipad");
+			//alert("ipad");
+			versionMovil = true;
 		}
 		if(navigator.userAgent.match(/iPhone/i)){
-			alert("iphone");
+			//alert("iphone");
+			versionMovil = true;
 		}
 		if(navigator.userAgent.match(/Android/i)){
-			alert("android");
+			//alert("android");
+			versionMovil = true;
 		}
 		if(navigator.userAgent.match(/BlackBerry/i)){
-			alert("blackberry");
+			//alert("blackberry");
+			versionMovil = true;
 		}
 		if(navigator.userAgent.match(/webOS/i)){
-			alert("webos");
+			//alert("webos");
+			versionMovil = true;
 		}
     </script>
   </head>
