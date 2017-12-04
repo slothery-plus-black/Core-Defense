@@ -105,6 +105,8 @@ function shootingController(){
 						this.mundo.sumarPuntuacion(objeto.tipo);
 					}
 
+					this.mundo.quitarVida(objeto.tipo);
+
 					this.removeBala(this.balas[i],i);
 				}
 			}

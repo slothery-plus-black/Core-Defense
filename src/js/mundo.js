@@ -153,7 +153,7 @@ function mundo(cellsize, tam) {
 		var posAleatoria = Math.floor((Math.random() * posiciones.length) + 0);
 		//Creamos el jugador en una de las posiciones de inicio aleatoriamente
 		this.jugador = new Jugador([imagenJ1_w,imagenJ1_s, imagenJ1_a, imagenJ1_d, imagenJ1_stand],
-			(posiciones[posAleatoria].posx * this.cellSize), (posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8);
+			(posiciones[posAleatoria].posx * this.cellSize), (posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8,"j1");
 
 		if (this.multiplayer){
 			var posAleatoria2 = Math.floor((Math.random() * posiciones.length) + 0);
@@ -162,7 +162,7 @@ function mundo(cellsize, tam) {
 			}while(posAleatoria === posAleatoria2)
 
 			this.jugador2 = new Jugador([imagenJ2_w,imagenJ2_s, imagenJ2_a, imagenJ2_d, imagenJ2_stand],
-				(posiciones[posAleatoria2].posx * this.cellSize), (posiciones[posAleatoria2].posy * this.cellSize), 4, 2, 8);
+				(posiciones[posAleatoria2].posx * this.cellSize), (posiciones[posAleatoria2].posy * this.cellSize), 4, 2, 8,"j2");
 		}
 		
 		this.spawns[0] = new gusanoSpawner([]);
@@ -292,6 +292,16 @@ function mundo(cellsize, tam) {
 			case "t":
 				this.puntuacion += 900;
 				break;
+		}
+	}
+
+	this.quitarVida = function(tipoJugador){
+		if (tipoJugador === "j1"){
+			console.log(this.jugador.vida);
+			document.getElementById("vidaj1"+this.jugador.vida).style.visibility = 'hidden';
+		}
+		if (tipoJugador === "j2"){
+			document.getElementById("vidaj2"+this.jugador2.vida).style.visibility = 'hidden';
 		}
 	}
 

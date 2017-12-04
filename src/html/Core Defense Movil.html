@@ -76,7 +76,11 @@
             if (jugadores === "2"){
                 multiplayer = true;
                 var controles2 = document.getElementById('controlesJ2');
-			    controles2.style.display='block';
+                controles2.style.display='block';
+                
+                document.getElementById("vidaj20").style.visibility = 'visible';
+                document.getElementById("vidaj21").style.visibility = 'visible';
+                document.getElementById("vidaj22").style.visibility = 'visible';
             }
 
             var sonido = window.localStorage.getItem("sonido");
@@ -171,7 +175,17 @@
         <canvas id="j9" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(96,true)" ontouchend="moverJugadorTouch(96,false)"></canvas>
     </p>
     <p align="center">
+        <img id="vidaj10" src="../images/sprite_vida.png"/>
+        <img id="vidaj11" src="../images/sprite_vida.png"/>
+        <img id="vidaj12" src="../images/sprite_vida.png"/>
+    </p>
+    <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
+    </p>
+    <p align="center">
+        <img id="vidaj20" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
+        <img id="vidaj21" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
+        <img id="vidaj22" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
     </p>
     <p align="center">
         <canvas id="j0" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(87,true)" ontouchend="moverJugadorTouch(87,false)"></canvas>
