@@ -166,7 +166,7 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.posy = y;
     this.velocidad = vel;
     this.dir = 0;
-    this.cadencia = cadencia * 3; //disparos por segundo
+    this.cadencia = cadencia; //disparos por segundo
     this.puedeDisparar = true;
     this.margen = margen;
     var random;
