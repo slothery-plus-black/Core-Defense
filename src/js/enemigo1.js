@@ -1,5 +1,5 @@
 //Objeto jugador, tiene su sprite, sus posiciones en x e y ademas de la velocidad
-function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion) {
+function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion, tipo) {
     //Velocidad del jugador debe ser multiplo de cellsize
     this.isAlive = true;
     var anim = [];
@@ -38,6 +38,8 @@ function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.margen = margen;
     this.vida = vida;
     this.i = 0;
+
+    this.tipo = tipo;
 
     var animacionDestruccion = 0;
     this.spritesAnimacionDestruccion = spritesAnimacionDestruccion;
@@ -136,13 +138,10 @@ function Enemigo1(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
             }
             return this.spritesAnimacionDestruccion[animacionDestruccion];
         }
-       
-
     }
-    
 }
 
-function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion) {
+function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion, tipo) {
     //Velocidad del jugador debe ser multiplo de cellsize
     var anim = [];
     anim[0] = new Image();
@@ -174,6 +173,8 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.vida = vida;
     var aniNum = 0;
     this.i = 0;
+
+    this.tipo = tipo;
     
     var animacionDestruccion = 0;
     this.spritesAnimacionDestruccion = spritesAnimacionDestruccion;
@@ -258,7 +259,7 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     }
 }
 
-function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion, spawnPadre) {
+function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion, spawnPadre, tipo) {
     //Velocidad del jugador debe ser multiplo de cellsize
     var anim = [];
     anim[0] = new Image();
@@ -285,6 +286,7 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     var aniNum = 0;
     this.i = 0;
 
+    this.tipo = tipo;
 
     var animacionDestruccion = 0;
     this.spritesAnimacionDestruccion = spritesAnimacionDestruccion;

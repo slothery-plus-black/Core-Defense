@@ -1,5 +1,5 @@
 //Objeto jugador, tiene su sprite, sus posiciones en x e y ademas de la velocidad
-function Jugador(spr,x,y,vel,cadencia,margen) {
+function Jugador(spr,x,y,vel,cadencia,margen,tipo) {
 	//Velocidad del jugador debe ser multiplo de cellsize
 	this.sprite = spr;
 	this.posx = x;
@@ -12,6 +12,7 @@ function Jugador(spr,x,y,vel,cadencia,margen) {
 	this.animacion = this.sprite.length;
 	this.tiempo = 0;
 	this.vida = 3;
+	this.tipo = tipo;
 
 	this.shoot = function(){
 		this.puedeDisparar = false;
