@@ -66,8 +66,6 @@ function mundo(cellsize, tam) {
 		
 		this.context = context;
 
-		this.context.globalAlpha = 1;
-
 		//Imagenes jugador
 		imagenJ1_stand = new Image();
 		imagenJ1_w = new Image();
@@ -347,7 +345,7 @@ function mundo(cellsize, tam) {
 			this.gameOver();
 		}
 
-		//console.log(this.puntuacion);
+		console.log(this.puntuacion);
 
 		if (this.cargado){
 			this.moverEnemigos();
@@ -549,40 +547,15 @@ function mundo(cellsize, tam) {
 
 		return false;
 	}
-
-	this.finalizar = function(mundo){
-		var fin = new Image();
-		if (mundo.idioma === "es"){
-			fin.src = mundo.srcImagenes+"GAMEOVER_ESP.png";
-		}else{
-			fin.src = mundo.srcImagenes+"GAMEOVER_ENG.png";
-		}
-
-		var atras = new Image();
-		atras.src = mundo.srcImagenes+"BOTONATRAS.png";
-
-		/*atras.onmousedown = function(){
-			myScript
-		};*/
-		
-		mundo.context.globalAlpha = 0.25;
-		mundo.pintar(fin,0,0);
-
-		mundo.context.font = "30px Arial";
-		mundo.context.fillStyle = 'white';
-		mundo.context.fillText(mundo.puntuacion,380,380); 
-	}
     
     this.gameOver = function(){
 		if (!this.multiplayer){
 			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			setTimeout(stopNS,3000);
-			setTimeout(this.finalizar,4000,this);
 		}else{
 			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			this.jugador2.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			setTimeout(stopNS,3000);
-			setTimeout(this.finalizar,4000,this);
 		}
     }
 }

@@ -254,6 +254,8 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
             }
             return this.spritesAnimacionDestruccion[animacionDestruccion];
         }
+       
+
     }
 }
 

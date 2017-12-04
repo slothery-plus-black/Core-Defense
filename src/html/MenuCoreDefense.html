@@ -290,12 +290,14 @@
 
 			if (stringValue === "off"){
 				window.localStorage.setItem("sonido", "on");
-
+				this.audio.play();
+				this.audio.loop= true;
 				var img = document.getElementById("botonsonido");
 				img.src = "../images/boton on opciones.png";
 			}else{
 				window.localStorage.setItem("sonido", "off");
-
+				this.audio.pause();
+				this.audio.currentTime = 0;
 				var img = document.getElementById("botonsonido");
 				img.src = "../images/boton off opciones.png";
 			}
@@ -303,12 +305,12 @@
 		//Por si se recarga la pagina que carge su configuracion si no esta por defecto
 		function initVariables(){
 
-			this.audio = new Audio("../audio/menu.wav");
+			 this.audio = new Audio("../audio/menu.wav");
 
-			if (sonido === "on"){
+			 if (sonido === "on"){
 				this.audio.play();
 				this.audio.loop= true;
-			}
+			 }
 
 			if (idioma === "en"){
 				var img = document.getElementById("creditos");
