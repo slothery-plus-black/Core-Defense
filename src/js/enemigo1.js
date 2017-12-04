@@ -164,7 +164,7 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.sprite = anim;
     this.posx = x;
     this.posy = y;
-    this.velocidad = vel * 1.5;
+    this.velocidad = vel;
     this.dir = 0;
     this.cadencia = cadencia * 3; //disparos por segundo
     this.puedeDisparar = true;
@@ -254,8 +254,6 @@ function Enemigo2(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
             }
             return this.spritesAnimacionDestruccion[animacionDestruccion];
         }
-       
-
     }
 }
 
@@ -278,7 +276,7 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
     this.sprite = anim;
     this.posx = x;
     this.posy = y;
-    this.velocidad = vel * 0.5;
+    this.velocidad = vel;
     this.dir = 0;
     this.timeleft = 6;
     this.spawn = spawnPadre;
