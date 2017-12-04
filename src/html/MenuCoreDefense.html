@@ -184,7 +184,6 @@
 		//Carga el juego segun la dificultad
 		function jugar(dificultad, jugadores){
 			
-
 			window.localStorage.setItem("dificultad", dificultad);
 			window.localStorage.setItem("jugadores", jugadores);
 
@@ -303,6 +302,13 @@
 		}
 		//Por si se recarga la pagina que carge su configuracion si no esta por defecto
 		function initVariables(){
+
+			 var audio = new Audio("../audio/menu.wav");
+			 if (sonido == off){
+			 audio.play();
+			 audio.loop= true;
+			 }
+
 			if (idioma === "en"){
 				var img = document.getElementById("creditos");
 				img.src = "../images/CREDITS_BUTTON.png";
