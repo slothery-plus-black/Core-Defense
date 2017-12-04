@@ -56,6 +56,7 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
         
         //Aparición de gusanos
         random = (Math.random() * 10);
+<<<<<<< HEAD
         if(random<probabilidad1)
         {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,vida1,spritesAnimacionDestruccion);}
         
@@ -69,6 +70,21 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
         else if((random>=probabilidad2+probabilidad1)&&(random<(probabilidad2+probabilidad1+probabilidad3)))
         {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,vida3,spritesAnimacionDestruccion,this);}
         
+=======
+        if (random<probabilidad1)
+        {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,"g");}
+        
+        //Aparicion de virus
+        random = (Math.random() * 10);
+        if (random<probabilidad2)
+        {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,"v");}
+        
+        
+        //Aparición del troyano
+         random = (Math.random() * 10);
+        if (random<probabilidad3)
+        {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,3,spritesAnimacionDestruccion,this,"t");}
+>>>>>>> 372d5e5511e1712adb52a645d372dd4ce567a7e9
         
         
         this.start(x,y,spritesAnimacionDestruccion);
@@ -76,6 +92,7 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
     
     //Función llamada por un troyano a la hora de soltar su carga
     this.spawnearGusano = function(_this, x,y,spritesAnimacionDestruccion){
+<<<<<<< HEAD
         //Aparición de gusanos
         random = (Math.random() * 10);
         if(random<probabilidad1)
@@ -85,6 +102,9 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
         else if((random>=probabilidad1)&&(random<(probabilidad2+probabilidad1+probabilidad3)))
         {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, 2, 0.5, 8,vida2,spritesAnimacionDestruccion);}
         
+=======
+        _this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,"g");
+>>>>>>> 372d5e5511e1712adb52a645d372dd4ce567a7e9
     }
 
     this.verificarMuertes = function(){

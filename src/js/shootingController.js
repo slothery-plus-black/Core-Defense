@@ -6,14 +6,16 @@ function shootingController(){
 	this.board;
 	this.margenBala;
 	this.velocidad;
+	this.mundo;
 
-	this.init = function (context,board,cellSize,margen,velocidad){
+	this.init = function (context,board,cellSize,margen,velocidad, mundo){
 		this.context = context;
 		this.balas = [];
 		this.board = board;
 		this.cellSize = cellSize;
 		this.margenBala = margen;
 		this.velocidad = velocidad;
+		this.mundo = mundo;
 	}
 	
 	//Disparo, crea una bala en la direccion indicada, desde la posicion dada
@@ -98,6 +100,13 @@ function shootingController(){
 			for (var i = 0;i<this.balas.length;i++){
 				if (this.balas[i].colisionObjeto(objeto,this.cellSize,this.margenBala)){
 					////////////////////Administrar puntuacion falta
+
+					if (objeto.vida <= 0){
+						this.mundo.sumarPuntuacion(objeto.tipo);
+					}
+
+					this.mundo.quitarVida(objeto.tipo);
+
 					this.removeBala(this.balas[i],i);
 				}
 			}

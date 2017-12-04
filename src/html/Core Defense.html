@@ -75,6 +75,10 @@
 
             if (jugadores === "2"){
                 multiplayer = true;
+
+                document.getElementById("vidaj20").style.visibility = 'visible';
+                document.getElementById("vidaj21").style.visibility = 'visible';
+                document.getElementById("vidaj22").style.visibility = 'visible';
             }
 
             var sonido = window.localStorage.getItem("sonido");
@@ -139,6 +143,15 @@
 <body onload="initGame()" bgcolor="#37383C">
     <p align="center">
         <img src="../images/titulo.png">
+    </p>
+    <p align="center">
+        <img id="vidaj10" src="../images/sprite_vida.png"/>
+        <img id="vidaj11" src="../images/sprite_vida.png"/>
+        <img id="vidaj12" src="../images/sprite_vida.png"/>
+
+        <img id="vidaj20" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
+        <img id="vidaj21" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
+        <img id="vidaj22" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
