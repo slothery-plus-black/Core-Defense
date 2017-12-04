@@ -53,6 +53,24 @@ header {
 /* Content */
 .anchor { padding-top: 90px; }
 
+.img-fluid { 
+	border-radius: 50%;
+	-webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
+	transition: all 1s ease;
+	filter: grayscale(100%);
+}
+
+.img-fluid:hover{
+    -webkit-transform:scale(1.25); /* Safari and Chrome */
+    -moz-transform:scale(1.25); /* Firefox */
+    -ms-transform:scale(1.25); /* IE 9 */
+    -o-transform:scale(1.25); /* Opera */
+	 transform:scale(1.25);
+	 filter: grayscale(0) blur(1px);
+}
 /* Carrusel */
 #carrusel-slider { 
 	margin-bottom: 50px;
@@ -71,7 +89,7 @@ header {
 		linear, left top, left bottom, from(rgba(0, 0, 0, 0)),
 		to(rgba(0, 0, 0, 0.8)), color-stop(.3,#000000)
 	  );
-
+	  
 	position: absolute;
 	left: 0;
 	right: 0;
