@@ -116,11 +116,10 @@
                         window.clearInterval(timerId);
 			            timerId = undefined;
                     }, 1000);
-                    
                 }
-                
             }
         }
+
         function startNS() {
 			if (!timerId) {
 				timerId = setInterval("computeNS()", 50);
@@ -136,15 +135,16 @@
 			window.clearInterval(timerId);
 			timerId = undefined;
         }
+
+        function volverMenu(){
+            window.location = "MenuCoreDefense.html";
+        }
         
 		startNS();
     </script>
 </head>
 
 <body onload="initGame()" bgcolor="#37383C">
-    <p align="center">
-        <img src="../images/titulo.png">
-    </p>
     <p align="center">
         <img id="vidaj10" src="../images/sprite_vida.png"/>
         <img id="vidaj11" src="../images/sprite_vida.png"/>
@@ -156,6 +156,8 @@
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
+
+        <img id="gameAtras" src="../images/BOTONATRAS.png" onmousedown="volverMenu()" style="display:none"/>
     </p>
     <p align="center">
         <span id="cellTime" style="color: #FF920E;"></span></p>

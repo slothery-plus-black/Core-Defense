@@ -14,6 +14,8 @@ function Jugador(spr,x,y,vel,cadencia,margen,tipo) {
 	this.vida = 3;
 	this.tipo = tipo;
 
+	this.animacionDestruccion = 1;
+
 	this.shoot = function(){
 		this.puedeDisparar = false;
 
@@ -50,14 +52,12 @@ function Jugador(spr,x,y,vel,cadencia,margen,tipo) {
 
 	this.daniar = function(){
 		this.vida--;
-		//console.log("dañado jugador");
 	}
 	
-    this.morir= function(mundo,sprExplosion){
+    this.morir = function(mundo,sprExplosion){
         this.sprite = sprExplosion;
         mundo.pintar(this.sprite, this.posx, this.posy);
         this.velocidad = 0;
-        this.puedeDisparar = false;
-        
-    }
+		this.puedeDisparar = false;
+	}
 }

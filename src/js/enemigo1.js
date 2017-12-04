@@ -320,7 +320,6 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
         return this.puedeDisparar;
     }
 
-
     this.animar = function () {
         if (this.dir != 0) {
             if (aniNum >= 4) {
@@ -378,8 +377,5 @@ function Enemigo3(x, y, vel, cadencia, margen, vida, spritesAnimacionDestruccion
             }
             return this.spritesAnimacionDestruccion[animacionDestruccion];
         }
-       
-
     }
-
 }

@@ -287,13 +287,34 @@ function mundo(cellsize, tam) {
 	this.sumarPuntuacion = function(tipo){
 		switch (tipo){
 			case "g":
-				this.puntuacion += 100;
+				if (dificultad === "0")
+					this.puntuacion += 100;
+				if (dificultad === "1")
+					this.puntuacion += 150;
+				if (dificultad === "2")
+					this.puntuacion += 200;
+				if (dificultad === "3")
+					this.puntuacion += 300;
 				break;
 			case "v":
-				this.puntuacion += 300;
+				if (dificultad === "0")
+					this.puntuacion += 200;
+				if (dificultad === "1")
+					this.puntuacion += 250;
+				if (dificultad === "2")
+					this.puntuacion += 300;
+				if (dificultad === "3")
+					this.puntuacion += 400;
 				break;
 			case "t":
-				this.puntuacion += 900;
+				if (dificultad === "0")
+					this.puntuacion += 600;
+				if (dificultad === "1")
+					this.puntuacion += 750;
+				if (dificultad === "2")
+					this.puntuacion += 900;
+				if (dificultad === "3")
+					this.puntuacion += 1200;
 				break;
 		}
 	}
@@ -346,8 +367,6 @@ function mundo(cellsize, tam) {
 		if (this.cores <= 0){
 			this.gameOver();
 		}
-
-		console.log(this.puntuacion);
 
 		if (this.cargado){
 			this.moverEnemigos();
@@ -558,15 +577,16 @@ function mundo(cellsize, tam) {
 			fin.src = mundo.srcImagenes+"GAMEOVER_ENG.png";
 		}
 
-		var atras = new Image();
-		atras.src = mundo.srcImagenes+"BOTONATRAS.png";
-
-		/*atras.onmousedown = function(){
-			myScript
-		};*/
+		var atras = document.getElementById("gameAtras");
 		
+		if (mundo.multiplayer){
+			mundo.puntuacion = mundo.puntuacion/2;
+		}
+
 		mundo.context.globalAlpha = 0.25;
 		mundo.pintar(fin,0,0);
+
+		atras.style.display = "block";
 
 		mundo.context.font = "30px Arial";
 		mundo.context.fillStyle = 'white';

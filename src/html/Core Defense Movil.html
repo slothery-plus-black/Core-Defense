@@ -138,6 +138,7 @@
                 
             }
         }
+
         function startNS() {
 			if (!timerId) {
 				timerId = setInterval("computeNS()", 50);
@@ -163,6 +164,10 @@
         function pararJugadorTouch(key){
             keysDown[key] = false;
         }
+
+        function volverMenu(){
+            window.location = "MenuCoreDefense.html";
+        }
     </script>
 </head>
 
@@ -181,6 +186,8 @@
     </p>
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
+
+        <img id="gameAtras" src="../images/BOTONATRAS.png" onmousedown="volverMenu()" style="display:none"/>
     </p>
     <p align="center">
         <img id="vidaj20" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
@@ -194,6 +201,8 @@
         <canvas id="j3" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(68,true)" ontouchend="moverJugadorTouch(68,false)"></canvas>
         <canvas id="j4" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(70,true)" ontouchend="moverJugadorTouch(70,false)"></canvas>
     </p>
+
+    
     
 </body>
 
