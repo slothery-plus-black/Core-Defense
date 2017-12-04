@@ -163,16 +163,16 @@ function mundo(cellsize, tam) {
 				(posiciones[posAleatoria2].posx * this.cellSize), (posiciones[posAleatoria2].posy * this.cellSize), 4, 2, 8);
 		}
 		
-		this.spawns[0] = new gusanoSpawner([]);
+		this.spawns[0] = new gusanoSpawner([],dificultad);
 		this.spawns[0].start(1*cellsize,8*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
-        this.spawns[1] = new gusanoSpawner([]);
+        this.spawns[1] = new gusanoSpawner([],dificultad);
 		this.spawns[1].start(8*cellsize,1*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
-        this.spawns[2] = new gusanoSpawner([]);
+        this.spawns[2] = new gusanoSpawner([],dificultad);
 		this.spawns[2].start(16*cellsize,8*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
-        this.spawns[3] = new gusanoSpawner([]);
+        this.spawns[3] = new gusanoSpawner([],dificultad);
 		this.spawns[3].start(8*cellsize,16*cellsize,
 			[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 
