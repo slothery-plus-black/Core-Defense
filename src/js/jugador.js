@@ -28,6 +28,11 @@ function Jugador(spr,x,y,vel,cadencia,margen,tipo) {
 		return this.puedeDisparar;
 	}
 
+	this.respawn = function(x, y){
+		this.posx = x;
+		this.posy = y;
+	}
+
 	this.cogerSprite = function(){
 		return this.sprite[this.animacion];
 	}
