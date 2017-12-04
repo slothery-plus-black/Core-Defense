@@ -24,15 +24,80 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
     var cad2 = 0.5;
     var cad3 = 0.5;
     
-    /*switch(dificultad){
-        case 1:{    //dificultad fácil(1), medio(2),etc
+   switch(dificultad){
+        case 0:   //dificultad fácil(1), medio(2),etc
             vida1 = 1;
             vida2 = 1;
             vida3 = 3;
-            //etc
-        }
-            break;
-    }*/
+            vel1 = 1;
+            vel2 = 2;
+            vel3 = 1;
+            cad1 = 0.7;
+            cad2 = 0.5;
+            
+            probabilidad1 = 8; 
+            probabilidad2 = 1.5;
+            probabilidad3 = 0.5;
+            
+            diferencia = 5;
+            vInicial = 5;
+        
+          break;
+        case 1:   //dificultad fácil(1), medio(2),etc
+            vida1 = 1;
+            vida2 = 2;
+            vida3 = 4;
+            vel1 = 2;
+            vel2 = 3;
+            vel3 = 1;
+            cad1 = 0.6;
+            cad2 = 0.4;
+            
+            probabilidad1 = 7;
+            probabilidad2 = 2; 
+            probabilidad3 = 1; 
+            
+            diferencia = 4;
+            vInicial = 4;
+        
+          break;
+        case 2: //dificultad fácil(1), medio(2),etc
+            vida1 = 2;
+            vida2 = 3;
+            vida3 = 5;
+            vel1 = 3;
+            vel2 = 4;
+            vel3 = 2;
+            cad1 = 0.5;
+            cad2 = 0.3;
+            
+            probabilidad1 = 6;
+            probabilidad2 = 2.5;
+            probabilidad3 = 1.5;
+            
+            diferencia = 3;
+            vInicial = 3;
+        
+          break;
+        case 3:  //dificultad fácil(1), medio(2),etc
+            vida1 = 2;
+            vida2 = 4;
+            vida3 = 6;
+            vel1 = 3;
+            vel2 = 5;
+            vel3 = 2;
+            cad1 = 0.4;
+            cad2 = 0.3;
+            
+            probabilidad1 = 5; 
+            probabilidad2 = 3;  
+            probabilidad3 = 2; 
+            
+            diferencia = 2;
+            vInicial = 3;
+        
+          break;
+    }
     
     this.start = function(x,y,spritesAnimacionDestruccion){
         if(!stop){
