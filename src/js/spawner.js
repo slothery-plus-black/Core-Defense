@@ -20,18 +20,18 @@ function gusanoSpawner(arrayEnemigos) {
         //Aparición de gusanos
         random = (Math.random() * 10);
         if (random<probabilidad1)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,"g");}
         
         //Aparicion de virus
         random = (Math.random() * 10);
         if (random<probabilidad2)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,"v");}
         
         
         //Aparición del troyano
          random = (Math.random() * 10);
         if (random<probabilidad3)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,3,spritesAnimacionDestruccion,this);}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,3,spritesAnimacionDestruccion,this,"t");}
         
         
         //Aumentar probabilidad
@@ -40,7 +40,7 @@ function gusanoSpawner(arrayEnemigos) {
         probabilidad3 +=0.01;
     }
     this.spawnearGusano = function(_this, x,y,spritesAnimacionDestruccion){
-        _this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion);
+        _this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,"g");
     }
 
     this.verificarMuertes = function(){

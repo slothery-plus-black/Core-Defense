@@ -18,6 +18,8 @@ function mundo(cellsize, tam) {
 	this.scEnemigos = new shootingController();
 	this.cargado = false;
 
+	this.puntuacion =0;
+
 	this.srcImagenes = "../images/";
 
 	//Imagenes de balas
@@ -212,8 +214,8 @@ function mundo(cellsize, tam) {
 		this.cargado = true;
 
 		//sc (context, board, cellSize, margenBalas, velocidad)
-		this.sc.init(this.context,this.board, this.cellSize, 12, 20);
-		this.scEnemigos.init(this.context,this.board, this.cellSize, 12, 20);
+		this.sc.init(this.context,this.board, this.cellSize, 12, 20,this);
+		this.scEnemigos.init(this.context,this.board, this.cellSize, 12, 20,this);
 	}
 
 	this.mover = function (keysDown) {
@@ -279,6 +281,20 @@ function mundo(cellsize, tam) {
 		}
 	}
 
+	this.sumarPuntuacion = function(tipo){
+		switch (tipo){
+			case "g":
+				this.puntuacion += 100;
+				break;
+			case "v":
+				this.puntuacion += 300;
+				break;
+			case "t":
+				this.puntuacion += 900;
+				break;
+		}
+	}
+
 	this.verificarMuertes = function(){
 		for(var i=0;i<this.spawns.length;i++){
 			//Para hacer animacion de destruccion
@@ -310,6 +326,8 @@ function mundo(cellsize, tam) {
 		if (this.cores <= 0){
 			this.gameOver();
 		}
+
+		console.log(this.puntuacion);
 
 		if (this.cargado){
 			this.moverEnemigos();
