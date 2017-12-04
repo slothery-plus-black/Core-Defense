@@ -86,6 +86,10 @@
             var sonido = window.localStorage.getItem("sonido");
             var idioma = window.localStorage.getItem("idioma");
 
+            if (idioma === "en"){
+                document.getElementById("gameAtras").src = "../images/GAMEOVER_CONTINUE.png";
+            }
+
 			$.ajax({
 				dataType: "json",
 				url: archivo,
@@ -187,7 +191,7 @@
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
 
-        <img id="gameAtras" src="../images/BOTONATRAS.png" onmousedown="volverMenu()" style="display:none"/>
+        <img id="gameAtras" src="../images/GAMEOVER_CONTINUAR.png" onmousedown="volverMenu()" style="display:none"/>
     </p>
     <p align="center">
         <img id="vidaj20" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />

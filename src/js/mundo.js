@@ -522,6 +522,8 @@ function mundo(cellsize, tam) {
 					break;
 			}
 
+			this.reproducirSonido("disparo_1");
+
 			jugador.animar(jugador.dir);
 		}
 	}
@@ -543,6 +545,7 @@ function mundo(cellsize, tam) {
 					this.scEnemigos.shoot(ene.posx, ene.posy, ene.dir, [this.imagenBala_1dE,this.imagenBala_2dE,this.imagenBala_3dE]);
 					break;
 			}
+			this.reproducirSonido("disparo_3");
 			ene.puedeDisparar = false;
 			ene.animar(ene.dir);
 		}
@@ -604,5 +607,13 @@ function mundo(cellsize, tam) {
 			setTimeout(stopNS,3000);
 			setTimeout(this.finalizar,4000,this);
 		}
-    }
+	}
+	
+	this.reproducirSonido = function(son){
+		if (this.sonido === "on"){
+			var soni = new Audio("../audio/"+son+".wav");
+
+			soni.play();
+		}
+	}
 }
