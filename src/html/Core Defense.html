@@ -47,6 +47,7 @@
         //console.log("Dificultad "+dificultad);
         var jugadores = window.localStorage.getItem("jugadores");
         //console.log("Jugadores "+jugadores);
+        var sonido = new Audio("../audio/menu.wav");
         
 		var m = new mundo(40,720); //Objeto mundo
 		var keysDown = {};//Para saber que teclas estan pulsadas
@@ -56,7 +57,7 @@
         function initGame() {
             canvas = document.getElementById("game");
             context = canvas.getContext("2d");
-
+        
             var archivo ="../json/MapaFacil.json";
 
             switch (dificultad){
