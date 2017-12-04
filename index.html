@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet"> 
@@ -26,75 +26,32 @@
   
   <header>
   <!-- Cabecera de la pagina -->
-	<div class = "container">
-	<!-- Barra inicio -->
-		<div class = "row">
-		<!-- la barra tendra 2 columnas, una el logo y otra los enlaces de las paginas web -->
-			<div class = "col-sm-6">
-				<img src="src/images/sprite1.png" alt="logo">
-			</div>
-			<div class = "col-sm-6">
-				<ul class= "social-media list-inline text-right">
+		<!-- Barra inicio -->
+		
+		<div class="menu-bar text-right">
+			<nav class="container" role ="menu">
+				<ul class="menu-list list-inline">	
+				
 					<li class = "list-inline-item">
-						<a href="#"><!-- aqui va el enlace a la pagina de twitter -->
-							<span class="fa-stack fa-lg">
-								<i class="fa fa-circle fa-stack-2x"></i>
-								<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-							</span>
-							
-						</a>
+						<a href = "#">	<img src="src/images/sprite1.png" alt="logo"></a>
+					</li>
+					
+					<li class = "list-inline-item">
+							<a href = "#">Inicio</a>
+						</li>
+					<li class = "list-inline-item">
+						<a href = "#slothery">Slothery Games</a>
 					</li>
 					<li class = "list-inline-item">
-						<a href="#"><!-- aqui va el enlace a la pagina de instagram -->
-							<span class="fa-stack fa-lg">
-								<i class="fa fa-circle fa-stack-2x"></i>
-								<i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
-							</span>
-							
-						</a>
+						<a href = "#equipo">El Equipo</a>
 					</li>
 					<li class = "list-inline-item">
-						<a href="#"><!-- aqui va el enlace a la pagina de facebook -->
-							<span class="fa-stack fa-lg">
-								<i class="fa fa-circle fa-stack-2x"></i>
-								<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-							</span>
-							
-						</a>
+						<a href = "#contacto">Contacto</a>
 					</li>
-					<li class = "list-inline-item">
-						<a href="#"><!-- aqui va el enlace a la pagina de youtube -->
-							<span class="fa-stack fa-lg">
-								<i class="fa fa-circle fa-stack-2x"></i>
-								<i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
-							</span>
 							
-						</a>
-					</li>
 				</ul>
-			</div>
+			</nav>
 		</div>
-	</div>
-	
-	<div class="menu-bar text-right">
-		<nav class="container" role ="menu">
-			<ul class="menu-list list-inline">
-				<li class = "list-inline-item">
-					<a href = "#">Inicio</a>
-				</li>
-				<li class = "list-inline-item">
-					<a href = "#">Slothery Games</a>
-				</li>
-				<li class = "list-inline-item">
-					<a href = "#">FAQ</a>
-				</li>
-				<li class = "list-inline-item">
-					<a href = "#">Donde estamos</a>
-				</li>
-						
-			</ul>
-		</nav>
-	</div>
   </header>
   
   <!-- Main con todos los elementos a mostrar -->
@@ -106,19 +63,27 @@
 				<li data-target="#carrusel-slider" data-slide-to="0" class="active"></li>
 				<li data-target="#carrusel-slider" data-slide-to="1"></li>
 				<li data-target="#carrusel-slider" data-slide-to="2"></li>
-				<li data-target="#carrusel-slider" data-slide-to="3"></li>
 			  </ol>
+			   <!-- Left and right controls -->
+			   <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			  
 			  <div class="carousel-inner">
 					<div class="carousel-item active">
-					  <img class="d-block w-100" src="src/images/fondo.png" alt="First slide">
-						  
+					  <img class="d-block w-100" src="src/images/gameplay.gif" alt="First slide">
+
 							<div class = "carousel-caption">
 							
-								<h2>Core Defense</h2>
-								<img src="src/images/titulo.png" alt="titulo" width="220" height="100"></img>
+								<img src="src/images/titulo.png" alt="titulo" width="30%" height="30%"></img>
 								<p class="h4">¡Protege el núcleo central contra virus informáticos!</p>
 								<p>Primer juego creado por Slothery plus Black Games para la asignatura de Juegos para web y Redes Sociales</p>
-								<a href="src/html/MenuCoreDefense.html" class="btn btn-info">Jugar</a>	<!-- Enlace para jugar al juego -->				
+								<a href="src/html/Core%20Defense.html" class="btn btn-info">Jugar</a>	<!-- Enlace para jugar al juego -->				
 								
 							</div>
 					</div>
@@ -146,80 +111,112 @@
 								
 							</div>
 					</div>
-					<div class="carousel-item">
-					  <img class="d-block w-100" src="src/images/unity_logo.jpg" alt="Fourth slide">
-							
-							<div class = "carousel-caption">
-							
-								<h2>Version movil</h2>
-								<p class="h4">¡Prueba nuestra version movil de nuestro juego: Core Defense!</p>
-								<p>¡Protege el núcleo central contra virus informáticos!</p>
-								<a href="src/html/Core%20Defense%20Movil.html" class="btn btn-info">Jugar</a>	<!-- Enlace  -->				
-								
-							</div>
-					</div>
 			  </div>
 
 			</div>
 			
 		<!-- Primera fila-->
-			<div class = "row mar-top-80">
-				<div class = "col-md-6">
-					<h3><strong>Slothery Plus Black Games</strong><i class="fa fa-gamepad pull-right hidden-xs-down" aria-hidden="true"></i></h3>
+		<div class = "row mar-top-80">
+				<div class = "col-md-6">		
+					<h3><a class="anchor" name="slothery"></a><strong>Slothery Plus Black Games</strong><i class="fa fa-gamepad pull-right hidden-xs-down" aria-hidden="true"></i></h3>
 					<p>Fundada originalmente como Slothery Games en el año 2015, Slothery Plus Black Games es una nueva y renovada empresa desarrolladora de videojuegos situada en Madrid, España</p>
 					<p>Slothery Plus Black Games nace bajo un ambiente de profunda tradición y se crea con el tiempo necesario para que alcance su madurez exacta.
 					De esta forma, obtenemos un estudio independiente que conjuga, bajo la atenta mirada del silicio de nuestras barricas, artesanía y modernidad.
 					En su interior, profesionales procedentes de Blizzard Entertainment, MercurySteam Entertainment, Pyro Studios, Sony Computer Entertainment y Weta Digital, se encuentran, combinando ideas y código, con la intención de proporcionar un aroma sorprendente en nuestras obras.</p>
-				</div>
+				</div></a>
+			
 				<div class = "col-md-6">
 					<h3>Dónde encontrar <strong>Slothery Plus Black Games</strong><i class="fa fa-map-marker pull-right hidden-xs-down" aria-hidden="true"></i></h3>
 					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3041.325603357925!2d-3.8743708841646303!3d40.335122479374746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418e7b3953b315%3A0xfda8c1f00603e3!2sUniversidad+Rey+Juan+Carlos!5e0!3m2!1ses!2ses!4v1511814882170" width="100%" height="205" frameborder="0" style="border:0" allowfullscreen></iframe>
 					<p> Calle Tulipán, s/n, 28933 Móstoles, Madrid, España</p>
 				</div>
 			</div>
-			<div class = "row mar-top-80">
+			<!--equipo-->
+	
 				<div class = "col-md-12">
-					<h3>El equipo de <strong>Slothery Plus Black Games</strong><i class="fa fa-users pull-right hidden-xs-down" aria-hidden="true"></i></h3>
+					<h3><a class="anchor" name="equipo"></a>El equipo de <strong>Slothery Plus Black Games</strong><i class="fa fa-users pull-right hidden-xs-down" aria-hidden="true"></i></h3>
 						<div class="row">
 							<div class="col-sm-4">
-								<img class="img-fluid" src="https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/c141.0.798.798/20687188_281064595704894_4346246113137786880_n.jpg?ig_cache_key=MTU3NzUyMTUwMTgwMzEwODYxNw%3D%3D.2.c&se=8" alt="Image 1">	
-								<h2>Ismel Cabrera</h2>
-								<p>Inserte frase ingeniosa</p>
+									<img class="img-fluid" src="src/images/isma.png" alt="Ismael">
+									<h2>Ismael Cabrera</h2>		
+									<p>Game Design</p>
 							</div>
 							<div class="col-sm-4">
-								<img class="img-fluid" src="https://pbs.twimg.com/profile_images/724602127117590529/zT29u7-8.jpg" alt="Image 2">
+								<img class="img-fluid" src="src/images/jesus.png" alt="Jesus">
 								<h2>Jesús Brey</h2>
-								<p>Inserte frase ingeniosa</p>								
+								<p>Web Programmer/Audio Desginer</p>								
 							</div>
 							<div class="col-sm-4">
-								<img class="img-fluid" src="https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/21576714_171223850114823_1359272667177287680_n.jpg?ig_cache_key=MTYwMTU0ODEzMzQwMTU0NzA2Mw%3D%3D.2" alt="Image 3">
+								<img class="img-fluid" src="src/images/sara.png" alt="Sara">
 								<h2>Sara Lozoya</h2>
-								<p>Inserte frase ingeniosa</p>
+								<p>Graphic Artist</p>
 							</div>
 						</div>
+					
 						<div class="row">
-							<div class="col-sm-4">
-								<img class="img-fluid" src="http://scontent.cdninstagram.com/t51.2885-15/s480x480/e35/17438348_284993868602020_5135659762112790528_n.jpg?ig_cache_key=MTQ3NDk2NjkwNDMwNDkyMjYzMA%3D%3D.2" alt="Image 4">
+							<div class="col-sm-4">								
+								<img class="img-fluid" src="src/images/alex.png" alt="Alex">
 								<h2>Alexander Matos</h2>	
-								<p>Inserte frase ingeniosa</p>
+								<p>Programmer</p>
 							</div>
 							<div class="col-sm-4">
-								<img class="img-fluid" src="https://pbs.twimg.com/profile_images/922492956929601537/ig8e_Fc__400x400.jpg" alt="Image 5">
+								<img class="img-fluid" src="src/images/jaime.png" alt="Jaime">
 								<h2>Jaime Calvo</h2>	
-								<p>Inserte frase ingeniosa</p>
-							</div>
-							<div class="col-sm-4">
-								<img class="img-fluid" src="https://images-na.ssl-images-amazon.com/images/I/71EFdlZYCXL._SX355_.jpg" alt="Image 5">
-								<h2>Nuestra mascota</h2>	
-								<p>No se me ocurría nada para que encajase con las 12 columnas que divide Bootstrap x_D</p>
+								<p>Programmer</p>
 							</div>
 						</div>
-				</div>
+					
+					</div>
+
+					<div class = "row mar-top-80">
+							<div class = "col-md-12">		
+								<h3><a class="anchor" name="contacto"></a><strong>Contacto</strong><i class="fa fa-address-book pull-right hidden-xs-down" aria-hidden="true"></i></h3>
+								<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+								<div class="container">
+									<div class="row">
+										<!-- Button trigger modal -->
+								<button class="btn btn-primary btn-lg"  title="Share this content" data-toggle="modal" data-target="#myModal">
+								  <i class="fa fa-share-alt"></i> Share
+								</button>
+								
+								<!-- Modal -->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								  <div class="modal-dialog">
+									<div class="modal-content">
+									  <div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabel"><i class="fa fa-share-alt"></i> Share</h4>
+									  </div>
+									  <div class="modal-body">
+										<p><a title="Facebook" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span></a> <a title="Twitter" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x"></i></span></a> <a title="Google+" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-google-plus fa-stack-1x"></i></span></a> <a title="Linkedin" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x"></i></span></a> <a title="Reddit" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-reddit fa-stack-1x"></i></span></a> <a title="WordPress" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-wordpress fa-stack-1x"></i></span></a> <a title="Digg" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-digg fa-stack-1x"></i></span></a>  <a title="Stumbleupon" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-stumbleupon fa-stack-1x"></i></span></a><a title="E-mail" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-envelope fa-stack-1x"></i></span></a>  <a title="Print" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-print fa-stack-1x"></i></span></a></p>
+										
+										<h2><i class="fa fa-envelope"></i> Newsletter</h2>
+												
+												<p>Subscribe to our weekly Newsletter and stay tuned.</p>
+												
+												<form action="" method="post">
+													<div class="input-group">
+								  <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+								  <input type="email" class="form-control" placeholder="your@email.com">
+								</div>
+													<br />
+													<button type="submit" value="sub" name="sub" class="btn btn-primary"><i class="fa fa-share"></i> Subscribe Now!</button>
+											  </form>
+									  </div>
+									  <div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									  </div>
+									</div>
+								  </div>
+								</div>
+									</div>
+								</div>
+							</div></a>
+
+				</div>	
 			</div>
 		</div>
-		</div>	
 	</div>
-  
   <footer>
   </footer>
 	
