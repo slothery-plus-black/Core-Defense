@@ -24,7 +24,7 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
     var cad2;
     var cad3;
     
-    switch(dificultad){
+    /*switch(dificultad){
         case 1:{    //dificultad fácil(1), medio(2),etc
             vida1 = 1;
             vida2 = 1;
@@ -32,7 +32,7 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
             //etc
         }
             break;
-    }
+    }*/
     
     
     this.start = function(x,y,spritesAnimacionDestruccion){

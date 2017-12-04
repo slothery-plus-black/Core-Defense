@@ -561,9 +561,9 @@ function mundo(cellsize, tam) {
 		var atras = new Image();
 		atras.src = mundo.srcImagenes+"BOTONATRAS.png";
 
-		atras.onmousedown = function(){
+		/*atras.onmousedown = function(){
 			myScript
-		};
+		};*/
 		
 		mundo.context.globalAlpha = 0.25;
 		mundo.pintar(fin,0,0);
