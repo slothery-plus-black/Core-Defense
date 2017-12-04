@@ -17,14 +17,14 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
     var vida1 = 1;
     var vida2 = 1;
     var vida3 = 3;
-    var vel1;
-    var vel2;
-    var vel3;
-    var cad1;
-    var cad2;
-    var cad3;
+    var vel1 = 2;
+    var vel2 = 2;
+    var vel3 = 2;
+    var cad1 = 0.5;
+    var cad2 = 0.5;
+    var cad3 = 0.5;
     
-    switch(dificultad){
+    /*switch(dificultad){
         case 1:{    //dificultad fácil(1), medio(2),etc
             vida1 = 1;
             vida2 = 1;
@@ -32,8 +32,7 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
             //etc
         }
             break;
-    }
-    
+    }*/
     
     this.start = function(x,y,spritesAnimacionDestruccion){
         if(!stop){
@@ -45,9 +44,8 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
             }, random*1000, this); 
             
         }
-        
-
     }
+    
     this.stop = function(){
         stop = true;
     }
@@ -58,18 +56,18 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
         random = (Math.random() * 10);
 
         if (random<probabilidad1)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,"g");}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, vel1, cad1, 8,vida1,spritesAnimacionDestruccion,"g");}
         
         //Aparicion de virus
         random = (Math.random() * 10);
         if (random<probabilidad2)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, 2, 0.5, 8,1,spritesAnimacionDestruccion,"v");}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, vel2, cad2, 8,vida2,spritesAnimacionDestruccion,"v");}
         
         
         //Aparición del troyano
          random = (Math.random() * 10);
         if (random<probabilidad3)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, 2, 0.5, 8,3,spritesAnimacionDestruccion,this,"t");}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo3(x,y, vel3, cad3, 8,vida3,spritesAnimacionDestruccion,this,"t");}
         
         
         this.start(x,y,spritesAnimacionDestruccion);
@@ -80,11 +78,11 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
         //Aparición de gusanos
         random = (Math.random() * 10);
         if(random<probabilidad1)
-        {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, 2, 0.5, 8,vida1,spritesAnimacionDestruccion,"g");}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo1(x,y, vel1, cad1, 8,vida1,spritesAnimacionDestruccion,"g");}
         
         //Aparicion de virus
         else if((random>=probabilidad1)&&(random<(probabilidad2+probabilidad1+probabilidad3)))
-        {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, 2, 0.5, 8,vida2,spritesAnimacionDestruccion,"v");}
+        {_this.enemigos[_this.enemigos.length] = new Enemigo2(x,y, vel2, cad2, 8,vida2,spritesAnimacionDestruccion,"v");}
     }
 
     this.verificarMuertes = function(){
