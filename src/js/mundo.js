@@ -55,6 +55,8 @@ function mundo(cellsize, tam) {
 	this.spawns = [];
 	this.cores = 4;
 
+	this.posiciones = [];
+
 	this.initMundo = function (context, mapa, multi, sound, idio) {
 		this.board = [];
 
@@ -143,26 +145,25 @@ function mundo(cellsize, tam) {
 		this.imagenBala_2dE.src = this.srcImagenes+"disparo_2dE.png";
 		this.imagenBala_3dE.src = this.srcImagenes+"disparo_3dE.png";
 
-		var posiciones = [];
 		for (var i = 0;i<mapa.jugador.length;i++){
-			posiciones[i] = mapa.jugador[i];
+			this.posiciones[i] = mapa.jugador[i];
 		}
 
 		//Return a random number between 1 and 10:
 		//Math.floor((Math.random() * 10) + 1);
-		var posAleatoria = Math.floor((Math.random() * posiciones.length) + 0);
+		var posAleatoria = Math.floor((Math.random() * this.posiciones.length) + 0);
 		//Creamos el jugador en una de las posiciones de inicio aleatoriamente
 		this.jugador = new Jugador([imagenJ1_w,imagenJ1_s, imagenJ1_a, imagenJ1_d, imagenJ1_stand],
-			(posiciones[posAleatoria].posx * this.cellSize), (posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8,"j1");
+			(this.posiciones[posAleatoria].posx * this.cellSize), (this.posiciones[posAleatoria].posy * this.cellSize), 4, 2, 8,"j1");
 
 		if (this.multiplayer){
-			var posAleatoria2 = Math.floor((Math.random() * posiciones.length) + 0);
+			var posAleatoria2 = Math.floor((Math.random() * this.posiciones.length) + 0);
 			do {
-				posAleatoria2 = Math.floor((Math.random() * posiciones.length) + 0);
+				posAleatoria2 = Math.floor((Math.random() * this.posiciones.length) + 0);
 			}while(posAleatoria === posAleatoria2)
 
 			this.jugador2 = new Jugador([imagenJ2_w,imagenJ2_s, imagenJ2_a, imagenJ2_d, imagenJ2_stand],
-				(posiciones[posAleatoria2].posx * this.cellSize), (posiciones[posAleatoria2].posy * this.cellSize), 4, 2, 8,"j2");
+				(this.posiciones[posAleatoria2].posx * this.cellSize), (this.posiciones[posAleatoria2].posy * this.cellSize), 4, 2, 8,"j2");
 		}
 		
 		this.spawns[0] = new gusanoSpawner([],dificultad);
@@ -297,11 +298,20 @@ function mundo(cellsize, tam) {
 
 	this.quitarVida = function(tipoJugador){
 		if (tipoJugador === "j1"){
-			console.log(this.jugador.vida);
+			//console.log(this.jugador.vida);
 			document.getElementById("vidaj1"+this.jugador.vida).style.visibility = 'hidden';
+			if (this.jugador.vida > 0){
+				var posAleatoria = Math.floor((Math.random() * this.posiciones.length) + 0);
+				this.jugador.respawn(this.posiciones[posAleatoria].posx*cellsize, this.posiciones[posAleatoria].posy*cellsize);
+			}
 		}
 		if (tipoJugador === "j2"){
 			document.getElementById("vidaj2"+this.jugador2.vida).style.visibility = 'hidden';
+
+			if (this.jugador2.vida > 0){
+				var posAleatoria = Math.floor((Math.random() * this.posiciones.length) + 0);
+				this.jugador2.respawn(this.posiciones[posAleatoria].posx*cellsize, this.posiciones[posAleatoria].posy*cellsize);
+			}
 		}
 	}
 
@@ -328,8 +338,6 @@ function mundo(cellsize, tam) {
 				this.gameOver();
 			}
 		}
-		
-			
 	}
 
 	this.pintado = function () {
