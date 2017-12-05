@@ -9,7 +9,11 @@
     <style>
         canvas {
             position: relative;
-            height: 90vh;
+            height: 75vh;
+        }
+        img{
+            position: relative;
+            height: 5vh;
         }
         
         cellTime {
@@ -150,7 +154,7 @@
 </head>
 
 <body onload="initGame()" bgcolor="#37383C">
-    <p align="center">
+    <p align="center" class ="vidas">
         <img id="vidaj10" src="../images/sprite_vida.png"/>
         <img id="vidaj11" src="../images/sprite_vida.png"/>
         <img id="vidaj12" src="../images/sprite_vida.png"/>
@@ -159,7 +163,7 @@
         <img id="vidaj21" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
         <img id="vidaj22" src="../images/sprite_vida_jugador2.png" style="visibility: hidden" />
     </p>
-    <p align="center">
+    <p id="pgame" align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
 
         <img id="gameAtras" src="../images/GAMEOVER_CONTINUAR.png" onmousedown="volverMenu()" style="display:none"/>
