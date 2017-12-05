@@ -641,7 +641,7 @@ function mundo(cellsize, tam) {
 	
 	this.reproducirSonido = function(son){
 		if (this.sonido === "on"){
-			var soni = new Audio("../audio/"+son+".wav");
+			var soni = new Audio("../audio/"+son+".mp3");
 
 			soni.play();
 		}
@@ -649,7 +649,7 @@ function mundo(cellsize, tam) {
 
 	this.reproducirSonidoMenu = function(){
 		if (this.sonido === "on"){
-			this.soniMenu = new Audio("../audio/mus_juego.wav");
+			this.soniMenu = new Audio("../audio/mus_juego.mp3");
 
 			this.soniMenu.play();
 			this.soniMenu.loop = true;
