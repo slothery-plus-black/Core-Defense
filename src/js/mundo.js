@@ -62,6 +62,8 @@ function mundo(cellsize, tam) {
 
 		this.multiplayer = multi;
 		this.sonido = sound;
+		this.soniMenu;
+
 		this.idioma = idio;
 		
 		this.context = context;
@@ -219,6 +221,8 @@ function mundo(cellsize, tam) {
 		//sc (context, board, cellSize, margenBalas, velocidad)
 		this.sc.init(this.context,this.board, this.cellSize, 12, 20,this);
 		this.scEnemigos.init(this.context,this.board, this.cellSize, 12, 20,this);
+
+		this.reproducirSonidoMenu();
 	}
 
 	this.mover = function (keysDown) {
@@ -596,6 +600,8 @@ function mundo(cellsize, tam) {
 		
 		if (mundo.multiplayer){
 			mundo.puntuacion = mundo.puntuacion/2;
+			console.log("asdf");
+			//mundo.puntuacion = Math.floor(mundo.puntuacion);
 		}
 
 		mundo.context.globalAlpha = 0.25;
@@ -614,12 +620,16 @@ function mundo(cellsize, tam) {
 			setTimeout(stopNS,3000);
 			setTimeout(this.finalizar,4000,this);
 			this.reproducirSonido("game_over");
+			this.soniMenu.pause();
+			this.soniMenu.currentTime = 0;
 		}else{
 			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			this.jugador2.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			setTimeout(stopNS,3000);
 			setTimeout(this.finalizar,4000,this);
 			this.reproducirSonido("game_over");
+			this.soniMenu.pause();
+			this.soniMenu.currentTime = 0;
 		}
 	}
 	
@@ -628,6 +638,15 @@ function mundo(cellsize, tam) {
 			var soni = new Audio("../audio/"+son+".wav");
 
 			soni.play();
+		}
+	}
+
+	this.reproducirSonidoMenu = function(){
+		if (this.sonido === "on"){
+			this.soniMenu = new Audio("../audio/mus_juego.wav");
+
+			this.soniMenu.play();
+			this.soniMenu.loop = true;
 		}
 	}
 }
