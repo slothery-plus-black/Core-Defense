@@ -23,9 +23,9 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
     var cad1 = 0.5;
     var cad2 = 0.5;
     var cad3 = 0.5;
-    
+
    switch(dificultad){
-        case 0:   //dificultad fácil(1), medio(2),etc
+        case "0":   //dificultad fácil(1), medio(2),etc
             vida1 = 1;
             vida2 = 1;
             vida3 = 3;
@@ -43,7 +43,7 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
             vInicial = 5;
         
           break;
-        case 1:   //dificultad fácil(1), medio(2),etc
+        case "1":   //dificultad fácil(1), medio(2),etc
             vida1 = 1;
             vida2 = 2;
             vida3 = 4;
@@ -61,7 +61,7 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
             vInicial = 4;
         
           break;
-        case 2: //dificultad fácil(1), medio(2),etc
+        case "2": //dificultad fácil(1), medio(2),etc
             vida1 = 2;
             vida2 = 3;
             vida3 = 5;
@@ -79,7 +79,7 @@ function gusanoSpawner(arrayEnemigos,dificultad) {
             vInicial = 3;
         
           break;
-        case 3:  //dificultad fácil(1), medio(2),etc
+        case "3":  //dificultad fácil(1), medio(2),etc
             vida1 = 2;
             vida2 = 4;
             vida3 = 6;
