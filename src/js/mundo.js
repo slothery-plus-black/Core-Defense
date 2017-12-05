@@ -612,7 +612,7 @@ function mundo(cellsize, tam) {
 			mundo.context.fillText(mundo.puntuacion,380,380);
 
 			var t1 = performance.now();
-            mundo.context.fillText(Math.floor((t1 - t0)/1000)-4,380,420);
+            mundo.context.fillText(Math.floor((t1 - t0)/1000)-4,380,410);
 		}
 
 		if (mundo.idioma === "es"){
