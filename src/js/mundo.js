@@ -321,8 +321,8 @@ function mundo(cellsize, tam) {
 
 	this.quitarVida = function(tipoJugador){
 		if (tipoJugador === "j1"){
-			//console.log(this.jugador.vida);
 			document.getElementById("vidaj1"+this.jugador.vida).style.visibility = 'hidden';
+			this.reproducirSonido("dano");
 			if (this.jugador.vida > 0){
 				var posAleatoria = Math.floor((Math.random() * this.posiciones.length) + 0);
 				this.jugador.respawn(this.posiciones[posAleatoria].posx*cellsize, this.posiciones[posAleatoria].posy*cellsize);
@@ -330,11 +330,23 @@ function mundo(cellsize, tam) {
 		}
 		if (tipoJugador === "j2"){
 			document.getElementById("vidaj2"+this.jugador2.vida).style.visibility = 'hidden';
-
+			this.reproducirSonido("dano");
 			if (this.jugador2.vida > 0){
 				var posAleatoria = Math.floor((Math.random() * this.posiciones.length) + 0);
 				this.jugador2.respawn(this.posiciones[posAleatoria].posx*cellsize, this.posiciones[posAleatoria].posy*cellsize);
 			}
+		}
+
+		if (tipoJugador === "g"){
+			this.reproducirSonido("explosion_1");
+		}
+
+		if (tipoJugador === "v"){
+			this.reproducirSonido("explosion_2");
+		}
+
+		if (tipoJugador === "t"){
+			this.reproducirSonido("enemigo_1");
 		}
 	}
 
@@ -601,11 +613,13 @@ function mundo(cellsize, tam) {
 			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			setTimeout(stopNS,3000);
 			setTimeout(this.finalizar,4000,this);
+			this.reproducirSonido("game_over");
 		}else{
 			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			this.jugador2.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			setTimeout(stopNS,3000);
 			setTimeout(this.finalizar,4000,this);
+			this.reproducirSonido("game_over");
 		}
 	}
 	

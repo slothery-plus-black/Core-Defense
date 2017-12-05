@@ -99,7 +99,6 @@ function shootingController(){
 		if (objeto.vida > 0){
 			for (var i = 0;i<this.balas.length;i++){
 				if (this.balas[i].colisionObjeto(objeto,this.cellSize,this.margenBala)){
-					////////////////////Administrar puntuacion falta
 
 					if (objeto.vida <= 0){
 						this.mundo.sumarPuntuacion(objeto.tipo);
