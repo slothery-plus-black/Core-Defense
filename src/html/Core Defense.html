@@ -49,9 +49,7 @@
         //Variable de la dificultad para un jugador: 0 facil, 1 medio y 2 dificil
         //Para el multi: 3 facil, 4 medio y 5 dificil
         var dificultad = window.localStorage.getItem("dificultad");
-        //console.log("Dificultad "+dificultad);
         var jugadores = window.localStorage.getItem("jugadores");
-        //console.log("Jugadores "+jugadores);
         var sonido = new Audio("../audio/menu.wav");
         
 		var m = new mundo(40,720); //Objeto mundo
@@ -140,10 +138,7 @@
         function startNS() {
 			if (!timerId) {
                 this.t0 = performance.now();
-                
                 timerId = setInterval("computeNS()", 50);
-                
-                
 				//1000 1 frame por segundoS
 				//100 10 frames por segundo
 				//50 20 frames por segundo
@@ -183,7 +178,8 @@
 		onmouseout="this.src='../images/GAMEOVER_CONTINUAR.png'"/>
     </p>
     <p align="center">
-        <span id="cellTime" style="color: #FF920E;"></span></p>
+        <span id="cellTime" style="color: #FF920E;"></span>
+    </p>
 </body>
 
 </html>
