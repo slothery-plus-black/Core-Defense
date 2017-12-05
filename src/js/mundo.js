@@ -526,7 +526,7 @@ function mundo(cellsize, tam) {
 	}
 	
 	this.disparar = function (jugador) {
-		if (jugador.canShoot()){
+		if (jugador.canShoot() && !this.final){
             jugador.shoot();
 			switch(jugador.dir){
 				case 0:
