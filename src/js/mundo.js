@@ -628,6 +628,7 @@ function mundo(cellsize, tam) {
 			this.reproducirSonido("game_over");
 			this.soniMenu.pause();
 			this.soniMenu.currentTime = 0;
+			this.reproducirSonido("fin");
 		}else{
 			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			this.jugador2.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
@@ -636,6 +637,7 @@ function mundo(cellsize, tam) {
 			this.reproducirSonido("game_over");
 			this.soniMenu.pause();
 			this.soniMenu.currentTime = 0;
+			this.reproducirSonidoFin();
 		}
 	}
 	
@@ -653,6 +655,15 @@ function mundo(cellsize, tam) {
 
 			this.soniMenu.play();
 			this.soniMenu.loop = true;
+		}
+	}
+
+	this.reproducirSonidoFin = function(){
+		if (this.sonido === "on"){
+			this.soniFin = new Audio("../audio/fin.mp3");
+
+			this.soniFin.play();
+			this.soniFin.loop = true;
 		}
 	}
 }
