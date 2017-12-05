@@ -68,6 +68,11 @@
 			left: 1000px;
 			top: 640px;
 		}
+
+		#main{
+    		zoom: 0.5;
+   		 -moz-transform: scale(0.5);
+		}
 	</style>
 	<script type="text/javascript">
 		if (window.localStorage.getItem("idioma") === null){
@@ -653,6 +658,7 @@
   </head>
 
   <body onload="initVariables()">
+	  <div id="main">
 	<p align="center" id ="menu">
 		<img src = "../images/fondo.png" style="z-index: 0" class="fondo"/>
 
@@ -766,4 +772,5 @@
 		onmouseout="this.src='../images/BOTONATRAS.png'"/>
 	</p>
   </body>
+</div>
 </html>
