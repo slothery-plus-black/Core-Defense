@@ -163,6 +163,7 @@
 
         function startNS() {
 			if (!timerId) {
+                this.t0 = performance.now();
 				timerId = setInterval("computeNS()", 50);
 				//1000 1 frame por segundoS
 				//100 10 frames por segundo
