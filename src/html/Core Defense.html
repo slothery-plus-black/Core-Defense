@@ -139,7 +139,12 @@
 
         function startNS() {
 			if (!timerId) {
-				timerId = setInterval("computeNS()", 50);
+                this.t0 = performance.now();
+
+                console.time('computeNS()');
+                timerId = setInterval("computeNS()", 50);
+                
+                
 				//1000 1 frame por segundoS
 				//100 10 frames por segundo
 				//50 20 frames por segundo
@@ -150,7 +155,11 @@
         //Para el tiempo de ejecucion
         function stopNS() {
 			window.clearInterval(timerId);
-			timerId = undefined;
+            timerId = undefined;
+            
+            
+            
+			
         }
 
         function volverMenu(){
