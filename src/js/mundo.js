@@ -65,6 +65,8 @@ function mundo(cellsize, tam) {
 		this.soniMenu;
 
 		this.idioma = idio;
+
+		this.final = false;
 		
 		this.context = context;
 
@@ -380,42 +382,45 @@ function mundo(cellsize, tam) {
 	}
 
 	this.pintado = function () {
-		if (this.cores <= 0){
-			this.gameOver();
-		}
+		if (!this.final){
+			if (this.cores <= 0){
+				this.gameOver();
+			}
 
-		if (this.cargado){
-			this.moverEnemigos();
+			if (this.cargado){
+				this.moverEnemigos();
 
-			this.colisionesDisparos();
+				this.colisionesDisparos();
 
-			for (var i = 0; i < this.x; i++) {
-				for (var j = 0; j < this.y; j++) {
-					this.pintar(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
+				for (var i = 0; i < this.x; i++) {
+					for (var j = 0; j < this.y; j++) {
+						this.pintar(this.board[i*this.cellSize][j*this.cellSize].image, i * this.cellSize, j * this.cellSize);
+					}
 				}
+
+				//Para imprimir el personaje
+				this.pintar(this.jugador.cogerSprite(), this.jugador.posx, this.jugador.posy);
+				this.jugador.avanzarTiempo();
+				if (this.multiplayer){
+					this.pintar(this.jugador2.cogerSprite(), this.jugador2.posx, this.jugador2.posy);
+					this.jugador2.avanzarTiempo();
+				}
+
+				//Impresion de las balas
+				this.sc.renderBalas();
+				this.scEnemigos.renderBalas();
+
+				this.verificarMuertes();
+
+				this.pintarEnemigos();
 			}
-
-			//Para imprimir el personaje
-			this.pintar(this.jugador.cogerSprite(), this.jugador.posx, this.jugador.posy);
-			this.jugador.avanzarTiempo();
-			if (this.multiplayer){
-				this.pintar(this.jugador2.cogerSprite(), this.jugador2.posx, this.jugador2.posy);
-				this.jugador2.avanzarTiempo();
-			}
-
-			//Impresion de las balas
-			this.sc.renderBalas();
-			this.scEnemigos.renderBalas();
-
-			this.verificarMuertes();
-
-			this.pintarEnemigos();
 		}
 	}
 
 	this.pintar = function(img, x, y){
 		try{
 			this.context.drawImage(img, x, y);
+			//console.log(img.src);
 		} catch(err) {
 			//Error en el pintado porque aun no se ha cargado la imagen en firefox, en chrome no hay problema
 		}
@@ -590,31 +595,32 @@ function mundo(cellsize, tam) {
     
     this.finalizar = function(mundo){
 		var fin = new Image();
+		fin.onload = function(){
+			mundo.context.globalAlpha = 0.95;
+			mundo.pintar(fin,0,0);
+			mundo.context.globalAlpha = 1;
+
+			var atras = document.getElementById("gameAtras");
+		
+			if (mundo.multiplayer){
+				mundo.puntuacion = mundo.puntuacion/2;
+			}
+
+			atras.style.display = "block";
+			mundo.context.font = "30px Arial";
+			mundo.context.fillStyle = 'white';
+			mundo.context.fillText(mundo.puntuacion,380,380);
+		}
+
 		if (mundo.idioma === "es"){
 			fin.src = mundo.srcImagenes+"GAMEOVER_ESP.png";
 		}else{
 			fin.src = mundo.srcImagenes+"GAMEOVER_ENG.png";
-		}
-
-		var atras = document.getElementById("gameAtras");
-		
-		if (mundo.multiplayer){
-			mundo.puntuacion = mundo.puntuacion/2;
-			console.log("asdf");
-			//mundo.puntuacion = Math.floor(mundo.puntuacion);
-		}
-
-		mundo.context.globalAlpha = 0.25;
-		mundo.pintar(fin,0,0);
-
-		atras.style.display = "block";
-
-		mundo.context.font = "30px Arial";
-		mundo.context.fillStyle = 'white';
-		mundo.context.fillText(mundo.puntuacion,380,380); 
+		}		
 	}
     
     this.gameOver = function(){
+		this.final = true;
 		if (!this.multiplayer){
 			this.jugador.morir(this,[enemigo_explosion1,enemigo_explosion2,enemigo_explosion3,enemigo_explosion4,enemigo_explosion5,enemigo_explosion6,enemigo_explosion7,enemigo_explosion8]);
 			setTimeout(stopNS,3000);
