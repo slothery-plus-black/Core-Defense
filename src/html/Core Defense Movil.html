@@ -97,7 +97,15 @@
             var idioma = window.localStorage.getItem("idioma");
 
             if (idioma === "en"){
-                document.getElementById("gameAtras").src = "../images/GAMEOVER_CONTINUE.png";
+                var img = document.getElementById("gameAtras");
+                img.src = "../images/GAMEOVER_CONTINUE.png";
+
+                img.onmouseover = function(){
+					this.src= "../images/GAMEOVER_CONTINUE_claro.png";
+				}
+				img.onmouseout = function(){
+					this.src= "../images/GAMEOVER_CONTINUE.png";
+				}
             }
 
 			$.ajax({
@@ -201,7 +209,9 @@
     <p align="center">
         <canvas id="game" width="720" height="720" border="1"></canvas>
 
-        <img id="gameAtras" src="../images/GAMEOVER_CONTINUAR.png" onmousedown="volverMenu()" style="display:none"/>
+        <img id="gameAtras" src="../images/GAMEOVER_CONTINUAR.png" onmousedown="volverMenu()" style="display:none"
+        onmouseover="this.src='../images/GAMEOVER_CONTINUAR_claro.png'"
+		onmouseout="this.src='../images/GAMEOVER_CONTINUAR.png'"/>
     </p>
     <p align="center">
         <img id="vidaj20" src="../images/sprite_vida_jugador2_movil.png" style="visibility: hidden" />
