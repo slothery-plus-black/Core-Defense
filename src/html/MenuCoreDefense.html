@@ -284,9 +284,32 @@
 				img.src = "../images/fondo_creditos_español.png";
 			}
 		}
+
+		// This only works for one sound for simplicity's sake
+		function playSound(sound){
+			if (currentSound == null){
+				var audio = document.createElement('audio');
+				audio.src = sound;
+				soundcv.appendChild(audio);
+				currentSound = audio;
+			}
+
+			currentSound.play();
+		}
+
 		//Cambia el sonido
 		function cambiarSonido(){
 			var stringValue = window.localStorage.getItem("sonido");
+
+			var currentSound;
+			// I have a div called "page"
+			var soundcv = document.body;
+
+			
+
+			// This isn't a real audio file URL - replace it with one of your own
+			playSound('../audio/menu.wav');
+
 
 			if (stringValue === "off"){
 				window.localStorage.setItem("sonido", "on");
