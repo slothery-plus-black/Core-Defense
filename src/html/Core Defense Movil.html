@@ -54,9 +54,7 @@
         //Variable de la dificultad para un jugador: 0 facil, 1 medio y 2 dificil
         //Para el multi: 3 facil, 4 medio y 5 dificil
         var dificultad = window.localStorage.getItem("dificultad");
-        //console.log("Dificultad "+dificultad);
         var jugadores = window.localStorage.getItem("jugadores");
-        //console.log("Jugadores "+jugadores);
 
 		var m = new mundo(40,720); //Objeto mundo
 		var keysDown = {};//Para saber que teclas estan pulsadas
@@ -130,7 +128,6 @@
                     jcontext.rect(0,0,174,152);
                     jcontext.stroke();
                 }
-                
             }
         }
 		
@@ -155,9 +152,7 @@
                         window.clearInterval(timerId);
 			            timerId = undefined;
                     }, 1000);
-                    
                 }
-                
             }
         }
 
@@ -233,10 +228,7 @@
             <canvas id="j3" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(68,true)" ontouchend="moverJugadorTouch(68,false)"></canvas>
              <canvas style="padding-left: 40px" id="j4" width="174" height="152" border="1" ontouchstart="moverJugadorTouch(70,true)" ontouchend="moverJugadorTouch(70,false)"></canvas>
         </p>
-        </div>
-
-    
-    
+    </div>
 </body>
 
 </html>
